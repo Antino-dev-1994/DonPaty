@@ -58,11 +58,11 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Ajustes e inventario negativo autorizado.
 - [x] Armado y desarmado de paquetes.
 - [x] Inventario inicial.
-- [ ] Verificación funcional y commit.
-- Evidencia del catálogo: commit `4f4b21d`; referencias iniciales idempotentes, reglas de dimensión, artículos, presentaciones, composición de paquetes, pantallas y dos pruebas funcionales básicas. Inventario continúa pendiente dentro de esta entrega.
-- Evidencia de inventario: commit `9480622`; kardex, saldos físicos/reservados/disponibles, costo promedio, ajustes, incidentes negativos, saldos iniciales, conversiones de paquetes, reversión y tres pruebas funcionales básicas. Pendiente de verificación por el usuario.
-- Corrección pendiente de reverificación: se eliminó un índice duplicado generado automáticamente por `nullableMorphs` y se agregó recuperación segura del intento parcial de migración SQLite.
-- Segunda corrección pendiente de reverificación: compatibilidad con fechas Carbon inmutables de Laravel 13 y aislamiento de cachés en PHPUnit.
+- [x] Verificación funcional y commit.
+- Evidencia del catálogo: commit `4f4b21d`; referencias iniciales idempotentes, reglas de dimensión, artículos, presentaciones, composición de paquetes, pantallas y dos pruebas funcionales básicas.
+- Evidencia de inventario: commit `9480622`; kardex, saldos físicos/reservados/disponibles, costo promedio, ajustes, incidentes negativos, saldos iniciales, conversiones de paquetes, reversión y tres pruebas funcionales básicas.
+- Correcciones verificadas: commits `863b8cd` y `18ee65b`; migración SQLite sin índice duplicado, compatibilidad con fechas Carbon inmutables y cachés de PHPUnit aisladas.
+- Verificación final informada por el usuario el 30 de agosto de 2026: pruebas básicas de catálogo e inventario aprobadas.
 
 ## Entrega 3: Proveedores y compras
 
