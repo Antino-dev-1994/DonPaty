@@ -3,11 +3,11 @@
 namespace App\Modules\Shared\Application;
 
 use App\Modules\Shared\Domain\Models\DocumentSequence;
-use Illuminate\Support\Carbon;
+use Carbon\CarbonInterface;
 
 class NextDocumentNumber
 {
-    public function execute(string $type, string $prefix, ?Carbon $date = null): string
+    public function execute(string $type, string $prefix, ?CarbonInterface $date = null): string
     {
         $period = ($date ?? now())->format('Ym');
         $sequence = DocumentSequence::query()->firstOrCreate(

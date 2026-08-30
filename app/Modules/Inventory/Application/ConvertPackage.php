@@ -14,8 +14,8 @@ use App\Modules\Inventory\Domain\Enums\PackageConversionType;
 use App\Modules\Inventory\Domain\Models\InventoryBalance;
 use App\Modules\Inventory\Domain\Models\PackageConversion;
 use App\Modules\Shared\Application\NextDocumentNumber;
+use Carbon\CarbonInterface;
 use DomainException;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ConvertPackage
@@ -26,7 +26,7 @@ class ConvertPackage
         private readonly RecordAuditEvent $audit,
     ) {}
 
-    public function execute(ProductPresentation $package, PackageConversionType $type, string $quantity, User $actor, ?AuthorizationRequest $authorization = null, ?Carbon $effectiveAt = null): PackageConversion
+    public function execute(ProductPresentation $package, PackageConversionType $type, string $quantity, User $actor, ?AuthorizationRequest $authorization = null, ?CarbonInterface $effectiveAt = null): PackageConversion
     {
         if (bccomp($quantity, '0', 6) <= 0) {
             throw new DomainException('La cantidad de paquetes debe ser positiva.');
