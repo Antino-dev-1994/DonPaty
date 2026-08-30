@@ -82,7 +82,7 @@ const modules = [
                 <span
                     class="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800 dark:bg-amber-900/40 dark:text-amber-200"
                 >
-                    Entrega 1 en progreso
+                    Entrega 1 completada
                 </span>
             </div>
 

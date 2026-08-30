@@ -45,8 +45,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Policies y ámbito propio/global.
 - [x] Autorizaciones excepcionales.
 - [x] Auditoría mínima.
-- [ ] Verificación funcional y commit.
-- Evidencia de implementación: commit `d9b7ddb`; migraciones, casos de uso, políticas del servidor, pantallas y tres pruebas funcionales básicas. Pendiente de ejecutar los comandos de verificación indicados al usuario.
+- [x] Verificación funcional y commit.
+- Evidencia: commit `d9b7ddb`; catálogo de acceso sembrado, 3 pruebas funcionales aprobadas con 8 aserciones y build frontend completado correctamente por el usuario.
 
 ## Entrega 2: Catálogo e inventario
 
