@@ -8,6 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
+        $this->cleanUpPartialAttempt();
+
         Schema::create('document_sequences', function (Blueprint $table): void {
             $table->ulid('id')->primary();
             $table->string('document_type');
@@ -29,7 +31,6 @@ return new class extends Migration
             $table->foreignUlid('authorization_request_id')->nullable()->constrained('authorization_requests')->nullOnDelete();
             $table->foreignUlid('reversal_of_id')->nullable()->constrained('inventory_movements')->restrictOnDelete();
             $table->timestamps();
-            $table->index(['source_type', 'source_id']);
         });
 
         Schema::create('inventory_movement_lines', function (Blueprint $table): void {
@@ -108,6 +109,18 @@ return new class extends Migration
     }
 
     public function down(): void
+    {
+        Schema::dropIfExists('negative_stock_incidents');
+        Schema::dropIfExists('package_conversions');
+        Schema::dropIfExists('inventory_adjustment_lines');
+        Schema::dropIfExists('inventory_adjustments');
+        Schema::dropIfExists('inventory_balances');
+        Schema::dropIfExists('inventory_movement_lines');
+        Schema::dropIfExists('inventory_movements');
+        Schema::dropIfExists('document_sequences');
+    }
+
+    private function cleanUpPartialAttempt(): void
     {
         Schema::dropIfExists('negative_stock_incidents');
         Schema::dropIfExists('package_conversions');

@@ -60,6 +60,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [ ] Verificación funcional y commit.
 - Evidencia del catálogo: commit `4f4b21d`; referencias iniciales idempotentes, reglas de dimensión, artículos, presentaciones, composición de paquetes, pantallas y dos pruebas funcionales básicas. Inventario continúa pendiente dentro de esta entrega.
 - Evidencia de inventario: commit `9480622`; kardex, saldos físicos/reservados/disponibles, costo promedio, ajustes, incidentes negativos, saldos iniciales, conversiones de paquetes, reversión y tres pruebas funcionales básicas. Pendiente de verificación por el usuario.
+- Corrección pendiente de reverificación: se eliminó un índice duplicado generado automáticamente por `nullableMorphs` y se agregó recuperación segura del intento parcial de migración SQLite.
 
 ## Entrega 3: Proveedores y compras
 
