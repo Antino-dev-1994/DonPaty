@@ -58,7 +58,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [ ] Armado y desarmado de paquetes.
 - [ ] Inventario inicial.
 - [ ] Verificación funcional y commit.
-- Bloque de catálogo preparado: referencias iniciales idempotentes, reglas de dimensión, artículos, presentaciones, composición de paquetes, pantallas y dos pruebas funcionales básicas. Inventario continúa pendiente dentro de esta entrega.
+- Evidencia del catálogo: commit `4f4b21d`; referencias iniciales idempotentes, reglas de dimensión, artículos, presentaciones, composición de paquetes, pantallas y dos pruebas funcionales básicas. Inventario continúa pendiente dentro de esta entrega.
 
 ## Entrega 3: Proveedores y compras
 
