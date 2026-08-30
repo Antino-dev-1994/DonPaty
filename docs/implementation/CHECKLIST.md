@@ -34,8 +34,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Configurar formato, lint y comprobación de tipos.
 - [x] Preparar las pruebas básicas.
 - [x] Verificar instalación, migraciones, build y pruebas esenciales.
-- [ ] Commit de Entrega 0.
-- Evidencia previa al commit: migraciones aplicadas, build frontend correcto y 39 pruebas básicas aprobadas (144 aserciones).
+- [x] Commit de Entrega 0.
+- Evidencia: commit `4af5094`; migraciones aplicadas, build frontend correcto y 39 pruebas básicas aprobadas (144 aserciones).
 
 ## Entrega 1: Identidad, personas y permisos
 
