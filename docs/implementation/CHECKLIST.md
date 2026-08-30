@@ -47,6 +47,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Auditoría mínima.
 - [x] Verificación funcional y commit.
 - Evidencia: commit `d9b7ddb`; catálogo de acceso sembrado, 3 pruebas funcionales aprobadas con 8 aserciones y build frontend completado correctamente por el usuario.
+- Datos locales: seeder idempotente de propietario de desarrollo, aislado de producción y sin sobrescribir contraseñas modificadas.
 
 ## Entrega 2: Catálogo e inventario
 
