@@ -46,7 +46,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Autorizaciones excepcionales.
 - [x] Auditoría mínima.
 - [ ] Verificación funcional y commit.
-- Implementación preparada: migraciones, casos de uso, políticas del servidor, pantallas y tres pruebas funcionales básicas. Pendiente de ejecutar los comandos de verificación indicados al usuario.
+- Evidencia de implementación: commit `d9b7ddb`; migraciones, casos de uso, políticas del servidor, pantallas y tres pruebas funcionales básicas. Pendiente de ejecutar los comandos de verificación indicados al usuario.
 
 ## Entrega 2: Catálogo e inventario
 
