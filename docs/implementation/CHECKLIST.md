@@ -50,14 +50,15 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 2: Catálogo e inventario
 
-- [ ] Unidades y conversiones.
-- [ ] Artículos y presentaciones.
-- [ ] Paquetes y componentes.
+- [x] Unidades y conversiones.
+- [x] Artículos y presentaciones.
+- [x] Paquetes y componentes.
 - [ ] Libro de movimientos y saldos.
 - [ ] Ajustes e inventario negativo autorizado.
 - [ ] Armado y desarmado de paquetes.
 - [ ] Inventario inicial.
 - [ ] Verificación funcional y commit.
+- Bloque de catálogo preparado: referencias iniciales idempotentes, reglas de dimensión, artículos, presentaciones, composición de paquetes, pantallas y dos pruebas funcionales básicas. Inventario continúa pendiente dentro de esta entrega.
 
 ## Entrega 3: Proveedores y compras
 

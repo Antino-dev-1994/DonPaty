@@ -2,6 +2,7 @@
 
 use App\Modules\Dashboard\DashboardServiceProvider;
 use App\Modules\Audit\AuditServiceProvider;
+use App\Modules\Catalog\CatalogServiceProvider;
 use App\Modules\Identity\IdentityServiceProvider;
 use App\Modules\People\PeopleServiceProvider;
 use App\Providers\AppServiceProvider;
@@ -12,6 +13,7 @@ return [
     FortifyServiceProvider::class,
     IdentityServiceProvider::class,
     AuditServiceProvider::class,
+    CatalogServiceProvider::class,
     DashboardServiceProvider::class,
     PeopleServiceProvider::class,
 ];

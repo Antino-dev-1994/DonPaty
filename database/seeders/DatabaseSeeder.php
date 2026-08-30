@@ -16,5 +16,6 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         app(EnsureAccessControlCatalog::class)->execute();
+        $this->call(CatalogReferenceSeeder::class);
     }
 }
