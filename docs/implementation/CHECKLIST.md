@@ -39,13 +39,14 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 1: Identidad, personas y permisos
 
-- [ ] Personas y clasificaciones.
-- [ ] Usuarios, autenticación y sesiones.
-- [ ] Roles y permisos.
-- [ ] Policies y ámbito propio/global.
-- [ ] Autorizaciones excepcionales.
-- [ ] Auditoría mínima.
+- [x] Personas y clasificaciones.
+- [x] Usuarios, autenticación y sesiones.
+- [x] Roles y permisos.
+- [x] Policies y ámbito propio/global.
+- [x] Autorizaciones excepcionales.
+- [x] Auditoría mínima.
 - [ ] Verificación funcional y commit.
+- Implementación preparada: migraciones, casos de uso, políticas del servidor, pantallas y tres pruebas funcionales básicas. Pendiente de ejecutar los comandos de verificación indicados al usuario.
 
 ## Entrega 2: Catálogo e inventario
 
