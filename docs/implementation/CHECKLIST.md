@@ -24,17 +24,18 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 0: Inicialización técnica
 
-- [ ] Confirmar versiones de PHP, Laravel, Node y dependencias frontend.
-- [ ] Inicializar Laravel en la raíz conservando la documentación.
-- [ ] Configurar Inertia, Vue 3 y TypeScript.
-- [ ] Configurar SQLite para desarrollo.
-- [ ] Configurar COP, UTC técnico y `America/Bogota` para presentación.
-- [ ] Crear estructura base del monolito modular.
-- [ ] Crear layout y navegación inicial.
-- [ ] Configurar formato, lint y comprobación de tipos.
-- [ ] Preparar las pruebas básicas.
-- [ ] Verificar instalación desde cero, migraciones, build y pruebas esenciales.
+- [x] Confirmar versiones de PHP, Laravel, Node y dependencias frontend.
+- [x] Inicializar Laravel en la raíz conservando la documentación.
+- [x] Configurar Inertia, Vue 3 y TypeScript.
+- [x] Configurar SQLite para desarrollo.
+- [x] Configurar COP, UTC técnico y `America/Bogota` para presentación.
+- [x] Crear estructura base del monolito modular.
+- [x] Crear layout y navegación inicial.
+- [x] Configurar formato, lint y comprobación de tipos.
+- [x] Preparar las pruebas básicas.
+- [x] Verificar instalación, migraciones, build y pruebas esenciales.
 - [ ] Commit de Entrega 0.
+- Evidencia previa al commit: migraciones aplicadas, build frontend correcto y 39 pruebas básicas aprobadas (144 aserciones).
 
 ## Entrega 1: Identidad, personas y permisos
 
@@ -168,4 +169,3 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [ ] Integración de cámara y archivos.
 - [ ] Empaquetado Capacitor.
 - [ ] Pruebas mínimas de publicación.
-

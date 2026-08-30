@@ -132,4 +132,3 @@ No se requiere inicialmente una plataforma externa compleja de monitoreo; bastan
 - No hay cálculo tributario certificado.
 - No hay nómina formal.
 - No hay notificaciones por WhatsApp, correo o push inicialmente.
-

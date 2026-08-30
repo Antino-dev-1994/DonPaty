@@ -130,4 +130,3 @@
 - La auditoría registra actor, acción, documento, fecha, dirección IP y cambios relevantes.
 - Los respaldos incluyen base de datos, adjuntos, manifiesto y verificación de integridad.
 - La restauración será una acción administrativa protegida.
-

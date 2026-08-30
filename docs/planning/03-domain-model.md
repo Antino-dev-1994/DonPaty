@@ -270,4 +270,3 @@ Person -- FundRequest -- Payment/Transfer
 - Una API `/api/mobile/v1` podrá exponer los mismos casos de uso para Capacitor.
 - La API tendrá autenticación revocable, autorización del lado del servidor y respuestas versionadas.
 - Capacitor no alojará la base de datos principal ni implementará sincronización offline en la primera versión.
-

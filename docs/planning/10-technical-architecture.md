@@ -346,4 +346,3 @@ La auditoría se genera desde las Actions o eventos confirmados:
 8. Cantidades mediante objeto de valor y precisión decimal.
 9. SQLite en desarrollo y MySQL en producción.
 10. Inertia para web y API versionada para Capacitor futuro.
-

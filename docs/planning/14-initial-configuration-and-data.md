@@ -189,4 +189,3 @@ No se construirá un importador genérico sin conocer los datos fuente.
 - Antes del lanzamiento, los documentos de apertura pueden corregirse mientras estén en borrador.
 - Después del inicio oficial, cualquier corrección usa ajuste o reversión documentada.
 - No se editarán saldos directamente en base de datos.
-

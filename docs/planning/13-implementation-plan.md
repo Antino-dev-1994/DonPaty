@@ -362,4 +362,3 @@ Identidad
 ## Estimaciones
 
 No se fijan duraciones antes de inicializar el proyecto y validar el entorno real. Las estimaciones se realizarán por entrega después de revisar dependencias, versiones y disponibilidad del usuario para validar.
-

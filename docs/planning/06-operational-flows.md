@@ -435,13 +435,12 @@ El cliente no accede directamente a MySQL y no almacena una copia autoritativa d
 
 ## Consistencia entre módulos
 
-| Acción | Inventario | Finanzas | Costos | Pedidos |
-|---|---:|---:|---:|---:|
-| Recibir compra | Sí | Según obligación | Actualiza costo | No |
-| Completar producción | Sí | No necesariamente | Sí | Sí |
-| Confirmar venta | Sí | Sí | Costo de venta | Puede completar |
-| Registrar abono | No | Sí | No | Puede reducir saldo |
-| Armar/desarmar paquete | Sí | No | Conserva costo | No |
-| Pagar mano de obra | No | Sí | Alimenta fondo | No |
-| Cerrar periodo | No | Ajuste/variación | Sí | No |
-
+| Acción                 | Inventario |          Finanzas |          Costos |             Pedidos |
+| ---------------------- | ---------: | ----------------: | --------------: | ------------------: |
+| Recibir compra         |         Sí |  Según obligación | Actualiza costo |                  No |
+| Completar producción   |         Sí | No necesariamente |              Sí |                  Sí |
+| Confirmar venta        |         Sí |                Sí |  Costo de venta |     Puede completar |
+| Registrar abono        |         No |                Sí |              No | Puede reducir saldo |
+| Armar/desarmar paquete |         Sí |                No |  Conserva costo |                  No |
+| Pagar mano de obra     |         No |                Sí |  Alimenta fondo |                  No |
+| Cerrar periodo         |         No |  Ajuste/variación |              Sí |                  No |

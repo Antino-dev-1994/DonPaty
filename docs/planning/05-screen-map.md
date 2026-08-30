@@ -565,4 +565,3 @@ Todos los reportes permiten rango de fechas, filtros relevantes y exportación p
 - `Revertido/Cancelado`: neutro con referencia al documento correctivo.
 
 El color nunca será el único indicador; todos los estados incluirán texto e iconografía accesible.
-

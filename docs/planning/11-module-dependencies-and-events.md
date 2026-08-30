@@ -193,92 +193,92 @@ Solo lectura:
 
 Los casos que atraviesan varios módulos tendrán una Action coordinadora ubicada en el módulo que representa la intención principal.
 
-| Acción | Módulo dueño | Colaboradores |
-|---|---|---|
-| `ReceivePurchase` | Purchasing | Inventory, Finance, Audit |
-| `CompleteProduction` | Production | Recipes, Inventory, CostAccounting, Orders, Audit |
-| `ConfirmSale` | Sales | Catalog, Inventory, Orders, CashManagement, Finance, Audit |
-| `RegisterCustomerPayment` | Finance | Sales, CashManagement, Audit |
-| `ConvertPackageForSale` | Sales | Catalog, Inventory |
-| `PayFundRequestFromBusiness` | Household | People, Finance, CostAccounting, Audit |
-| `CloseCashSession` | CashManagement | Finance, Audit |
-| `CloseCostPeriod` | CostAccounting | Production, Finance, Audit |
+| Acción                       | Módulo dueño   | Colaboradores                                              |
+| ---------------------------- | -------------- | ---------------------------------------------------------- |
+| `ReceivePurchase`            | Purchasing     | Inventory, Finance, Audit                                  |
+| `CompleteProduction`         | Production     | Recipes, Inventory, CostAccounting, Orders, Audit          |
+| `ConfirmSale`                | Sales          | Catalog, Inventory, Orders, CashManagement, Finance, Audit |
+| `RegisterCustomerPayment`    | Finance        | Sales, CashManagement, Audit                               |
+| `ConvertPackageForSale`      | Sales          | Catalog, Inventory                                         |
+| `PayFundRequestFromBusiness` | Household      | People, Finance, CostAccounting, Audit                     |
+| `CloseCashSession`           | CashManagement | Finance, Audit                                             |
+| `CloseCostPeriod`            | CostAccounting | Production, Finance, Audit                                 |
 
 ## Eventos principales
 
 ### Personas e identidad
 
-| Evento | Emisor | Consumidores principales |
-|---|---|---|
-| `PersonClassificationsChanged` | People | Identity, Reporting |
-| `UserBlocked` | Identity | Revocación de sesiones, Audit |
-| `AuthorizationApproved` | Identity | Acción solicitante, Audit |
+| Evento                         | Emisor   | Consumidores principales      |
+| ------------------------------ | -------- | ----------------------------- |
+| `PersonClassificationsChanged` | People   | Identity, Reporting           |
+| `UserBlocked`                  | Identity | Revocación de sesiones, Audit |
+| `AuthorizationApproved`        | Identity | Acción solicitante, Audit     |
 
 ### Catálogo e inventario
 
-| Evento | Emisor | Consumidores principales |
-|---|---|---|
-| `ProductPresentationChanged` | Catalog | Sales read model, Reporting |
-| `InventoryMovementPosted` | Inventory | Reporting, alertas internas |
-| `InventoryWentBelowMinimum` | Inventory | Dashboard |
-| `NegativeStockAuthorized` | Inventory | Audit, Dashboard |
-| `PackageConverted` | Inventory | Sales, Reporting |
+| Evento                       | Emisor    | Consumidores principales    |
+| ---------------------------- | --------- | --------------------------- |
+| `ProductPresentationChanged` | Catalog   | Sales read model, Reporting |
+| `InventoryMovementPosted`    | Inventory | Reporting, alertas internas |
+| `InventoryWentBelowMinimum`  | Inventory | Dashboard                   |
+| `NegativeStockAuthorized`    | Inventory | Audit, Dashboard            |
+| `PackageConverted`           | Inventory | Sales, Reporting            |
 
 ### Compras
 
-| Evento | Emisor | Consumidores principales |
-|---|---|---|
-| `PurchaseConfirmed` | Purchasing | Finance para obligación, Audit |
-| `PurchaseReceived` | Purchasing | Inventory, Reporting |
+| Evento                      | Emisor             | Consumidores principales              |
+| --------------------------- | ------------------ | ------------------------------------- |
+| `PurchaseConfirmed`         | Purchasing         | Finance para obligación, Audit        |
+| `PurchaseReceived`          | Purchasing         | Inventory, Reporting                  |
 | `SupplierPaymentRegistered` | Purchasing/Finance | Purchasing read model, CashManagement |
-| `PurchaseReturned` | Purchasing | Inventory, Finance |
+| `PurchaseReturned`          | Purchasing         | Inventory, Finance                    |
 
 ### Recetas y producción
 
-| Evento | Emisor | Consumidores principales |
-|---|---|---|
-| `RecipeVersionActivated` | Recipes | Production, Reporting |
-| `ProductionPlanned` | Production | Orders, Dashboard |
-| `ProductionStarted` | Production | Dashboard |
-| `ProductionCompleted` | Production | Orders, CostAccounting, Reporting |
-| `ProductionReversed` | Production | Inventory, Orders, CostAccounting, Reporting |
+| Evento                   | Emisor     | Consumidores principales                     |
+| ------------------------ | ---------- | -------------------------------------------- |
+| `RecipeVersionActivated` | Recipes    | Production, Reporting                        |
+| `ProductionPlanned`      | Production | Orders, Dashboard                            |
+| `ProductionStarted`      | Production | Dashboard                                    |
+| `ProductionCompleted`    | Production | Orders, CostAccounting, Reporting            |
+| `ProductionReversed`     | Production | Inventory, Orders, CostAccounting, Reporting |
 
 Los movimientos críticos de inventario de una producción se coordinan dentro de `CompleteProduction`; `ProductionCompleted` informa el resultado después de una confirmación consistente.
 
 ### Pedidos y ventas
 
-| Evento | Emisor | Consumidores principales |
-|---|---|---|
-| `SalesOrderConfirmed` | Orders | Inventory reservations, Production demand |
-| `SalesOrderDueSoon` | Orders | Dashboard |
-| `SalesOrderReady` | Orders | Sales, Dashboard |
-| `SaleConfirmed` | Sales | Reporting, customer statement projection |
-| `SaleReturned` | Sales | Reporting |
+| Evento                      | Emisor  | Consumidores principales                    |
+| --------------------------- | ------- | ------------------------------------------- |
+| `SalesOrderConfirmed`       | Orders  | Inventory reservations, Production demand   |
+| `SalesOrderDueSoon`         | Orders  | Dashboard                                   |
+| `SalesOrderReady`           | Orders  | Sales, Dashboard                            |
+| `SaleConfirmed`             | Sales   | Reporting, customer statement projection    |
+| `SaleReturned`              | Sales   | Reporting                                   |
 | `CustomerPaymentRegistered` | Finance | Sales receivable projection, CashManagement |
 
 Los efectos obligatorios de inventario y finanzas forman parte de `ConfirmSale`; el evento se publica después de que la venta quedó consistente.
 
 ### Caja y finanzas
 
-| Evento | Emisor | Consumidores principales |
-|---|---|---|
-| `CashSessionOpened` | CashManagement | Dashboard, Audit |
-| `CashSessionClosed` | CashManagement | Finance, Reporting, Audit |
-| `CashDifferenceDetected` | CashManagement | Dashboard, Audit |
-| `JournalEntryPosted` | Finance | Reporting |
-| `ReceivableOverdue` | Finance | Dashboard |
-| `PayableOverdue` | Finance | Dashboard |
+| Evento                   | Emisor         | Consumidores principales  |
+| ------------------------ | -------------- | ------------------------- |
+| `CashSessionOpened`      | CashManagement | Dashboard, Audit          |
+| `CashSessionClosed`      | CashManagement | Finance, Reporting, Audit |
+| `CashDifferenceDetected` | CashManagement | Dashboard, Audit          |
+| `JournalEntryPosted`     | Finance        | Reporting                 |
+| `ReceivableOverdue`      | Finance        | Dashboard                 |
+| `PayableOverdue`         | Finance        | Dashboard                 |
 
 ### Costos y hogar
 
-| Evento | Emisor | Consumidores principales |
-|---|---|---|
-| `CostPeriodOpened` | CostAccounting | Production, Dashboard |
-| `CostPeriodClosed` | CostAccounting | Finance, Reporting |
-| `FundRequestCreated` | Household | Dashboard |
-| `FundRequestApproved` | Household | Responsable de pago, Audit |
-| `FundRequestPaid` | Household | Finance, CostAccounting, Reporting |
-| `BudgetThresholdReached` | Household | Dashboard |
+| Evento                   | Emisor         | Consumidores principales           |
+| ------------------------ | -------------- | ---------------------------------- |
+| `CostPeriodOpened`       | CostAccounting | Production, Dashboard              |
+| `CostPeriodClosed`       | CostAccounting | Finance, Reporting                 |
+| `FundRequestCreated`     | Household      | Dashboard                          |
+| `FundRequestApproved`    | Household      | Responsable de pago, Audit         |
+| `FundRequestPaid`        | Household      | Finance, CostAccounting, Reporting |
+| `BudgetThresholdReached` | Household      | Dashboard                          |
 
 ## Eventos sincrónicos y posteriores al commit
 
@@ -317,4 +317,3 @@ Dentro del monolito, los contratos cambian junto con sus consumidores en una mis
 ```
 
 Un cambio incompatible en la API exige una nueva versión o un periodo de compatibilidad.
-

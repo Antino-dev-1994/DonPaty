@@ -47,52 +47,52 @@ Acceso de solo lectura a módulos y reportes expresamente asignados.
 
 ## Matriz general
 
-| Área | Propietario | Administrador | Producción | Ventas/Caja | Habitante | Consulta |
-|---|---|---|---|---|---|---|
-| Tablero del negocio | Total | Total | Consultar operativo | Consultar operativo | — | Consultar asignado |
-| Tablero del hogar | Total | Consultar asignado | — | — | Propio | Consultar asignado |
-| Personas | Total | Operar | Consultar asignado | Clientes | Propio | Consultar asignado |
-| Usuarios | Total | Operar sin propietarios | — | — | Propio | — |
-| Roles y permisos | Total | Consultar | — | — | — | — |
-| Catálogo | Total | Total | Consultar | Consultar | — | Consultar |
-| Inventario | Total | Total | Operar producción | Operar ventas/paquetes | — | Consultar |
-| Ajustes de inventario | Total | Operar | Solicitar | Solicitar | — | — |
-| Recetas y versiones | Total | Total | Operar borradores | Consultar | — | Consultar |
-| Periodos de costos | Total | Operar | Consultar | — | — | Consultar |
-| Producción | Total | Total | Operar | Consultar pedidos | — | Consultar |
-| Clientes y pedidos | Total | Total | Consultar demanda | Operar | — | Consultar |
-| Ventas y devoluciones | Total | Total | — | Operar | — | Consultar |
-| Precios | Total | Total | Consultar costo permitido | Aplicar vigentes | — | Consultar |
-| Compras y proveedores | Total | Total | Consultar recepción | — | — | Consultar |
-| Caja menor | Total | Total | — | Operar | — | Consultar |
-| Caja principal | Total | Operar asignado | — | Consultar saldo permitido | — | Consultar asignado |
-| Ingresos y gastos del negocio | Total | Total | — | Registrar asignados | — | Consultar |
-| Cartera y obligaciones | Total | Total | — | Operar cobros | — | Consultar |
-| Hogar consolidado | Total | Asignado | — | — | Propio | Consultar asignado |
-| Solicitudes de fondos | Total | Autorizar asignadas | — | Pagar asignadas | Propio | — |
-| Presupuestos | Total | Operar asignado | — | — | Propio | Consultar asignado |
-| Deudas y préstamos | Total | Operar asignado | — | — | Propio | Consultar asignado |
-| Reportes | Total | Total | Operativos | Ventas/caja | Propio | Asignados |
-| Auditoría | Total | Consultar limitada | — | — | Propia limitada | — |
-| Respaldos y restauración | Total | Consultar estado | — | — | — | — |
-| Configuración global | Total | Consultar/operar asignada | — | — | — | — |
+| Área                          | Propietario | Administrador             | Producción                | Ventas/Caja               | Habitante       | Consulta           |
+| ----------------------------- | ----------- | ------------------------- | ------------------------- | ------------------------- | --------------- | ------------------ |
+| Tablero del negocio           | Total       | Total                     | Consultar operativo       | Consultar operativo       | —               | Consultar asignado |
+| Tablero del hogar             | Total       | Consultar asignado        | —                         | —                         | Propio          | Consultar asignado |
+| Personas                      | Total       | Operar                    | Consultar asignado        | Clientes                  | Propio          | Consultar asignado |
+| Usuarios                      | Total       | Operar sin propietarios   | —                         | —                         | Propio          | —                  |
+| Roles y permisos              | Total       | Consultar                 | —                         | —                         | —               | —                  |
+| Catálogo                      | Total       | Total                     | Consultar                 | Consultar                 | —               | Consultar          |
+| Inventario                    | Total       | Total                     | Operar producción         | Operar ventas/paquetes    | —               | Consultar          |
+| Ajustes de inventario         | Total       | Operar                    | Solicitar                 | Solicitar                 | —               | —                  |
+| Recetas y versiones           | Total       | Total                     | Operar borradores         | Consultar                 | —               | Consultar          |
+| Periodos de costos            | Total       | Operar                    | Consultar                 | —                         | —               | Consultar          |
+| Producción                    | Total       | Total                     | Operar                    | Consultar pedidos         | —               | Consultar          |
+| Clientes y pedidos            | Total       | Total                     | Consultar demanda         | Operar                    | —               | Consultar          |
+| Ventas y devoluciones         | Total       | Total                     | —                         | Operar                    | —               | Consultar          |
+| Precios                       | Total       | Total                     | Consultar costo permitido | Aplicar vigentes          | —               | Consultar          |
+| Compras y proveedores         | Total       | Total                     | Consultar recepción       | —                         | —               | Consultar          |
+| Caja menor                    | Total       | Total                     | —                         | Operar                    | —               | Consultar          |
+| Caja principal                | Total       | Operar asignado           | —                         | Consultar saldo permitido | —               | Consultar asignado |
+| Ingresos y gastos del negocio | Total       | Total                     | —                         | Registrar asignados       | —               | Consultar          |
+| Cartera y obligaciones        | Total       | Total                     | —                         | Operar cobros             | —               | Consultar          |
+| Hogar consolidado             | Total       | Asignado                  | —                         | —                         | Propio          | Consultar asignado |
+| Solicitudes de fondos         | Total       | Autorizar asignadas       | —                         | Pagar asignadas           | Propio          | —                  |
+| Presupuestos                  | Total       | Operar asignado           | —                         | —                         | Propio          | Consultar asignado |
+| Deudas y préstamos            | Total       | Operar asignado           | —                         | —                         | Propio          | Consultar asignado |
+| Reportes                      | Total       | Total                     | Operativos                | Ventas/caja               | Propio          | Asignados          |
+| Auditoría                     | Total       | Consultar limitada        | —                         | —                         | Propia limitada | —                  |
+| Respaldos y restauración      | Total       | Consultar estado          | —                         | —                         | —               | —                  |
+| Configuración global          | Total       | Consultar/operar asignada | —                         | —                         | —               | —                  |
 
 ## Autorizaciones críticas
 
-| Operación | Quién puede solicitar | Quién puede autorizar por defecto |
-|---|---|---|
-| Continuar con inventario negativo | Producción, Ventas/Caja, Administrador | Propietario o Administrador diferente |
-| Precio inferior al mínimo | Ventas/Caja, Administrador | Propietario o Administrador diferente |
-| Recepción superior a compra | Administrador | Propietario |
-| Diferencia relevante de caja | Ventas/Caja, Administrador | Propietario o Administrador diferente |
-| Reabrir caja cerrada | Ventas/Caja, Administrador | Propietario |
-| Tarifa mensual manual | Administrador | Propietario; el propietario puede registrarla directamente |
-| Producción sin tarifa mensual definitiva | Producción, Administrador | Propietario, dejando pendiente de regularización |
-| Revertir producción | Producción, Administrador | Propietario o Administrador diferente |
-| Revertir venta o devolución | Ventas/Caja, Administrador | Propietario o Administrador diferente |
-| Reabrir periodo mensual | Administrador | Propietario |
-| Restaurar respaldo | Propietario | Nueva autenticación del mismo propietario |
-| Cambiar roles de propietario | Propietario | Otro propietario si existe; si no, nueva autenticación |
+| Operación                                | Quién puede solicitar                  | Quién puede autorizar por defecto                          |
+| ---------------------------------------- | -------------------------------------- | ---------------------------------------------------------- |
+| Continuar con inventario negativo        | Producción, Ventas/Caja, Administrador | Propietario o Administrador diferente                      |
+| Precio inferior al mínimo                | Ventas/Caja, Administrador             | Propietario o Administrador diferente                      |
+| Recepción superior a compra              | Administrador                          | Propietario                                                |
+| Diferencia relevante de caja             | Ventas/Caja, Administrador             | Propietario o Administrador diferente                      |
+| Reabrir caja cerrada                     | Ventas/Caja, Administrador             | Propietario                                                |
+| Tarifa mensual manual                    | Administrador                          | Propietario; el propietario puede registrarla directamente |
+| Producción sin tarifa mensual definitiva | Producción, Administrador              | Propietario, dejando pendiente de regularización           |
+| Revertir producción                      | Producción, Administrador              | Propietario o Administrador diferente                      |
+| Revertir venta o devolución              | Ventas/Caja, Administrador             | Propietario o Administrador diferente                      |
+| Reabrir periodo mensual                  | Administrador                          | Propietario                                                |
+| Restaurar respaldo                       | Propietario                            | Nueva autenticación del mismo propietario                  |
+| Cambiar roles de propietario             | Propietario                            | Otro propietario si existe; si no, nueva autenticación     |
 
 ## Separación solicitante-autorizador
 
@@ -173,4 +173,3 @@ backups.manage
 backups.restore
 settings.manage
 ```
-

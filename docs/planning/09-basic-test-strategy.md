@@ -151,4 +151,3 @@ Se agrega una prueba nueva únicamente cuando:
 - Corrige un defecto que podría reaparecer.
 - Una integración externa requiere asegurar su contrato.
 - Una migración de datos implica riesgo real.
-

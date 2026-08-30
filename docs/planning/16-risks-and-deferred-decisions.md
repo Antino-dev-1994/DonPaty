@@ -2,24 +2,24 @@
 
 ## Registro de riesgos
 
-| Riesgo | Impacto | Probabilidad inicial | Mitigación |
-|---|---|---|---|
-| Inventario inicial incorrecto | Alto | Alta | Conteo físico, responsable y documento de apertura |
-| Recetas o rendimientos poco precisos | Alto | Media | Producciones de ensayo y comparación esperado/real |
-| Costos de gas, energía o mano de obra duplicados | Alto | Media | Fondos de costo, aplicaciones y variación mensual |
-| Uso frecuente de inventario negativo | Alto | Media | Autorización, incidencias visibles y regularización |
-| Caja principal y menor no coinciden con efectivo | Alto | Media | Apertura/cierre diario y traslados documentados |
-| Mezcla incorrecta entre hogar y negocio | Alto | Media | Ámbitos separados y transferencias balanceadas |
-| Pagos a habitantes clasificados dos veces | Alto | Media | Action única de pago desde negocio y asientos definidos |
-| Diferencias entre SQLite y MySQL | Alto | Media | Pruebas tempranas de migraciones y flujos críticos en MySQL |
-| Pérdida de datos o adjuntos | Alto | Baja/Media | Respaldos diarios, integridad y restauración probada |
-| Acceso no autorizado por Internet | Alto | Media | HTTPS, Policies, sesiones revocables y revisión de roles |
-| Internet no disponible durante operación | Medio/Alto | Media | Procedimiento temporal manual; no prometer modo offline |
-| Pedidos sin receta o peso de masa configurado | Medio | Media | Validación antes de confirmar demanda productiva |
-| Usuarios omiten apertura mensual de costos | Medio | Media | Bloqueo de finalización y alerta en tablero |
-| Demasiadas excepciones autorizadas | Medio | Media | Reporte de excepciones y revisión periódica |
-| Crecimiento excesivo del alcance | Alto | Alta | Respetar entregas y mover mejoras no críticas a versiones futuras |
-| Dependencia de un proveedor de hosting | Medio | Baja | Diseño portable, MySQL estándar y respaldos descargables |
+| Riesgo                                           | Impacto    | Probabilidad inicial | Mitigación                                                        |
+| ------------------------------------------------ | ---------- | -------------------- | ----------------------------------------------------------------- |
+| Inventario inicial incorrecto                    | Alto       | Alta                 | Conteo físico, responsable y documento de apertura                |
+| Recetas o rendimientos poco precisos             | Alto       | Media                | Producciones de ensayo y comparación esperado/real                |
+| Costos de gas, energía o mano de obra duplicados | Alto       | Media                | Fondos de costo, aplicaciones y variación mensual                 |
+| Uso frecuente de inventario negativo             | Alto       | Media                | Autorización, incidencias visibles y regularización               |
+| Caja principal y menor no coinciden con efectivo | Alto       | Media                | Apertura/cierre diario y traslados documentados                   |
+| Mezcla incorrecta entre hogar y negocio          | Alto       | Media                | Ámbitos separados y transferencias balanceadas                    |
+| Pagos a habitantes clasificados dos veces        | Alto       | Media                | Action única de pago desde negocio y asientos definidos           |
+| Diferencias entre SQLite y MySQL                 | Alto       | Media                | Pruebas tempranas de migraciones y flujos críticos en MySQL       |
+| Pérdida de datos o adjuntos                      | Alto       | Baja/Media           | Respaldos diarios, integridad y restauración probada              |
+| Acceso no autorizado por Internet                | Alto       | Media                | HTTPS, Policies, sesiones revocables y revisión de roles          |
+| Internet no disponible durante operación         | Medio/Alto | Media                | Procedimiento temporal manual; no prometer modo offline           |
+| Pedidos sin receta o peso de masa configurado    | Medio      | Media                | Validación antes de confirmar demanda productiva                  |
+| Usuarios omiten apertura mensual de costos       | Medio      | Media                | Bloqueo de finalización y alerta en tablero                       |
+| Demasiadas excepciones autorizadas               | Medio      | Media                | Reporte de excepciones y revisión periódica                       |
+| Crecimiento excesivo del alcance                 | Alto       | Alta                 | Respetar entregas y mover mejoras no críticas a versiones futuras |
+| Dependencia de un proveedor de hosting           | Medio      | Baja                 | Diseño portable, MySQL estándar y respaldos descargables          |
 
 ## Riesgos contables
 
@@ -147,4 +147,3 @@ Ya están confirmados:
 - Acceso desde Internet.
 - Capacitor como aplicación instalable futura.
 - Pruebas básicas y enfocadas.
-

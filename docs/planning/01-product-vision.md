@@ -137,4 +137,3 @@ Una persona puede cumplir simultáneamente varios roles, por ejemplo habitante y
 - WhatsApp, correo y notificaciones push.
 
 La arquitectura deberá permitir agregar facturación electrónica, integraciones externas y un cliente Capacitor sin reescribir el dominio.
-

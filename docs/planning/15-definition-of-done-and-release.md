@@ -185,4 +185,3 @@ El lanzamiento se aplaza si:
 ## Capacitor
 
 El cliente Capacitor se evalúa después de estabilizar la aplicación web. Tendrá su propia lista de publicación, firma, permisos de dispositivo y pruebas mínimas, sin alterar la definición de terminado de la primera versión web.
-
