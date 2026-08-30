@@ -53,12 +53,13 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Unidades y conversiones.
 - [x] Artículos y presentaciones.
 - [x] Paquetes y componentes.
-- [ ] Libro de movimientos y saldos.
-- [ ] Ajustes e inventario negativo autorizado.
-- [ ] Armado y desarmado de paquetes.
-- [ ] Inventario inicial.
+- [x] Libro de movimientos y saldos.
+- [x] Ajustes e inventario negativo autorizado.
+- [x] Armado y desarmado de paquetes.
+- [x] Inventario inicial.
 - [ ] Verificación funcional y commit.
 - Evidencia del catálogo: commit `4f4b21d`; referencias iniciales idempotentes, reglas de dimensión, artículos, presentaciones, composición de paquetes, pantallas y dos pruebas funcionales básicas. Inventario continúa pendiente dentro de esta entrega.
+- Implementación de inventario preparada: kardex, saldos físicos/reservados/disponibles, costo promedio, ajustes, incidentes negativos, saldos iniciales, conversiones de paquetes, reversión y tres pruebas funcionales básicas. Pendiente de verificación por el usuario.
 
 ## Entrega 3: Proveedores y compras
 

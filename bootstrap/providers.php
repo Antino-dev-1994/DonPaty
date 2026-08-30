@@ -4,6 +4,7 @@ use App\Modules\Dashboard\DashboardServiceProvider;
 use App\Modules\Audit\AuditServiceProvider;
 use App\Modules\Catalog\CatalogServiceProvider;
 use App\Modules\Identity\IdentityServiceProvider;
+use App\Modules\Inventory\InventoryServiceProvider;
 use App\Modules\People\PeopleServiceProvider;
 use App\Providers\AppServiceProvider;
 use App\Providers\FortifyServiceProvider;
@@ -14,6 +15,7 @@ return [
     IdentityServiceProvider::class,
     AuditServiceProvider::class,
     CatalogServiceProvider::class,
+    InventoryServiceProvider::class,
     DashboardServiceProvider::class,
     PeopleServiceProvider::class,
 ];

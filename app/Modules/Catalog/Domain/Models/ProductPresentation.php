@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Modules\Inventory\Domain\Models\InventoryBalance;
 
 #[Fillable(['item_id', 'sku', 'name', 'stock_unit_id', 'conversion_to_item_base', 'is_purchasable', 'is_sellable', 'is_stockable', 'is_active', 'barcode', 'minimum_sale_price'])]
 class ProductPresentation extends Model
@@ -26,6 +28,11 @@ class ProductPresentation extends Model
     public function packageComponents(): HasMany
     {
         return $this->hasMany(PackageComponent::class, 'package_presentation_id');
+    }
+
+    public function inventoryBalance(): HasOne
+    {
+        return $this->hasOne(InventoryBalance::class, 'presentation_id');
     }
 
     public function isPackage(): bool
