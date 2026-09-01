@@ -124,15 +124,21 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 7: Ventas, cartera y caja
 
-- [ ] Punto de venta.
-- [ ] Venta directa y desde pedido.
-- [ ] Unidades, paquetes y conversiones en venta.
-- [ ] Contado, crédito, pagos y abonos.
-- [ ] Cuentas por cobrar.
-- [ ] Caja principal y caja menor.
-- [ ] Apertura, cierre y diferencias.
-- [ ] Devolución básica.
+- [x] Punto de venta.
+- [x] Venta directa y desde pedido.
+- [x] Unidades, paquetes y conversiones en venta.
+- [x] Contado, crédito, pagos y abonos.
+- [x] Cuentas por cobrar.
+- [x] Caja principal y caja menor.
+- [x] Apertura, cierre y diferencias.
+- [x] Devolución básica.
 - [ ] Verificación funcional y commit.
+- Evidencia de caja: commit `0e024b0`; caja principal y menor, traslados con saldo suficiente, apertura, cierre, saldo esperado, explicación de diferencias y autorización sobre el umbral configurable.
+- Evidencia de ventas y cartera: commit `53a36a8`; venta directa o desde pedido, precios trazables, contado, crédito, múltiples pagos, aplicación de anticipos, cuentas por cobrar y abonos parciales.
+- La venta consume reservas propias del pedido, descuenta inventario y registra ingreso, costo y utilidad bruta de forma atómica.
+- Cuando faltan unidades, el punto de venta puede desarmar automáticamente un paquete compatible del mismo producto antes de evaluar inventario negativo.
+- La devolución controla el acumulado por línea, permite decidir si el producto vuelve al inventario, aplica primero el crédito a cartera y reembolsa únicamente el excedente desde una cuenta con saldo.
+- Se agregaron dos pruebas funcionales básicas: venta en caja con desarmado, devolución y cierre; venta a crédito con abono parcial.
 
 ## Entrega 8: Finanzas del negocio
 
