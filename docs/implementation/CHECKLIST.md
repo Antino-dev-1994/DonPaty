@@ -71,11 +71,12 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Entradas y costo promedio.
 - [x] Cuentas por pagar y pagos parciales.
 - [x] Devoluciones básicas.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia de proveedores y compras base: commit `37abfc8`; perfiles enlazados a personas, condiciones comerciales, compras confirmadas, líneas y distribución proporcional de costos adicionales.
 - Evidencia de recepciones: commit `6280623`; recepciones parciales confirmadas, control de cantidades, autorización para excedentes, entradas de inventario y costo promedio con transporte distribuido.
 - Evidencia financiera y devoluciones: commit `d21abec`; cuentas, obligaciones, pagos, aplicaciones y asientos de partida doble. Cada compra genera una cuenta por pagar y admite abonos parciales sin duplicar su costo.
 - El mismo bloque incluye devoluciones básicas con documento independiente, salida de inventario, trazabilidad por línea y nota crédito aplicada al saldo sin alterar el valor original de la compra.
+- Verificación final informada por el usuario el 1 de septiembre de 2026: migraciones, seeder y las dos pruebas básicas de compras aprobadas.
 
 ## Entrega 4: Recetas y periodos de costos
 
@@ -85,21 +86,25 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Periodos mensuales.
 - [x] Gas, electricidad y distribución hogar/negocio.
 - [x] Tarifas sugeridas y manuales.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia de recetas: commit `0d68bdb`; borradores completos, ingredientes y porcentajes panaderos, productos compatibles, rendimientos, clonación histórica, rangos de vigencia y previsualización de escalado decimal.
 - Evidencia de costos: commit `34324a2`; apertura mensual, facturas previas de gas y electricidad, reparto exacto hogar/negocio, fondos productivos, tarifa sugerida por harina histórica, tarifa manual justificada y alerta de periodo faltante en el tablero.
 - Se agregaron dos pruebas funcionales básicas para cubrir historial/escalado de recetas y el paso de tarifa inicial manual a tarifa sugerida.
+- Verificación final informada por el usuario el 1 de septiembre de 2026: las dos pruebas básicas de recetas y periodos de costos aprobadas.
 
 ## Entrega 5: Producción
 
-- [ ] Planeación y escalado por harina.
-- [ ] Disponibilidad y consumos.
-- [ ] Mano de obra configurable.
-- [ ] Novedades, masa y merma.
-- [ ] Distribución entre productos.
-- [ ] Costos y movimientos atómicos.
-- [ ] Reversión controlada.
+- [x] Planeación y escalado por harina.
+- [x] Disponibilidad y consumos.
+- [x] Mano de obra configurable.
+- [x] Novedades, masa y merma.
+- [x] Distribución entre productos.
+- [x] Costos y movimientos atómicos.
+- [x] Reversión controlada.
 - [ ] Verificación funcional y commit.
+- Evidencia de producción: commit `053aacf`; planeación por versión exacta y kilogramos de harina, disponibilidad, inicio autorizado ante faltantes, consumos reales, novedades, masa, merma y múltiples productos compatibles.
+- El mismo bloque calcula mano de obra por tarifa estándar, horas reales o valor manual autorizado; distribuye costos enteros, publica entradas y salidas de inventario de forma atómica y permite reversión controlada.
+- Se agregaron dos pruebas funcionales básicas: ciclo completo con dos productos y reversión, y bloqueo de inicio cuando existen faltantes sin autorización.
 
 ## Entrega 6: Clientes, precios y pedidos
 
