@@ -142,13 +142,18 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 8: Finanzas del negocio
 
-- [ ] Cuentas y asientos balanceados.
-- [ ] Ingresos, gastos y obligaciones.
-- [ ] Pagos parciales.
-- [ ] Flujo de caja y rentabilidad separados.
-- [ ] Conciliación de costos.
-- [ ] Cierre mensual.
+- [x] Cuentas y asientos balanceados.
+- [x] Ingresos, gastos y obligaciones.
+- [x] Pagos parciales.
+- [x] Flujo de caja y rentabilidad separados.
+- [x] Conciliación de costos.
+- [x] Cierre mensual.
 - [ ] Verificación funcional y commit.
+- Evidencia de esquema y catálogos: commit `bf0d322`; categorías con cuenta contable, ingresos y gastos separados, ámbitos y vinculación opcional al fondo de costos.
+- Evidencia operativa: commit `d62ef2f`; documentos pagados, parciales o pendientes, cartera y obligaciones con terceros, abonos posteriores y trazabilidad por cuenta, categoría, persona y mes.
+- El tablero financiero deriva el flujo únicamente de pagos confirmados y la rentabilidad de cuentas de ingreso, costo y gasto; las transferencias internas no inflan ninguno de los dos valores.
+- Evidencia de cierre: commit `88920cb`; variación por electricidad, gas y mano de obra, reclasificación del costo aplicado al inventario, bloqueo por producciones pendientes y reapertura con asiento inverso.
+- Evidencia de prueba básica: commit `4b85f87`; un flujo integral cubre ingreso, servicios, mano de obra parcialmente pagada y conciliación mensual.
 
 ## Entrega 9: Hogar
 
