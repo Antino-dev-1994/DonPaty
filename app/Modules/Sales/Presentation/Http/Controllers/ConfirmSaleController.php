@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Sales\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller;use App\Modules\Identity\Domain\Models\AuthorizationRequest;use App\Modules\Sales\Application\ConfirmSale;use App\Modules\Sales\Domain\Models\Sale;use App\Modules\Sales\Presentation\Http\Requests\ConfirmSaleRequest;use Illuminate\Http\RedirectResponse;
+class ConfirmSaleController extends Controller {public function __invoke(ConfirmSaleRequest $request,Sale $sale,ConfirmSale $action):RedirectResponse{$d=$request->validated();$find=fn($key)=>isset($d[$key])?AuthorizationRequest::findOrFail($d[$key]):null;$action->execute($sale,$request->user(),$find('price_authorization_id'),$find('inventory_authorization_id'),$find('credit_authorization_id'));return back()->with('success','Venta confirmada, inventario y finanzas actualizados.');}}

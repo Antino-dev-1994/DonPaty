@@ -15,6 +15,7 @@ use App\Modules\Purchasing\PurchasingServiceProvider;
 use App\Modules\Production\ProductionServiceProvider;
 use App\Modules\Pricing\PricingServiceProvider;
 use App\Modules\Recipes\RecipesServiceProvider;
+use App\Modules\Sales\SalesServiceProvider;
 use App\Providers\AppServiceProvider;
 use App\Providers\FortifyServiceProvider;
 
@@ -36,4 +37,5 @@ return [
     ProductionServiceProvider::class,
     PricingServiceProvider::class,
     RecipesServiceProvider::class,
+    SalesServiceProvider::class,
 ];

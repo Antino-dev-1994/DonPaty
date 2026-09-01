@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Sales\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller;use App\Modules\Finance\Domain\Models\FinancialAccount;use App\Modules\Sales\Domain\Models\Receivable;use Illuminate\Http\Request;use Inertia\Inertia;use Inertia\Response;
+class CreateReceivablePaymentController extends Controller {public function __invoke(Request $request,Receivable $receivable):Response{abort_unless($request->user()->hasPermission('receivables.manage'),403);$receivable->load('person:id,name');return Inertia::render('receivables/Pay',['receivable'=>[...$receivable->only(['id','document_number','balance_amount']),'customer'=>$receivable->person->name],'accounts'=>FinancialAccount::query()->where('accepts_payments',true)->where('is_active',true)->get(['id','name']),'now'=>now()->format('Y-m-d\TH:i')]);}}

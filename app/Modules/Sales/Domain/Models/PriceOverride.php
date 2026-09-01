@@ -1,0 +1,5 @@
+<?php
+namespace App\Modules\Sales\Domain\Models;
+use App\Models\User;use App\Modules\Catalog\Domain\Models\ProductPresentation;use App\Modules\Identity\Domain\Models\AuthorizationRequest;use Illuminate\Database\Eloquent\Attributes\Fillable;use Illuminate\Database\Eloquent\Concerns\HasUlids;use Illuminate\Database\Eloquent\Model;use Illuminate\Database\Eloquent\Relations\BelongsTo;
+#[Fillable(['sale_line_id','presentation_id','requested_price','minimum_price','reason','requested_by','authorization_request_id'])]
+class PriceOverride extends Model {use HasUlids;public function saleLine():BelongsTo{return $this->belongsTo(SaleLine::class);}public function presentation():BelongsTo{return $this->belongsTo(ProductPresentation::class);}public function requester():BelongsTo{return $this->belongsTo(User::class,'requested_by');}public function authorization():BelongsTo{return $this->belongsTo(AuthorizationRequest::class,'authorization_request_id');}protected function casts():array{return ['requested_price'=>'integer','minimum_price'=>'integer'];}}

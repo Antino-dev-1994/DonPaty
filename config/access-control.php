@@ -31,7 +31,9 @@ return [
         'orders.view' => ['Pedidos', 'Consultar pedidos'],
         'orders.manage' => ['Pedidos', 'Administrar pedidos'],
         'sales.create' => ['Ventas', 'Registrar ventas'],
+        'sales.return' => ['Ventas', 'Registrar devoluciones'],
         'sales.reverse' => ['Ventas', 'Revertir ventas'],
+        'sales.authorize-credit' => ['Ventas', 'Autorizar límite de crédito'],
         'prices.manage' => ['Precios', 'Administrar precios'],
         'prices.override' => ['Precios', 'Aplicar precios personalizados'],
         'prices.authorize-below-minimum' => ['Precios', 'Autorizar precio bajo el mínimo'],
@@ -67,7 +69,7 @@ return [
             'inventory.adjust', 'inventory.authorize-negative', 'packages.convert', 'recipes.view', 'recipes.manage',
             'recipes.activate-version', 'production.view', 'production.manage', 'production.complete', 'production.reverse', 'production.authorize-manual-labor',
             'cost-periods.view', 'cost-periods.manage', 'cost-periods.close', 'customers.view', 'customers.manage', 'orders.view', 'orders.manage',
-            'sales.create', 'sales.reverse', 'prices.manage', 'prices.override', 'prices.authorize-below-minimum',
+            'sales.create', 'sales.return', 'sales.reverse', 'sales.authorize-credit', 'prices.manage', 'prices.override', 'prices.authorize-below-minimum',
             'purchases.manage', 'purchases.receive', 'purchases.authorize-over-receipt', 'payables.manage', 'receivables.manage', 'cash.open',
             'cash.operate', 'cash.close', 'cash.authorize-difference', 'finance.view', 'finance.manage',
             'fund-requests.approve', 'fund-requests.pay', 'reports.view-operational', 'reports.view-financial', 'audit.view',
@@ -78,7 +80,7 @@ return [
         ]],
         'sales_cash' => ['Ventas y caja', 'Operación de clientes, pedidos, ventas y caja menor.', [
             'people.view', 'customers.view', 'customers.manage', 'catalog.view', 'inventory.view', 'packages.convert', 'orders.view', 'orders.manage',
-            'sales.create', 'prices.override', 'cash.open', 'cash.operate', 'cash.close', 'receivables.manage',
+            'sales.create', 'sales.return', 'prices.override', 'cash.open', 'cash.operate', 'cash.close', 'receivables.manage',
             'reports.view-operational', 'authorizations.request',
         ]],
         'resident' => ['Habitante', 'Acceso limitado a la información propia del hogar.', [

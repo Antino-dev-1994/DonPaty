@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Sales\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller;use App\Modules\Sales\Domain\Models\Receivable;use Illuminate\Http\Request;use Inertia\Inertia;use Inertia\Response;
+class ListReceivablesController extends Controller {public function __invoke(Request $request):Response{abort_unless($request->user()->hasPermission('receivables.manage')||$request->user()->hasPermission('finance.view'),403);return Inertia::render('receivables/Index',['receivables'=>Receivable::query()->with('person:id,name')->whereIn('status',['pending','partial'])->orderBy('due_at')->paginate(25)->through(fn($r)=>[...$r->only(['id','document_number','original_amount','paid_amount','balance_amount']),'customer'=>$r->person->name,'issued_at'=>$r->issued_at->format('Y-m-d'),'due_at'=>$r->due_at?->format('Y-m-d'),'status'=>$r->status->value]),'canManage'=>$request->user()->hasPermission('receivables.manage')]);}}

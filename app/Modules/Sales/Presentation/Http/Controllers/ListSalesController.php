@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Sales\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller;use App\Modules\Sales\Domain\Models\Sale;use Illuminate\Http\Request;use Inertia\Inertia;use Inertia\Response;
+class ListSalesController extends Controller {public function __invoke(Request $request):Response{abort_unless($request->user()->hasPermission('sales.create')||$request->user()->hasPermission('finance.view'),403);return Inertia::render('sales/Index',['sales'=>Sale::query()->with('customer:id,name')->latest('sold_at')->paginate(25)->through(fn($s)=>[...$s->only(['id','document_number','total','paid_amount','balance_amount','gross_profit']),'customer'=>$s->customer?->name??'Consumidor final','sold_at'=>$s->sold_at->format('Y-m-d H:i'),'status'=>$s->status->value,'status_label'=>$s->status->label()]),'canCreate'=>$request->user()->hasPermission('sales.create')]);}}

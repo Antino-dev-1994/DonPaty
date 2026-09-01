@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { BadgeDollarSign, Boxes, Calculator, CircleDollarSign, ClipboardCheck, CookingPot, Factory, LayoutDashboard, PackageOpen, ScrollText, ShieldCheck, ShoppingBag, ShoppingCart, UserRoundCheck, UsersRound } from '@lucide/vue';
+import { BadgeDollarSign, Boxes, Calculator, CircleDollarSign, ClipboardCheck, CookingPot, Factory, LayoutDashboard, PackageOpen, ReceiptText, ScrollText, ShieldCheck, ShoppingBag, ShoppingCart, UserRoundCheck, UsersRound } from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -41,6 +41,8 @@ const mainNavItems = computed<NavItem[]>(() => [
     ...(hasPermission('orders.view') ? [{ title: 'Demanda pendiente', href: '/orders/demand', icon: ClipboardCheck }] : []),
     ...(hasPermission('prices.manage') ? [{ title: 'Precios', href: '/pricing', icon: BadgeDollarSign }] : []),
     ...(hasPermission('cash.operate') || hasPermission('cash.open') ? [{ title: 'Caja', href: '/cash', icon: CircleDollarSign }] : []),
+    ...(hasPermission('sales.create') || hasPermission('finance.view') ? [{ title: 'Ventas', href: '/sales', icon: ReceiptText }] : []),
+    ...(hasPermission('receivables.manage') || hasPermission('finance.view') ? [{ title: 'Cuentas por cobrar', href: '/receivables', icon: BadgeDollarSign }] : []),
 ]);
 </script>
 

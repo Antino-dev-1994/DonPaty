@@ -27,5 +27,21 @@ class FinanceReferenceSeeder extends Seeder
             'name' => 'Anticipos de clientes', 'account_type' => FinancialAccountType::Liability,
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
         ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '1305-CXC'], [
+            'name' => 'Cuentas por cobrar a clientes', 'account_type' => FinancialAccountType::Asset,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '1435-INVENTARIO'], [
+            'name' => 'Inventario de productos', 'account_type' => FinancialAccountType::Asset,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '4135-VENTAS'], [
+            'name' => 'Ingresos por ventas', 'account_type' => FinancialAccountType::Income,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '6135-COSTO-VENTAS'], [
+            'name' => 'Costo de ventas', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
     }
 }
