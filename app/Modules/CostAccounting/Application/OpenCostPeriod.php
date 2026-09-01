@@ -5,6 +5,7 @@ namespace App\Modules\CostAccounting\Application;
 use App\Modules\Audit\Application\RecordAuditEvent;
 use App\Modules\CostAccounting\Application\Data\OpenCostPeriodData;
 use App\Modules\CostAccounting\Domain\Enums\CostPeriodStatus;
+use App\Modules\CostAccounting\Domain\Enums\CostType;
 use App\Modules\CostAccounting\Domain\Enums\UtilityType;
 use App\Modules\CostAccounting\Domain\Models\CostPeriod;
 use App\Modules\CostAccounting\Domain\Services\OverheadRateCalculator;
@@ -38,7 +39,7 @@ class OpenCostPeriod
                 $record=$period->utilities()->create(['utility_type'=>$utility->type,'billed_from'=>$utility->billedFrom,'billed_to'=>$utility->billedTo,'paid_at'=>$utility->paidAt,'total_amount'=>$utility->totalAmount,'business_percentage'=>$utility->businessPercentage,'household_percentage'=>$utility->householdPercentage,'business_amount'=>$businessAmount,'household_amount'=>$householdAmount,'physical_consumption'=>$utility->physicalConsumption,'physical_consumption_unit'=>$utility->type->consumptionUnit(),'reference'=>$utility->reference]);
                 $rate=$this->rateCalculator->calculate($businessAmount,$base,$utility->manualRate,$utility->overrideReason);
                 $period->rates()->create(['cost_type'=>$utility->type,'suggested_rate'=>$rate['suggested'],'manual_rate'=>$rate['manual'],'effective_rate'=>$rate['effective'],'calculation_base_quantity'=>$base,'method'=>$rate['method'],'override_reason'=>$utility->overrideReason,'set_by'=>$data->opener->id]);
-                $period->poolEntries()->create(['cost_type'=>$utility->type,'amount'=>$businessAmount,'source_type'=>$record->getMorphClass(),'source_id'=>$record->id,'effective_at'=>$utility->paidAt]);
+                $period->poolEntries()->create(['cost_type'=>CostType::from($utility->type->value),'amount'=>$businessAmount,'source_type'=>$record->getMorphClass(),'source_id'=>$record->id,'effective_at'=>$utility->paidAt]);
             }
             $this->audit->execute('costs.period_opened',$period,$data->opener,after:$period->load(['utilities','rates'])->toArray());
             return $period->fresh(['utilities','rates','poolEntries']);

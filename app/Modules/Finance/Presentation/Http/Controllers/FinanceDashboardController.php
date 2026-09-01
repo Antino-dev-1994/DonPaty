@@ -76,7 +76,12 @@ class FinanceDashboardController extends Controller
                 'receivables' => (int) Receivable::query()->whereIn('status', ['pending', 'partial'])->sum('balance_amount'),
                 'payables' => (int) Payable::query()->whereIn('status', ['pending', 'partial'])->sum('balance_amount'),
             ],
-            'accounts' => $accounts->map(fn ($account) => [...$account->only(['id', 'code', 'name', 'account_type']), 'balance' => $balances->execute($account->id)]),
+            'accounts' => $accounts->map(function ($account) use ($balances): array {
+                $rawBalance = $balances->execute($account->id);
+                $creditNature = in_array($account->account_type, [FinancialAccountType::Liability, FinancialAccountType::Equity, FinancialAccountType::Revenue], true);
+
+                return [...$account->only(['id', 'code', 'name']), 'account_type' => $account->account_type->value, 'balance' => $creditNature ? -$rawBalance : $rawBalance];
+            }),
             'categories' => FinancialCategory::query()->where('scope', FinancialScope::Business)->where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'people' => Person::query()->where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'filters' => $request->only(['account_id', 'category_id', 'person_id']),
