@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         app(EnsureAccessControlCatalog::class)->execute();
         $this->call(CatalogReferenceSeeder::class);
         $this->call(FinanceReferenceSeeder::class);
+        $this->call(PricingReferenceSeeder::class);
 
         if (app()->environment(['local', 'testing'])) {
             $this->call(DevelopmentOwnerSeeder::class);

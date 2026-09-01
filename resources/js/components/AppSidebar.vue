@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Boxes, Calculator, ClipboardCheck, CookingPot, Factory, LayoutDashboard, PackageOpen, ScrollText, ShieldCheck, ShoppingCart, UsersRound } from '@lucide/vue';
+import { BadgeDollarSign, Boxes, Calculator, ClipboardCheck, CookingPot, Factory, LayoutDashboard, PackageOpen, ScrollText, ShieldCheck, ShoppingCart, UserRoundCheck, UsersRound } from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -26,6 +26,7 @@ const mainNavItems = computed<NavItem[]>(() => [
         icon: LayoutDashboard,
     },
     ...(hasPermission('people.view') ? [{ title: 'Personas', href: '/people', icon: UsersRound }] : []),
+    ...(hasPermission('customers.view') ? [{ title: 'Clientes', href: '/customers', icon: UserRoundCheck }] : []),
     ...(hasPermission('users.manage') ? [{ title: 'Usuarios', href: '/users', icon: ShieldCheck }] : []),
     ...(hasPermission('roles.manage') ? [{ title: 'Roles y permisos', href: '/roles', icon: ShieldCheck }] : []),
     ...(hasPermission('authorizations.approve') || hasPermission('authorizations.request') ? [{ title: 'Autorizaciones', href: '/authorizations', icon: ClipboardCheck }] : []),
@@ -36,6 +37,7 @@ const mainNavItems = computed<NavItem[]>(() => [
     ...(hasPermission('recipes.view') ? [{ title: 'Recetas', href: '/recipes', icon: CookingPot }] : []),
     ...(hasPermission('cost-periods.view') ? [{ title: 'Periodos de costos', href: '/cost-periods', icon: Calculator }] : []),
     ...(hasPermission('production.view') ? [{ title: 'Producción', href: '/production', icon: Factory }] : []),
+    ...(hasPermission('prices.manage') ? [{ title: 'Precios', href: '/pricing', icon: BadgeDollarSign }] : []),
 ]);
 </script>
 

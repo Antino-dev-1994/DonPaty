@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use App\Modules\Customers\Domain\Models\CustomerProfile;
 
 #[Fillable(['name', 'document_type', 'document_number', 'email', 'phone', 'notes', 'is_active'])]
 class Person extends Model
@@ -30,6 +31,11 @@ class Person extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
+    }
+
+    public function customerProfile(): HasOne
+    {
+        return $this->hasOne(CustomerProfile::class);
     }
 
     protected function casts(): array
