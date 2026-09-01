@@ -4,6 +4,7 @@ namespace App\Modules\Purchasing\Application;
 
 use App\Modules\Audit\Application\RecordAuditEvent;
 use App\Modules\Catalog\Domain\Models\ProductPresentation;
+use App\Modules\Finance\Application\CreatePayableForPurchase;
 use App\Modules\Purchasing\Application\Data\PurchaseData;
 use App\Modules\Purchasing\Domain\Enums\PurchaseDocumentStatus;
 use App\Modules\Purchasing\Domain\Enums\PurchasePaymentStatus;
@@ -19,6 +20,7 @@ class CreatePurchase
 {
     public function __construct(
         private readonly AdditionalCostAllocator $costAllocator,
+        private readonly CreatePayableForPurchase $createPayable,
         private readonly NextDocumentNumber $nextDocumentNumber,
         private readonly RecordAuditEvent $audit,
     ) {}
@@ -51,7 +53,7 @@ class CreatePurchase
                 'status' => PurchaseDocumentStatus::Confirmed, 'receipt_status' => PurchaseReceiptStatus::Pending,
                 'payment_status' => PurchasePaymentStatus::Pending, 'subtotal' => $subtotal,
                 'additional_costs' => $data->additionalCosts, 'total' => $total,
-                'paid_amount' => 0, 'balance_amount' => $total, 'notes' => $data->notes, 'created_by' => $data->creator->id,
+                'paid_amount' => 0, 'returned_amount' => 0, 'balance_amount' => $total, 'notes' => $data->notes, 'created_by' => $data->creator->id,
             ]);
             foreach ($data->lines as $index => $line) {
                 $purchase->lines()->create([
@@ -60,6 +62,7 @@ class CreatePurchase
                     'allocated_additional_cost' => $allocations[$index], 'line_total' => $lineTotals[$index],
                 ]);
             }
+            $this->createPayable->execute($purchase);
             $this->audit->execute('purchasing.purchase_created', $purchase, $data->creator, after: $purchase->load('lines')->toArray());
 
             return $purchase;

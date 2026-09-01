@@ -17,16 +17,17 @@ class AdditionalCostAllocator
         }
 
         $subtotal = array_sum($lineTotals);
-        $remaining = $amount;
-        $lastIndex = array_key_last($lineTotals);
+        $exact = array_map(fn (int $lineTotal): float => $amount * ($lineTotal / $subtotal), $lineTotals);
+        $allocated = array_map(fn (float $value): int => (int) floor($value), $exact);
+        $remaining = $amount - array_sum($allocated);
+        $indexes = array_keys($lineTotals);
+        usort($indexes, fn (int $left, int $right): int => ($exact[$right] - $allocated[$right]) <=> ($exact[$left] - $allocated[$left]));
+        for ($position = 0; $position < $remaining; $position++) {
+            $allocated[$indexes[$position % count($indexes)]]++;
+        }
 
-        return array_map(function (int $lineTotal, int $index) use ($amount, $subtotal, &$remaining, $lastIndex): int {
-            $allocated = $index === $lastIndex
-                ? $remaining
-                : (int) round($amount * ($lineTotal / $subtotal));
-            $remaining -= $allocated;
+        ksort($allocated);
 
-            return $allocated;
-        }, $lineTotals, array_keys($lineTotals));
+        return array_values($allocated);
     }
 }

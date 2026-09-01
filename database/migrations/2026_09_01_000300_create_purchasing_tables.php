@@ -34,6 +34,7 @@ return new class extends Migration
             $table->unsignedBigInteger('additional_costs')->default(0);
             $table->unsignedBigInteger('total');
             $table->unsignedBigInteger('paid_amount')->default(0);
+            $table->unsignedBigInteger('returned_amount')->default(0);
             $table->unsignedBigInteger('balance_amount');
             $table->text('notes')->nullable();
             $table->foreignId('created_by')->constrained('users')->restrictOnDelete();

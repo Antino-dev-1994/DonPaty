@@ -13,8 +13,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use App\Modules\Finance\Domain\Models\Payable;
 
-#[Fillable(['document_number', 'supplier_person_id', 'supplier_document_number', 'issued_at', 'due_at', 'payment_condition', 'status', 'receipt_status', 'payment_status', 'subtotal', 'additional_costs', 'total', 'paid_amount', 'balance_amount', 'notes', 'created_by', 'reversal_of_id'])]
+#[Fillable(['document_number', 'supplier_person_id', 'supplier_document_number', 'issued_at', 'due_at', 'payment_condition', 'status', 'receipt_status', 'payment_status', 'subtotal', 'additional_costs', 'total', 'paid_amount', 'returned_amount', 'balance_amount', 'notes', 'created_by', 'reversal_of_id'])]
 class Purchase extends Model
 {
     use HasUlids;
@@ -44,6 +46,11 @@ class Purchase extends Model
         return $this->hasMany(PurchaseReturn::class);
     }
 
+    public function payable(): MorphOne
+    {
+        return $this->morphOne(Payable::class, 'source');
+    }
+
     protected function casts(): array
     {
         return [
@@ -53,7 +60,7 @@ class Purchase extends Model
             'receipt_status' => PurchaseReceiptStatus::class,
             'payment_status' => PurchasePaymentStatus::class,
             'subtotal' => 'integer', 'additional_costs' => 'integer', 'total' => 'integer',
-            'paid_amount' => 'integer', 'balance_amount' => 'integer',
+            'paid_amount' => 'integer', 'returned_amount' => 'integer', 'balance_amount' => 'integer',
         ];
     }
 }
