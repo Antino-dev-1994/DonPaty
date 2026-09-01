@@ -74,8 +74,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [ ] Verificación funcional y commit.
 - Evidencia de proveedores y compras base: commit `37abfc8`; perfiles enlazados a personas, condiciones comerciales, compras confirmadas, líneas y distribución proporcional de costos adicionales.
 - Evidencia de recepciones: commit `6280623`; recepciones parciales confirmadas, control de cantidades, autorización para excedentes, entradas de inventario y costo promedio con transporte distribuido.
-- Implementada la base financiera reutilizable: cuentas, obligaciones, pagos, aplicaciones y asientos de partida doble. Cada compra genera una cuenta por pagar y admite abonos parciales sin duplicar su costo.
-- Implementadas devoluciones básicas con documento independiente, salida de inventario, trazabilidad por línea y nota crédito aplicada al saldo sin alterar el valor original de la compra.
+- Evidencia financiera y devoluciones: commit `d21abec`; cuentas, obligaciones, pagos, aplicaciones y asientos de partida doble. Cada compra genera una cuenta por pagar y admite abonos parciales sin duplicar su costo.
+- El mismo bloque incluye devoluciones básicas con documento independiente, salida de inventario, trazabilidad por línea y nota crédito aplicada al saldo sin alterar el valor original de la compra.
 
 ## Entrega 4: Recetas y periodos de costos
 
