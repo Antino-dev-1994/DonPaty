@@ -38,6 +38,7 @@ const mainNavItems = computed<NavItem[]>(() => [
     ...(hasPermission('cost-periods.view') ? [{ title: 'Periodos de costos', href: '/cost-periods', icon: Calculator }] : []),
     ...(hasPermission('production.view') ? [{ title: 'Producción', href: '/production', icon: Factory }] : []),
     ...(hasPermission('orders.view') ? [{ title: 'Pedidos', href: '/orders', icon: ShoppingBag }] : []),
+    ...(hasPermission('orders.view') ? [{ title: 'Demanda pendiente', href: '/orders/demand', icon: ClipboardCheck }] : []),
     ...(hasPermission('prices.manage') ? [{ title: 'Precios', href: '/pricing', icon: BadgeDollarSign }] : []),
 ]);
 </script>

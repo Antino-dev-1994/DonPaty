@@ -16,6 +16,7 @@ use App\Modules\Production\Domain\Enums\ProductionStatus;
 use App\Modules\Production\Domain\Models\ProductionConsumption;
 use App\Modules\Production\Domain\Models\ProductionOrder;
 use App\Modules\Production\Domain\Services\IntegerCostAllocator;
+use App\Modules\Orders\Application\FulfillProductionDemand;
 use App\Modules\Recipes\Domain\Models\RecipeCompatibleProduct;
 use DomainException;
 use Illuminate\Support\Collection;
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\DB;
 
 class CompleteProduction
 {
-    public function __construct(private readonly UnitConverter $converter, private readonly PostInventoryMovement $postMovement, private readonly CalculateProductionLabor $labor, private readonly IntegerCostAllocator $allocator, private readonly RecordAuditEvent $audit) {}
+    public function __construct(private readonly UnitConverter $converter, private readonly PostInventoryMovement $postMovement, private readonly CalculateProductionLabor $labor, private readonly IntegerCostAllocator $allocator, private readonly FulfillProductionDemand $fulfillDemand, private readonly RecordAuditEvent $audit) {}
 
     public function execute(ProductionOrder $order, CompleteProductionData $data): ProductionOrder
     {
@@ -59,6 +60,7 @@ class CompleteProduction
                 lines: $outputLines, source: $order, notes: "Productos obtenidos en {$order->document_number}",
             ));
             foreach ($outputRecords as $record) $order->outputs()->create($record);
+            $this->fulfillDemand->execute($order);
             $order->costPeriod->increment('processed_flour_quantity', (float) $order->flour_quantity);
             $order->update(['status' => ProductionStatus::Completed, 'completed_at' => $data->completedAt, 'actual_dough_quantity' => $data->actualDoughQuantityKg, 'waste_quantity' => $data->wasteQuantityKg, 'consumption_movement_id' => $consumptionMovement->id, 'output_movement_id' => $outputMovement->id, 'ingredient_cost' => $ingredientCost, 'labor_cost' => $laborCost, 'overhead_cost' => $overheadCost, 'total_cost' => $totalCost]);
             if (bccomp($data->actualDoughQuantityKg, $order->expected_dough_quantity, 3) !== 0) $order->incidents()->create(['incident_type' => 'yield_difference', 'description' => 'La masa real difiere del rendimiento esperado.', 'quantity' => bcsub($data->actualDoughQuantityKg, $order->expected_dough_quantity, 6), 'recorded_by' => $data->actor->id, 'recorded_at' => $data->completedAt]);

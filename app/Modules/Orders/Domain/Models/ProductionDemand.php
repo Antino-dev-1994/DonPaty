@@ -1,0 +1,5 @@
+<?php
+namespace App\Modules\Orders\Domain\Models;
+use App\Modules\Orders\Domain\Enums\ProductionDemandStatus;use App\Modules\Recipes\Domain\Models\RecipeCompatibleProduct;use App\Modules\Recipes\Domain\Models\RecipeVersion;use Illuminate\Database\Eloquent\Attributes\Fillable;use Illuminate\Database\Eloquent\Concerns\HasUlids;use Illuminate\Database\Eloquent\Model;use Illuminate\Database\Eloquent\Relations\BelongsTo;
+#[Fillable(['sales_order_line_id','recipe_version_id','recipe_compatible_product_id','pending_quantity','pending_dough_quantity','suggested_flour_quantity','status'])]
+class ProductionDemand extends Model {use HasUlids;public function orderLine():BelongsTo{return $this->belongsTo(SalesOrderLine::class,'sales_order_line_id');}public function recipeVersion():BelongsTo{return $this->belongsTo(RecipeVersion::class);}public function compatibleProduct():BelongsTo{return $this->belongsTo(RecipeCompatibleProduct::class,'recipe_compatible_product_id');}protected function casts():array{return ['pending_quantity'=>'decimal:6','pending_dough_quantity'=>'decimal:6','suggested_flour_quantity'=>'decimal:6','status'=>ProductionDemandStatus::class];}}

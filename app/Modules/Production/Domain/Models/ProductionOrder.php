@@ -30,6 +30,7 @@ class ProductionOrder extends Model
     public function incidents(): HasMany { return $this->hasMany(ProductionIncident::class); }
     public function laborEntries(): HasMany { return $this->hasMany(ProductionLaborEntry::class); }
     public function overheadAllocations(): HasMany { return $this->hasMany(ProductionOverheadAllocation::class); }
+    public function orderAllocations(): HasMany { return $this->hasMany(ProductionOrderAllocation::class); }
     public function consumptionMovement(): BelongsTo { return $this->belongsTo(InventoryMovement::class, 'consumption_movement_id'); }
     public function outputMovement(): BelongsTo { return $this->belongsTo(InventoryMovement::class, 'output_movement_id'); }
     public function negativeStockAuthorization(): BelongsTo { return $this->belongsTo(AuthorizationRequest::class, 'negative_stock_authorization_id'); }

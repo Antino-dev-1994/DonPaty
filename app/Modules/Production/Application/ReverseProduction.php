@@ -11,12 +11,14 @@ use App\Modules\Production\Domain\Enums\ProductionStatus;
 use App\Modules\Production\Domain\Models\ProductionOrder;
 use DomainException;
 use Illuminate\Support\Facades\DB;
+use App\Modules\Orders\Application\ReopenProductionDemand;
 
 class ReverseProduction
 {
     public function __construct(
         private readonly ReverseInventoryMovement $reverseMovement,
         private readonly ProductionAuthorizationGuard $authorizationGuard,
+        private readonly ReopenProductionDemand $reopenDemand,
         private readonly RecordAuditEvent $audit,
     ) {}
 
@@ -27,6 +29,7 @@ class ReverseProduction
             $order = ProductionOrder::query()->with(['outputMovement', 'consumptionMovement', 'costPeriod'])->lockForUpdate()->findOrFail($order->id);
             if ($order->status !== ProductionStatus::Completed) throw new DomainException('Solo se puede revertir una producción completada.');
             if ($authorization) $this->authorizationGuard->ensureUsableFor($authorization, $order, 'inventory.authorize-negative');
+            $this->reopenDemand->execute($order, $actor);
             $this->reverseMovement->execute($order->outputMovement, $actor, "Reversión de productos: {$reason}", $authorization);
             $this->reverseMovement->execute($order->consumptionMovement, $actor, "Reintegro de ingredientes: {$reason}");
             $newProcessed = max(0, (float) $order->costPeriod->processed_flour_quantity - (float) $order->flour_quantity);

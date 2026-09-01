@@ -48,7 +48,7 @@ const modules = [
     },
 ];
 
-defineProps<{ costPeriodAlert: { message: string; canManage: boolean } | null }>();
+defineProps<{ costPeriodAlert: { message: string; canManage: boolean } | null; upcomingOrders: { id: string; document_number: string; customer: string; due_at: string; is_overdue: boolean; status: string }[] }>();
 </script>
 
 <template>
@@ -58,6 +58,10 @@ defineProps<{ costPeriodAlert: { message: string; canManage: boolean } | null }>
         <section v-if="costPeriodAlert" class="flex flex-col justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950 sm:flex-row sm:items-center dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100">
             <p>{{ costPeriodAlert.message }}</p>
             <Link v-if="costPeriodAlert.canManage" href="/cost-periods/create" class="shrink-0 font-semibold underline">Abrir periodo</Link>
+        </section>
+        <section v-if="upcomingOrders.length" class="rounded-xl border bg-card p-4">
+            <div class="flex items-center justify-between"><div><h2 class="font-semibold">Pedidos próximos o atrasados</h2><p class="text-xs text-muted-foreground">Entregas dentro de las próximas 24 horas.</p></div><Link href="/orders?view=upcoming" class="text-sm font-medium text-amber-700 underline">Ver pedidos</Link></div>
+            <div class="mt-3 divide-y"><Link v-for="order in upcomingOrders" :key="order.id" :href="`/orders/${order.id}`" class="flex justify-between gap-3 py-2 text-sm"><span><strong>{{ order.document_number }}</strong> · {{ order.customer }}<small class="block text-muted-foreground">{{ order.status }}</small></span><span :class="order.is_overdue ? 'font-semibold text-destructive' : ''">{{ order.due_at }}<small v-if="order.is_overdue" class="block">Atrasado</small></span></Link></div>
         </section>
         <section
             class="overflow-hidden rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-orange-50 to-white p-6 dark:border-amber-900/50 dark:from-amber-950/40 dark:via-orange-950/20 dark:to-background"
