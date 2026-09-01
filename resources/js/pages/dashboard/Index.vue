@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import {
     CircleDollarSign,
     ClipboardList,
@@ -47,12 +47,18 @@ const modules = [
         icon: House,
     },
 ];
+
+defineProps<{ costPeriodAlert: { message: string; canManage: boolean } | null }>();
 </script>
 
 <template>
     <Head title="Panel principal" />
 
     <main class="flex flex-1 flex-col gap-6 p-4 md:p-6">
+        <section v-if="costPeriodAlert" class="flex flex-col justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950 sm:flex-row sm:items-center dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100">
+            <p>{{ costPeriodAlert.message }}</p>
+            <Link v-if="costPeriodAlert.canManage" href="/cost-periods/create" class="shrink-0 font-semibold underline">Abrir periodo</Link>
+        </section>
         <section
             class="overflow-hidden rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-orange-50 to-white p-6 dark:border-amber-900/50 dark:from-amber-950/40 dark:via-orange-950/20 dark:to-background"
         >

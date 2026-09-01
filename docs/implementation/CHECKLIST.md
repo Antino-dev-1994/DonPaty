@@ -82,11 +82,13 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Recetas de masa base.
 - [x] Versiones e ingredientes.
 - [x] Productos compatibles y rendimientos.
-- [ ] Periodos mensuales.
-- [ ] Gas, electricidad y distribución hogar/negocio.
-- [ ] Tarifas sugeridas y manuales.
+- [x] Periodos mensuales.
+- [x] Gas, electricidad y distribución hogar/negocio.
+- [x] Tarifas sugeridas y manuales.
 - [ ] Verificación funcional y commit.
 - Implementado el bloque de recetas: borradores completos, ingredientes y porcentajes panaderos, productos compatibles, rendimientos, clonación histórica, rangos de vigencia y previsualización de escalado decimal.
+- Implementado el bloque de costos: apertura mensual, facturas previas de gas y electricidad, reparto exacto hogar/negocio, fondos productivos, tarifa sugerida por harina histórica, tarifa manual justificada y alerta de periodo faltante en el tablero.
+- Se agregaron dos pruebas funcionales básicas para cubrir historial/escalado de recetas y el paso de tarifa inicial manual a tarifa sugerida.
 
 ## Entrega 5: Producción
 

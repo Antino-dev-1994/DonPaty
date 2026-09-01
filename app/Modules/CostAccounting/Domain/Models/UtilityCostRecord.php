@@ -1,0 +1,5 @@
+<?php
+namespace App\Modules\CostAccounting\Domain\Models;
+use App\Modules\CostAccounting\Domain\Enums\UtilityType; use Illuminate\Database\Eloquent\Attributes\Fillable; use Illuminate\Database\Eloquent\Concerns\HasUlids; use Illuminate\Database\Eloquent\Model; use Illuminate\Database\Eloquent\Relations\BelongsTo;
+#[Fillable(['cost_period_id','utility_type','billed_from','billed_to','paid_at','total_amount','business_percentage','household_percentage','business_amount','household_amount','physical_consumption','physical_consumption_unit','reference'])]
+class UtilityCostRecord extends Model { use HasUlids; public function period():BelongsTo{return $this->belongsTo(CostPeriod::class,'cost_period_id');} protected function casts():array{return ['utility_type'=>UtilityType::class,'billed_from'=>'date','billed_to'=>'date','paid_at'=>'date','total_amount'=>'integer','business_percentage'=>'decimal:4','household_percentage'=>'decimal:4','business_amount'=>'integer','household_amount'=>'integer','physical_consumption'=>'decimal:6'];} }

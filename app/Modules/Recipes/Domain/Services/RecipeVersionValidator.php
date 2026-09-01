@@ -18,6 +18,7 @@ class RecipeVersionValidator
     public function validate(RecipeVersionData $data): void
     {
         if (bccomp($data->referenceFlourQuantity, '0', 6) <= 0 || bccomp($data->expectedDoughYield, '0', 6) <= 0) throw new DomainException('La harina de referencia y el rendimiento deben ser positivos.');
+        if (bccomp($data->expectedWastePercentage, '0', 4) < 0 || bccomp($data->expectedWastePercentage, '100', 4) > 0) throw new DomainException('La merma esperada debe estar entre 0 % y 100 %.');
         $referenceUnit = Unit::query()->findOrFail($data->referenceFlourUnitId); $yieldUnit = Unit::query()->findOrFail($data->yieldUnitId);
         if ($referenceUnit->dimension->value !== 'mass' || $yieldUnit->dimension->value !== 'mass') throw new DomainException('Harina y rendimiento deben expresarse en unidades de masa.');
         $flours = array_values(array_filter($data->ingredients, fn ($line) => $line->role === IngredientRole::Flour));
@@ -27,6 +28,11 @@ class RecipeVersionValidator
             $item = Item::query()->where('is_active', true)->findOrFail($ingredient->itemId); $unit = Unit::query()->findOrFail($ingredient->unitId);
             if (bccomp($ingredient->quantity, '0', 6) <= 0) throw new DomainException('Las cantidades de ingredientes deben ser positivas.');
             if ($ingredient->presentationId && ! ProductPresentation::query()->where('item_id', $item->id)->where('id', $ingredient->presentationId)->exists()) throw new DomainException('La presentación del ingrediente no pertenece al artículo.');
+            if ($ingredient->bakerPercentage !== null && $unit->dimension->value === 'mass') {
+                $quantityInReferenceUnit = $this->converter->convert($ingredient->quantity, $unit, $referenceUnit);
+                $calculatedPercentage = bcmul(bcdiv($quantityInReferenceUnit, $data->referenceFlourQuantity, 8), '100', 4);
+                if (abs((float) $calculatedPercentage - (float) $ingredient->bakerPercentage) > 0.01) throw new DomainException('El porcentaje panadero no coincide con la cantidad del ingrediente.');
+            }
             if ($ingredient->role === IngredientRole::Flour) {
                 if ($unit->dimension->value !== 'mass' || bccomp((string) $ingredient->bakerPercentage, '100', 4) !== 0) throw new DomainException('La harina debe ser masa y tener 100 % panadero.');
                 $referenceInIngredientUnit = $this->converter->convert($data->referenceFlourQuantity, $referenceUnit, $unit);
@@ -40,6 +46,7 @@ class RecipeVersionValidator
             $unit = Unit::query()->findOrFail($product->doughWeightUnitId);
             if ($presentation->item->type !== ItemType::FinishedProduct || $unit->dimension->value !== 'mass') throw new DomainException('Los productos compatibles deben ser productos terminados y usar peso de masa.');
             if (bccomp($product->doughWeightPerUnit, '0', 6) <= 0 || bccomp($product->costWeightFactor, '0', 6) <= 0) throw new DomainException('El peso de masa y el factor de costo deben ser positivos.');
+            if (bccomp($product->bakingLossPercentage, '0', 4) < 0 || bccomp($product->bakingLossPercentage, '100', 4) > 0) throw new DomainException('La pérdida de horneado debe estar entre 0 % y 100 %.');
         }
     }
 }

@@ -1,0 +1,5 @@
+<?php
+namespace App\Modules\CostAccounting\Domain\Models;
+use App\Models\User; use App\Modules\CostAccounting\Domain\Enums\OverheadRateMethod; use App\Modules\CostAccounting\Domain\Enums\UtilityType; use Illuminate\Database\Eloquent\Attributes\Fillable; use Illuminate\Database\Eloquent\Concerns\HasUlids; use Illuminate\Database\Eloquent\Model; use Illuminate\Database\Eloquent\Relations\BelongsTo;
+#[Fillable(['cost_period_id','cost_type','suggested_rate','manual_rate','effective_rate','calculation_base_quantity','method','override_reason','set_by'])]
+class OverheadRate extends Model { use HasUlids; public function period():BelongsTo{return $this->belongsTo(CostPeriod::class,'cost_period_id');} public function setter():BelongsTo{return $this->belongsTo(User::class,'set_by');} protected function casts():array{return ['cost_type'=>UtilityType::class,'suggested_rate'=>'integer','manual_rate'=>'integer','effective_rate'=>'integer','calculation_base_quantity'=>'decimal:6','method'=>OverheadRateMethod::class];} }

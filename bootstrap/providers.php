@@ -3,6 +3,7 @@
 use App\Modules\Dashboard\DashboardServiceProvider;
 use App\Modules\Audit\AuditServiceProvider;
 use App\Modules\Catalog\CatalogServiceProvider;
+use App\Modules\CostAccounting\CostAccountingServiceProvider;
 use App\Modules\Identity\IdentityServiceProvider;
 use App\Modules\Inventory\InventoryServiceProvider;
 use App\Modules\Finance\FinanceServiceProvider;
@@ -18,6 +19,7 @@ return [
     IdentityServiceProvider::class,
     AuditServiceProvider::class,
     CatalogServiceProvider::class,
+    CostAccountingServiceProvider::class,
     InventoryServiceProvider::class,
     FinanceServiceProvider::class,
     DashboardServiceProvider::class,
