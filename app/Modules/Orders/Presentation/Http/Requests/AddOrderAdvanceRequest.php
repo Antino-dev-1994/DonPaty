@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Orders\Presentation\Http\Requests;
+use Illuminate\Foundation\Http\FormRequest;
+class AddOrderAdvanceRequest extends FormRequest {public function authorize():bool{return $this->user()->hasPermission('orders.manage');}public function rules():array{return ['amount'=>['required','integer','gt:0'],'financial_account_id'=>['required','ulid','exists:financial_accounts,id'],'paid_at'=>['required','date'],'reference'=>['nullable','string','max:255']];}}

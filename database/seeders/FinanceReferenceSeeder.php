@@ -19,5 +19,9 @@ class FinanceReferenceSeeder extends Seeder
             'name' => 'Cuentas por pagar a proveedores', 'account_type' => FinancialAccountType::Liability,
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
         ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '2805-ANTICIPOS'], [
+            'name' => 'Anticipos de clientes', 'account_type' => FinancialAccountType::Liability,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
     }
 }
