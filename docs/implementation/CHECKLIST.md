@@ -109,13 +109,18 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 6: Clientes, precios y pedidos
 
-- [ ] Clientes.
-- [ ] Listas y reglas de precios.
-- [ ] Pedidos, anticipos y reservas.
-- [ ] Recordatorio de 24 horas.
-- [ ] Demanda pendiente y producción sugerida.
-- [ ] Vinculación pedido-producción.
+- [x] Clientes.
+- [x] Listas y reglas de precios.
+- [x] Pedidos, anticipos y reservas.
+- [x] Recordatorio de 24 horas.
+- [x] Demanda pendiente y producción sugerida.
+- [x] Vinculación pedido-producción.
 - [ ] Verificación funcional y commit.
+- Evidencia de clientes y precios: commit `769e76b`; perfiles comerciales sin duplicar datos personales, lista predeterminada por cliente, minorista inicial, mayorista, promocional, vigencias, precios mínimos y precios configurables por presentación.
+- Evidencia de pedidos: commit `6794c94`; borradores editables, precio original y acordado, autorización bajo mínimo, fechas y prioridad, historial, anticipos con asiento contable, reservas parciales y liberación controlada.
+- Evidencia de demanda y producción: commit `f826eaf`; recordatorio de próximas 24 horas en el tablero, faltante convertido a masa y harina, consolidación de varios pedidos por versión de receta y asignaciones entre pedidos y producciones.
+- Completar una producción vinculada reserva sus resultados para cada pedido; revertirla libera esas reservas y reabre la demanda de forma atómica.
+- Se agregaron dos pruebas funcionales básicas: reserva con anticipo, y dos pedidos consolidados en una producción con cumplimiento y reversión.
 
 ## Entrega 7: Ventas, cartera y caja
 
