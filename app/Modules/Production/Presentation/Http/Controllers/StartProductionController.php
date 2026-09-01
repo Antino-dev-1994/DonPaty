@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Production\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller; use App\Modules\Identity\Domain\Models\AuthorizationRequest; use App\Modules\Production\Application\StartProduction; use App\Modules\Production\Domain\Models\ProductionOrder; use App\Modules\Production\Presentation\Http\Requests\StartProductionRequest; use Illuminate\Http\RedirectResponse;
+class StartProductionController extends Controller { public function __invoke(StartProductionRequest $request,ProductionOrder $production,StartProduction $action):RedirectResponse { $id=$request->validated('authorization_request_id');$authorization=$id?AuthorizationRequest::query()->findOrFail($id):null;$action->execute($production,$request->user(),$authorization);return back()->with('success','Producción iniciada.'); } }

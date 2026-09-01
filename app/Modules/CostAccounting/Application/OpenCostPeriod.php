@@ -30,7 +30,7 @@ class OpenCostPeriod
             if(CostPeriod::query()->where('year',$data->year)->where('month',$data->month)->exists()) throw new DomainException('Ya existe un periodo para este mes.');
             $periodStart=Carbon::create($data->year,$data->month,1)->startOfDay(); $previousDate=$periodStart->copy()->subMonth();
             $previous=CostPeriod::query()->where('year',$previousDate->year)->where('month',$previousDate->month)->first(); $base=$previous?->processed_flour_quantity??'0';
-            $period=CostPeriod::create(['year'=>$data->year,'month'=>$data->month,'status'=>CostPeriodStatus::Open,'processed_flour_quantity'=>0,'opened_at'=>now(),'opened_by'=>$data->opener->id]);
+            $period=CostPeriod::create(['year'=>$data->year,'month'=>$data->month,'status'=>CostPeriodStatus::Open,'processed_flour_quantity'=>0,'standard_labor_rate_per_kg'=>$data->standardLaborRatePerKg,'labor_rate_reason'=>$data->laborRateReason,'opened_at'=>now(),'opened_by'=>$data->opener->id]);
             foreach($data->utilities as $utility){
                 if($utility->billedFrom->gt($utility->billedTo)||$utility->billedTo->gte($periodStart)) throw new DomainException('La factura debe corresponder a un intervalo anterior al periodo que se abre.');
                 if(bccomp(bcadd($utility->businessPercentage,$utility->householdPercentage,4),'100',4)!==0) throw new DomainException('Los porcentajes de negocio y hogar deben sumar 100 %.');

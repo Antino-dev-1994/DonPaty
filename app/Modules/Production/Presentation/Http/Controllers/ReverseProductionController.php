@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Production\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller; use App\Modules\Identity\Domain\Models\AuthorizationRequest; use App\Modules\Production\Application\ReverseProduction; use App\Modules\Production\Domain\Models\ProductionOrder; use App\Modules\Production\Presentation\Http\Requests\ReverseProductionRequest; use Illuminate\Http\RedirectResponse;
+class ReverseProductionController extends Controller { public function __invoke(ReverseProductionRequest $request,ProductionOrder $production,ReverseProduction $action):RedirectResponse { $data=$request->validated();$id=$data['authorization_request_id']??null;$action->execute($production,$request->user(),$data['reason'],$id?AuthorizationRequest::query()->findOrFail($id):null);return back()->with('success','Producción revertida correctamente.'); } }

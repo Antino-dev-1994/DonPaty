@@ -1,0 +1,5 @@
+<?php
+namespace App\Modules\Production\Domain\Models;
+use App\Modules\Catalog\Domain\Models\ProductPresentation; use App\Modules\Recipes\Domain\Models\RecipeCompatibleProduct; use Illuminate\Database\Eloquent\Attributes\Fillable; use Illuminate\Database\Eloquent\Concerns\HasUlids; use Illuminate\Database\Eloquent\Model; use Illuminate\Database\Eloquent\Relations\BelongsTo;
+#[Fillable(['production_order_id','recipe_compatible_product_id','presentation_id','quantity','dough_quantity','waste_quantity','allocated_cost','unit_cost'])]
+class ProductionOutput extends Model { use HasUlids; public function order():BelongsTo{return $this->belongsTo(ProductionOrder::class,'production_order_id');} public function compatibleProduct():BelongsTo{return $this->belongsTo(RecipeCompatibleProduct::class);} public function presentation():BelongsTo{return $this->belongsTo(ProductPresentation::class);} protected function casts():array{return ['quantity'=>'decimal:6','dough_quantity'=>'decimal:6','waste_quantity'=>'decimal:6','allocated_cost'=>'integer','unit_cost'=>'integer'];} }

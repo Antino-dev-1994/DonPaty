@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Boxes, Calculator, ClipboardCheck, CookingPot, LayoutDashboard, PackageOpen, ScrollText, ShieldCheck, ShoppingCart, UsersRound } from '@lucide/vue';
+import { Boxes, Calculator, ClipboardCheck, CookingPot, Factory, LayoutDashboard, PackageOpen, ScrollText, ShieldCheck, ShoppingCart, UsersRound } from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -35,6 +35,7 @@ const mainNavItems = computed<NavItem[]>(() => [
     ...(hasPermission('purchases.manage') || hasPermission('purchases.receive') ? [{ title: 'Compras', href: '/purchasing/purchases', icon: ShoppingCart }] : []),
     ...(hasPermission('recipes.view') ? [{ title: 'Recetas', href: '/recipes', icon: CookingPot }] : []),
     ...(hasPermission('cost-periods.view') ? [{ title: 'Periodos de costos', href: '/cost-periods', icon: Calculator }] : []),
+    ...(hasPermission('production.view') ? [{ title: 'Producción', href: '/production', icon: Factory }] : []),
 ]);
 </script>
 

@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Production\Presentation\Http\Requests;
+use App\Modules\Production\Domain\Enums\LaborMethod; use Illuminate\Foundation\Http\FormRequest; use Illuminate\Validation\Rule;
+class StoreProductionRequest extends FormRequest { public function authorize():bool{return $this->user()->hasPermission('production.manage');} public function rules():array{return ['recipe_version_id'=>['required','ulid','exists:recipe_versions,id'],'planned_for'=>['required','date'],'flour_quantity'=>['required','numeric','gt:0','decimal:0,6'],'labor_method'=>['required',Rule::enum(LaborMethod::class)],'responsible_person_id'=>['required','ulid','exists:people,id'],'outputs'=>['required','array','min:1'],'outputs.*.compatible_product_id'=>['required','ulid','distinct','exists:recipe_compatible_products,id'],'outputs.*.quantity'=>['required','numeric','gt:0','decimal:0,6']];} }

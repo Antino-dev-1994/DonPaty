@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Production\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller; use App\Modules\Production\Application\RecordProductionIncident; use App\Modules\Production\Domain\Models\ProductionOrder; use App\Modules\Production\Presentation\Http\Requests\StoreProductionIncidentRequest; use Illuminate\Http\RedirectResponse;
+class StoreProductionIncidentController extends Controller { public function __invoke(StoreProductionIncidentRequest $request,ProductionOrder $production,RecordProductionIncident $action):RedirectResponse { $data=$request->validated();$action->execute($production,$data['incident_type'],$data['description'],$request->user(),isset($data['quantity'])?(string)$data['quantity']:null,isset($data['amount'])?(int)$data['amount']:null);return back()->with('success','Novedad registrada.'); } }

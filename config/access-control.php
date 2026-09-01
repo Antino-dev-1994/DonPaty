@@ -21,6 +21,7 @@ return [
         'production.manage' => ['Producción', 'Administrar producción'],
         'production.complete' => ['Producción', 'Completar producción'],
         'production.reverse' => ['Producción', 'Revertir producción'],
+        'production.authorize-manual-labor' => ['Producción', 'Autorizar mano de obra manual'],
         'cost-periods.view' => ['Costos', 'Consultar periodos de costos'],
         'cost-periods.manage' => ['Costos', 'Administrar periodos de costos'],
         'cost-periods.close' => ['Costos', 'Cerrar periodos de costos'],
@@ -62,7 +63,7 @@ return [
         'administrator' => ['Administrador', 'Administración operativa sin privilegios exclusivos del propietario.', [
             'people.view', 'people.manage', 'users.manage', 'authorizations.approve', 'catalog.view', 'catalog.manage', 'inventory.view',
             'inventory.adjust', 'inventory.authorize-negative', 'packages.convert', 'recipes.view', 'recipes.manage',
-            'recipes.activate-version', 'production.view', 'production.manage', 'production.complete', 'production.reverse',
+            'recipes.activate-version', 'production.view', 'production.manage', 'production.complete', 'production.reverse', 'production.authorize-manual-labor',
             'cost-periods.view', 'cost-periods.manage', 'cost-periods.close', 'orders.view', 'orders.manage',
             'sales.create', 'sales.reverse', 'prices.manage', 'prices.override', 'prices.authorize-below-minimum',
             'purchases.manage', 'purchases.receive', 'purchases.authorize-over-receipt', 'payables.manage', 'receivables.manage', 'cash.open',

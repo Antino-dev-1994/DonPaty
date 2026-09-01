@@ -9,6 +9,7 @@ use App\Modules\Inventory\InventoryServiceProvider;
 use App\Modules\Finance\FinanceServiceProvider;
 use App\Modules\People\PeopleServiceProvider;
 use App\Modules\Purchasing\PurchasingServiceProvider;
+use App\Modules\Production\ProductionServiceProvider;
 use App\Modules\Recipes\RecipesServiceProvider;
 use App\Providers\AppServiceProvider;
 use App\Providers\FortifyServiceProvider;
@@ -25,5 +26,6 @@ return [
     DashboardServiceProvider::class,
     PeopleServiceProvider::class,
     PurchasingServiceProvider::class,
+    ProductionServiceProvider::class,
     RecipesServiceProvider::class,
 ];

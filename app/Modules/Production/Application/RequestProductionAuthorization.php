@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\Production\Application;
+use App\Models\User; use App\Modules\Identity\Application\CreateAuthorizationRequest; use App\Modules\Identity\Domain\Models\AuthorizationRequest; use App\Modules\Production\Domain\Models\ProductionOrder; use DomainException;
+class RequestProductionAuthorization { public function __construct(private readonly CreateAuthorizationRequest $create){} public function execute(ProductionOrder $order,string $type,string $reason,User $requester):AuthorizationRequest { [$operation,$permission]=match($type){'negative_stock'=>['production.ingredient-shortage','inventory.authorize-negative'],'manual_labor'=>['production.manual-labor','production.authorize-manual-labor'],default=>throw new DomainException('Tipo de autorización no válido.')}; return $this->create->execute($operation,$permission,$order,$requester,$reason); } }

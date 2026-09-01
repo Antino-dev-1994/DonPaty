@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Modules\Production\Presentation\Http\Controllers;
+
+use App\Http\Controllers\Controller; use App\Modules\Catalog\Domain\Models\Unit; use App\Modules\Catalog\Domain\Services\UnitConverter; use App\Modules\CostAccounting\Domain\Enums\CostPeriodStatus; use App\Modules\CostAccounting\Domain\Models\CostPeriod; use App\Modules\People\Domain\Models\Person; use App\Modules\Production\Domain\Enums\LaborMethod; use App\Modules\Recipes\Domain\Enums\RecipeVersionStatus; use App\Modules\Recipes\Domain\Models\RecipeVersion; use Illuminate\Http\Request; use Inertia\Inertia; use Inertia\Response;
+class CreateProductionController extends Controller
+{
+    public function __invoke(Request $request,UnitConverter $converter):Response
+    {
+        abort_unless($request->user()->hasPermission('production.manage'),403); $kg=Unit::query()->where('code','kg')->sole();
+        $versions=RecipeVersion::query()->with(['recipe:id,name','referenceFlourUnit','yieldUnit','compatibleProducts.presentation.item:id,name','compatibleProducts.doughWeightUnit'])->where('status',RecipeVersionStatus::Published)->orderByDesc('effective_from')->get()->map(function(RecipeVersion $version)use($converter,$kg):array{$referenceKg=$converter->convert($version->reference_flour_quantity,$version->referenceFlourUnit,$kg);$yieldKg=$converter->convert($version->expected_dough_yield,$version->yieldUnit,$kg);return ['id'=>$version->id,'label'=>"{$version->recipe->name} · v{$version->version_number}",'effective_from'=>$version->effective_from?->toDateString(),'effective_to'=>$version->effective_to?->toDateString(),'yield_per_flour_kg'=>bcdiv($yieldKg,$referenceKg,6),'products'=>$version->compatibleProducts->map(fn($product)=>['id'=>$product->id,'name'=>"{$product->presentation->item->name} — {$product->presentation->name}",'dough_weight_kg'=>$converter->convert($product->dough_weight_per_unit,$product->doughWeightUnit,$kg)])];});
+        return Inertia::render('production/Create',['versions'=>$versions,'people'=>Person::query()->where('is_active',true)->orderBy('name')->get(['id','name']),'laborMethods'=>collect(LaborMethod::cases())->map(fn($method)=>['value'=>$method->value,'label'=>$method->label()]),'periods'=>CostPeriod::query()->where('status',CostPeriodStatus::Open)->orderByDesc('year')->orderByDesc('month')->get()->map(fn(CostPeriod $period)=>['id'=>$period->id,'year'=>$period->year,'month'=>$period->month,'labor_rate'=>$period->standard_labor_rate_per_kg]),'now'=>now()->format('Y-m-d\TH:i')]);
+    }
+}
