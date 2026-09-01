@@ -36,7 +36,27 @@ class FinanceReferenceSeeder extends Seeder
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
         ]);
         FinancialAccount::query()->updateOrCreate(['code' => '4135-VENTAS'], [
-            'name' => 'Ingresos por ventas', 'account_type' => FinancialAccountType::Income,
+            'name' => 'Ingresos por ventas', 'account_type' => FinancialAccountType::Revenue,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '4210-OTROS-INGRESOS'], [
+            'name' => 'Otros ingresos del negocio', 'account_type' => FinancialAccountType::Revenue,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5105-MANO-OBRA'], [
+            'name' => 'Gasto real de mano de obra', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5135-ELECTRICIDAD'], [
+            'name' => 'Electricidad del negocio', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5135-GAS'], [
+            'name' => 'Gas del negocio', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5195-OTROS-GASTOS'], [
+            'name' => 'Otros gastos del negocio', 'account_type' => FinancialAccountType::Expense,
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
         ]);
         FinancialAccount::query()->updateOrCreate(['code' => '6135-COSTO-VENTAS'], [
