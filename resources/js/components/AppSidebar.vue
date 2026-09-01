@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Boxes, ClipboardCheck, LayoutDashboard, PackageOpen, ScrollText, ShieldCheck, ShoppingCart, UsersRound } from '@lucide/vue';
+import { Boxes, ClipboardCheck, CookingPot, LayoutDashboard, PackageOpen, ScrollText, ShieldCheck, ShoppingCart, UsersRound } from '@lucide/vue';
 import { computed } from 'vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -33,6 +33,7 @@ const mainNavItems = computed<NavItem[]>(() => [
     ...(hasPermission('catalog.view') ? [{ title: 'Catálogo', href: '/catalog/items', icon: Boxes }] : []),
     ...(hasPermission('inventory.view') ? [{ title: 'Inventario', href: '/inventory', icon: PackageOpen }] : []),
     ...(hasPermission('purchases.manage') || hasPermission('purchases.receive') ? [{ title: 'Compras', href: '/purchasing/purchases', icon: ShoppingCart }] : []),
+    ...(hasPermission('recipes.view') ? [{ title: 'Recetas', href: '/recipes', icon: CookingPot }] : []),
 ]);
 </script>
 

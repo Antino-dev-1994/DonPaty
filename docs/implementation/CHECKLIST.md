@@ -79,13 +79,14 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 4: Recetas y periodos de costos
 
-- [ ] Recetas de masa base.
-- [ ] Versiones e ingredientes.
-- [ ] Productos compatibles y rendimientos.
+- [x] Recetas de masa base.
+- [x] Versiones e ingredientes.
+- [x] Productos compatibles y rendimientos.
 - [ ] Periodos mensuales.
 - [ ] Gas, electricidad y distribución hogar/negocio.
 - [ ] Tarifas sugeridas y manuales.
 - [ ] Verificación funcional y commit.
+- Implementado el bloque de recetas: borradores completos, ingredientes y porcentajes panaderos, productos compatibles, rendimientos, clonación histórica, rangos de vigencia y previsualización de escalado decimal.
 
 ## Entrega 5: Producción
 
