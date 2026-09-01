@@ -1,3 +1,22 @@
 <?php
-use App\Modules\CostAccounting\Presentation\Http\Controllers\CreateCostPeriodController; use App\Modules\CostAccounting\Presentation\Http\Controllers\EditLaborRateController; use App\Modules\CostAccounting\Presentation\Http\Controllers\ListCostPeriodsController; use App\Modules\CostAccounting\Presentation\Http\Controllers\ShowCostPeriodController; use App\Modules\CostAccounting\Presentation\Http\Controllers\StoreCostPeriodController; use App\Modules\CostAccounting\Presentation\Http\Controllers\UpdateLaborRateController; use Illuminate\Support\Facades\Route;
-Route::middleware(['web','auth','verified'])->prefix('cost-periods')->name('cost-periods.')->group(function():void{Route::get('/',ListCostPeriodsController::class)->name('index');Route::get('/create',CreateCostPeriodController::class)->name('create');Route::post('/',StoreCostPeriodController::class)->name('store');Route::get('/{costPeriod}',ShowCostPeriodController::class)->name('show');Route::get('/{costPeriod}/labor-rate/edit',EditLaborRateController::class)->name('labor-rate.edit');Route::put('/{costPeriod}/labor-rate',UpdateLaborRateController::class)->name('labor-rate.update');});
+
+use App\Modules\CostAccounting\Presentation\Http\Controllers\CloseCostPeriodController;
+use App\Modules\CostAccounting\Presentation\Http\Controllers\CreateCostPeriodController;
+use App\Modules\CostAccounting\Presentation\Http\Controllers\EditLaborRateController;
+use App\Modules\CostAccounting\Presentation\Http\Controllers\ListCostPeriodsController;
+use App\Modules\CostAccounting\Presentation\Http\Controllers\ReopenCostPeriodController;
+use App\Modules\CostAccounting\Presentation\Http\Controllers\ShowCostPeriodController;
+use App\Modules\CostAccounting\Presentation\Http\Controllers\StoreCostPeriodController;
+use App\Modules\CostAccounting\Presentation\Http\Controllers\UpdateLaborRateController;
+use Illuminate\Support\Facades\Route;
+
+Route::middleware(['web', 'auth', 'verified'])->prefix('cost-periods')->name('cost-periods.')->group(function (): void {
+    Route::get('/', ListCostPeriodsController::class)->name('index');
+    Route::get('/create', CreateCostPeriodController::class)->name('create');
+    Route::post('/', StoreCostPeriodController::class)->name('store');
+    Route::get('/{costPeriod}', ShowCostPeriodController::class)->name('show');
+    Route::get('/{costPeriod}/labor-rate/edit', EditLaborRateController::class)->name('labor-rate.edit');
+    Route::put('/{costPeriod}/labor-rate', UpdateLaborRateController::class)->name('labor-rate.update');
+    Route::post('/{costPeriod}/close', CloseCostPeriodController::class)->name('close');
+    Route::post('/{costPeriod}/reopen', ReopenCostPeriodController::class)->name('reopen');
+});
