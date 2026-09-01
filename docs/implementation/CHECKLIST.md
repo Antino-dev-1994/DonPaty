@@ -101,10 +101,11 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Distribución entre productos.
 - [x] Costos y movimientos atómicos.
 - [x] Reversión controlada.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia de producción: commit `053aacf`; planeación por versión exacta y kilogramos de harina, disponibilidad, inicio autorizado ante faltantes, consumos reales, novedades, masa, merma y múltiples productos compatibles.
 - El mismo bloque calcula mano de obra por tarifa estándar, horas reales o valor manual autorizado; distribuye costos enteros, publica entradas y salidas de inventario de forma atómica y permite reversión controlada.
 - Se agregaron dos pruebas funcionales básicas: ciclo completo con dos productos y reversión, y bloqueo de inicio cuando existen faltantes sin autorización.
+- Verificación final informada por el usuario el 1 de septiembre de 2026: las dos pruebas básicas de producción y la compilación del frontend con Node 24.5.0 aprobaron correctamente.
 
 ## Entrega 6: Clientes, precios y pedidos
 
