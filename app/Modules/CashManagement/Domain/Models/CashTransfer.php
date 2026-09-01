@@ -1,0 +1,5 @@
+<?php
+namespace App\Modules\CashManagement\Domain\Models;
+use App\Models\User;use App\Modules\Finance\Domain\Enums\FinancialDocumentStatus;use App\Modules\Finance\Domain\Models\FinancialAccount;use App\Modules\Finance\Domain\Models\JournalEntry;use Illuminate\Database\Eloquent\Attributes\Fillable;use Illuminate\Database\Eloquent\Concerns\HasUlids;use Illuminate\Database\Eloquent\Model;use Illuminate\Database\Eloquent\Relations\BelongsTo;
+#[Fillable(['document_number','from_account_id','to_account_id','amount','transferred_at','reason','created_by','status','journal_entry_id'])]
+class CashTransfer extends Model {use HasUlids;public function fromAccount():BelongsTo{return $this->belongsTo(FinancialAccount::class,'from_account_id');}public function toAccount():BelongsTo{return $this->belongsTo(FinancialAccount::class,'to_account_id');}public function creator():BelongsTo{return $this->belongsTo(User::class,'created_by');}public function journalEntry():BelongsTo{return $this->belongsTo(JournalEntry::class);}protected function casts():array{return ['amount'=>'integer','transferred_at'=>'datetime','status'=>FinancialDocumentStatus::class];}}

@@ -15,6 +15,10 @@ class FinanceReferenceSeeder extends Seeder
             'name' => 'Caja principal', 'account_type' => FinancialAccountType::Asset,
             'scope' => FinancialScope::Business, 'accepts_payments' => true, 'is_active' => true,
         ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '1105-CAJA-MENOR'], [
+            'name' => 'Caja menor', 'account_type' => FinancialAccountType::Asset,
+            'scope' => FinancialScope::Business, 'accepts_payments' => true, 'is_active' => true,
+        ]);
         FinancialAccount::query()->updateOrCreate(['code' => '2110-CXP'], [
             'name' => 'Cuentas por pagar a proveedores', 'account_type' => FinancialAccountType::Liability,
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,

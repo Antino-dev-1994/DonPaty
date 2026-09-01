@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\CashManagement\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller;use App\Modules\CashManagement\Application\CloseCashSession;use App\Modules\CashManagement\Domain\Models\CashSession;use App\Modules\CashManagement\Presentation\Http\Requests\CloseCashSessionRequest;use App\Modules\Identity\Domain\Models\AuthorizationRequest;use Illuminate\Http\RedirectResponse;
+class CloseCashSessionController extends Controller {public function __invoke(CloseCashSessionRequest $request,CashSession $session,CloseCashSession $action):RedirectResponse{$d=$request->validated();$auth=isset($d['authorization_request_id'])?AuthorizationRequest::findOrFail($d['authorization_request_id']):null;$action->execute($session,(int)$d['counted_amount'],$d['difference_reason']??'',$request->user(),$auth);return back()->with('success','Caja cerrada correctamente.');}}

@@ -1,0 +1,4 @@
+<?php
+namespace App\Modules\CashManagement\Presentation\Http\Controllers;
+use App\Http\Controllers\Controller;use App\Modules\CashManagement\Domain\Models\CashSession;use App\Modules\Identity\Application\CreateAuthorizationRequest;use Illuminate\Http\RedirectResponse;use Illuminate\Http\Request;
+class RequestCashDifferenceAuthorizationController extends Controller {public function __invoke(Request $request,CashSession $session,CreateAuthorizationRequest $action):RedirectResponse{abort_unless($request->user()->hasPermission('authorizations.request'),403);$d=$request->validate(['reason'=>['required','string','max:2000']]);$action->execute('cash.close-difference','cash.authorize-difference',$session,$request->user(),$d['reason']);return back()->with('success','Autorización de diferencia solicitada.');}}
