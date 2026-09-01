@@ -66,12 +66,13 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 3: Proveedores y compras
 
-- [ ] Proveedores.
+- [x] Proveedores.
 - [ ] Compras y recepciones parciales.
 - [ ] Entradas y costo promedio.
 - [ ] Cuentas por pagar y pagos parciales.
 - [ ] Devoluciones básicas.
 - [ ] Verificación funcional y commit.
+- Implementado el primer bloque: perfiles de proveedor enlazados a personas, condiciones comerciales, registro de compras confirmadas, líneas y distribución proporcional de costos adicionales. Recepciones y obligaciones continúan pendientes.
 
 ## Entrega 4: Recetas y periodos de costos
 

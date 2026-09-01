@@ -1,0 +1,2 @@
+<script setup lang="ts">import { Head } from '@inertiajs/vue3'; import SupplierForm from '@/components/purchasing/SupplierForm.vue';</script>
+<template><Head title="Nuevo proveedor" /><main class="flex flex-1 flex-col gap-5 p-4 md:p-6"><header><h1 class="text-2xl font-semibold">Nuevo proveedor</h1><p class="text-sm text-muted-foreground">Registra sus datos personales y comerciales.</p></header><section class="max-w-4xl rounded-xl border bg-card p-5"><SupplierForm submit-url="/purchasing/suppliers" method="post" /></section></main></template>

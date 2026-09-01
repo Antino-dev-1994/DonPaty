@@ -8,6 +8,7 @@ enum PersonClassificationType: string
     case Resident = 'resident';
     case Employee = 'employee';
     case Customer = 'customer';
+    case Supplier = 'supplier';
     case Other = 'other';
 
     public function label(): string
@@ -17,6 +18,7 @@ enum PersonClassificationType: string
             self::Resident => 'Habitante',
             self::Employee => 'Empleado',
             self::Customer => 'Cliente',
+            self::Supplier => 'Proveedor',
             self::Other => 'Otra',
         };
     }

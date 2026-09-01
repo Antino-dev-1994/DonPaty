@@ -6,6 +6,7 @@ use App\Modules\Catalog\CatalogServiceProvider;
 use App\Modules\Identity\IdentityServiceProvider;
 use App\Modules\Inventory\InventoryServiceProvider;
 use App\Modules\People\PeopleServiceProvider;
+use App\Modules\Purchasing\PurchasingServiceProvider;
 use App\Providers\AppServiceProvider;
 use App\Providers\FortifyServiceProvider;
 
@@ -18,4 +19,5 @@ return [
     InventoryServiceProvider::class,
     DashboardServiceProvider::class,
     PeopleServiceProvider::class,
+    PurchasingServiceProvider::class,
 ];
