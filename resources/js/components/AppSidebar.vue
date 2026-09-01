@@ -43,6 +43,7 @@ const mainNavItems = computed<NavItem[]>(() => [
     ...(hasPermission('cash.operate') || hasPermission('cash.open') ? [{ title: 'Caja', href: '/cash', icon: CircleDollarSign }] : []),
     ...(hasPermission('sales.create') || hasPermission('finance.view') ? [{ title: 'Ventas', href: '/sales', icon: ReceiptText }] : []),
     ...(hasPermission('receivables.manage') || hasPermission('finance.view') ? [{ title: 'Cuentas por cobrar', href: '/receivables', icon: BadgeDollarSign }] : []),
+    ...(hasPermission('finance.view') ? [{ title: 'Finanzas', href: '/finance', icon: CircleDollarSign }] : []),
 ]);
 </script>
 

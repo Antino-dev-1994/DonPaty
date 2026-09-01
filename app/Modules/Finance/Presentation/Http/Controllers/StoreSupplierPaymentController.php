@@ -15,11 +15,14 @@ class StoreSupplierPaymentController extends Controller
     public function __invoke(StoreSupplierPaymentRequest $request, Payable $payable, PaySupplierPayable $action): RedirectResponse
     {
         $validated = $request->validated();
+        $isPurchase = $payable->source instanceof \App\Modules\Purchasing\Domain\Models\Purchase;
         $action->execute($payable, new SupplierPaymentData(
             amount: (int) $validated['amount'], financialAccountId: $validated['financial_account_id'],
             paidAt: Carbon::parse($validated['paid_at']), creator: $request->user(), reference: $validated['reference'] ?? null,
         ));
 
-        return to_route('purchasing.purchases.show', $payable->source_id)->with('success', 'Pago aplicado correctamente.');
+        return $isPurchase
+            ? to_route('purchasing.purchases.show', $payable->source_id)->with('success', 'Pago aplicado correctamente.')
+            : to_route('finance.index')->with('success', 'Pago aplicado correctamente.');
     }
 }
