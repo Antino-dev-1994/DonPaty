@@ -115,12 +115,13 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Recordatorio de 24 horas.
 - [x] Demanda pendiente y producción sugerida.
 - [x] Vinculación pedido-producción.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia de clientes y precios: commit `769e76b`; perfiles comerciales sin duplicar datos personales, lista predeterminada por cliente, minorista inicial, mayorista, promocional, vigencias, precios mínimos y precios configurables por presentación.
 - Evidencia de pedidos: commit `6794c94`; borradores editables, precio original y acordado, autorización bajo mínimo, fechas y prioridad, historial, anticipos con asiento contable, reservas parciales y liberación controlada.
 - Evidencia de demanda y producción: commit `f826eaf`; recordatorio de próximas 24 horas en el tablero, faltante convertido a masa y harina, consolidación de varios pedidos por versión de receta y asignaciones entre pedidos y producciones.
 - Completar una producción vinculada reserva sus resultados para cada pedido; revertirla libera esas reservas y reabre la demanda de forma atómica.
 - Se agregaron dos pruebas funcionales básicas: reserva con anticipo, y dos pedidos consolidados en una producción con cumplimiento y reversión.
+- Verificación final informada por el usuario el 2 de septiembre de 2026: las dos pruebas de pedidos aprobaron correctamente.
 
 ## Entrega 7: Ventas, cartera y caja
 
@@ -149,13 +150,14 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Flujo de caja y rentabilidad separados.
 - [x] Conciliación de costos.
 - [x] Cierre mensual.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia de esquema y catálogos: commit `bf0d322`; categorías con cuenta contable, ingresos y gastos separados, ámbitos y vinculación opcional al fondo de costos.
 - Evidencia operativa: commit `d62ef2f`; documentos pagados, parciales o pendientes, cartera y obligaciones con terceros, abonos posteriores y trazabilidad por cuenta, categoría, persona y mes.
 - El tablero financiero deriva el flujo únicamente de pagos confirmados y la rentabilidad de cuentas de ingreso, costo y gasto; las transferencias internas no inflan ninguno de los dos valores.
 - Evidencia de cierre: commit `88920cb`; variación por electricidad, gas y mano de obra, reclasificación del costo aplicado al inventario, bloqueo por producciones pendientes y reapertura con asiento inverso.
 - Evidencia de prueba básica: commit `4b85f87`; un flujo integral cubre ingreso, servicios, mano de obra parcialmente pagada y conciliación mensual.
 - Corrección posterior a la primera verificación: commit `c0fd4bb`; precios acepta fechas mutables o inmutables y la expectativa del saldo parcial coincide con el abono registrado.
+- Verificación final informada por el usuario el 2 de septiembre de 2026: la prueba integral de movimientos, pago parcial y conciliación mensual aprobó correctamente.
 
 ## Entrega 9: Hogar
 
