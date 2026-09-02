@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CatalogReferenceSeeder::class);
         $this->call(FinanceReferenceSeeder::class);
         $this->call(BusinessFinanceReferenceSeeder::class);
+        $this->call(HouseholdFinanceReferenceSeeder::class);
         $this->call(PricingReferenceSeeder::class);
 
         if (app()->environment(['local', 'testing'])) {

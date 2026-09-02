@@ -63,5 +63,45 @@ class FinanceReferenceSeeder extends Seeder
             'name' => 'Costo de ventas', 'account_type' => FinancialAccountType::Expense,
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
         ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '3105-HOG-PATRIMONIO'], [
+            'name' => 'Patrimonio inicial del hogar', 'account_type' => FinancialAccountType::Equity,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '2105-HOG-DEUDAS'], [
+            'name' => 'Deudas del hogar', 'account_type' => FinancialAccountType::Liability,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '1355-HOG-PRESTAMOS'], [
+            'name' => 'Préstamos por cobrar', 'account_type' => FinancialAccountType::Asset,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '4215-HOG-MANO-OBRA'], [
+            'name' => 'Ingresos familiares por mano de obra', 'account_type' => FinancialAccountType::Revenue,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '4295-HOG-INTERESES'], [
+            'name' => 'Intereses recibidos', 'account_type' => FinancialAccountType::Revenue,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '4299-HOG-OTROS-INGRESOS'], [
+            'name' => 'Otros ingresos del hogar', 'account_type' => FinancialAccountType::Revenue,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5301-HOG-ALIMENTACION'], [
+            'name' => 'Alimentación del hogar', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5302-HOG-SERVICIOS'], [
+            'name' => 'Servicios del hogar', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5305-HOG-INTERESES'], [
+            'name' => 'Intereses pagados', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5399-HOG-OTROS-GASTOS'], [
+            'name' => 'Otros gastos del hogar', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Household, 'accepts_payments' => false, 'is_active' => true,
+        ]);
     }
 }
