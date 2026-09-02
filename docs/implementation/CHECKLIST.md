@@ -133,7 +133,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Caja principal y caja menor.
 - [x] Apertura, cierre y diferencias.
 - [x] Devolución básica.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia de caja: commit `0e024b0`; caja principal y menor, traslados con saldo suficiente, apertura, cierre, saldo esperado, explicación de diferencias y autorización sobre el umbral configurable.
 - Evidencia de ventas y cartera: commit `53a36a8`; venta directa o desde pedido, precios trazables, contado, crédito, múltiples pagos, aplicación de anticipos, cuentas por cobrar y abonos parciales.
 - La venta consume reservas propias del pedido, descuenta inventario y registra ingreso, costo y utilidad bruta de forma atómica.
@@ -141,6 +141,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - La devolución controla el acumulado por línea, permite decidir si el producto vuelve al inventario, aplica primero el crédito a cartera y reembolsa únicamente el excedente desde una cuenta con saldo.
 - Se agregaron dos pruebas funcionales básicas: venta en caja con desarmado, devolución y cierre; venta a crédito con abono parcial.
 - La primera verificación confirmó pedidos, finanzas y venta a crédito; el escenario de caja requirió alinear el reloj simulado del cierre con la devolución ya registrada.
+- Verificación final informada por el usuario el 2 de septiembre de 2026: el escenario corregido de caja, paquetes, devolución e inventario aprobó con 8 assertions.
 
 ## Entrega 8: Finanzas del negocio
 
