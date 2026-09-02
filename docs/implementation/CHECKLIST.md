@@ -154,6 +154,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - El tablero financiero deriva el flujo únicamente de pagos confirmados y la rentabilidad de cuentas de ingreso, costo y gasto; las transferencias internas no inflan ninguno de los dos valores.
 - Evidencia de cierre: commit `88920cb`; variación por electricidad, gas y mano de obra, reclasificación del costo aplicado al inventario, bloqueo por producciones pendientes y reapertura con asiento inverso.
 - Evidencia de prueba básica: commit `4b85f87`; un flujo integral cubre ingreso, servicios, mano de obra parcialmente pagada y conciliación mensual.
+- Corrección posterior a la primera verificación: commit `c0fd4bb`; precios acepta fechas mutables o inmutables y la expectativa del saldo parcial coincide con el abono registrado.
 
 ## Entrega 9: Hogar
 
