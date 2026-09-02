@@ -6,6 +6,8 @@ use App\Modules\Household\Presentation\Http\Controllers\ConfirmFundRequestContro
 use App\Modules\Household\Presentation\Http\Controllers\PayFundRequestController;
 use App\Modules\Household\Presentation\Http\Controllers\RejectFundRequestController;
 use App\Modules\Household\Presentation\Http\Controllers\StoreFundRequestController;
+use App\Modules\Household\Presentation\Http\Controllers\ConfirmHouseholdBudgetController;
+use App\Modules\Household\Presentation\Http\Controllers\StoreHouseholdBudgetLineController;
 use App\Modules\Household\Presentation\Http\Controllers\StoreHouseholdAccountController;
 use App\Modules\Household\Presentation\Http\Controllers\StoreHouseholdTransactionController;
 use Illuminate\Support\Facades\Route;
@@ -19,4 +21,6 @@ Route::middleware(['web', 'auth', 'verified'])->prefix('household')->name('house
     Route::post('/fund-requests/{fundRequest}/reject', RejectFundRequestController::class)->name('fund-requests.reject');
     Route::post('/fund-requests/{fundRequest}/pay', PayFundRequestController::class)->name('fund-requests.pay');
     Route::post('/fund-requests/{fundRequest}/confirm', ConfirmFundRequestController::class)->name('fund-requests.confirm');
+    Route::post('/budgets/lines', StoreHouseholdBudgetLineController::class)->name('budgets.lines.store');
+    Route::post('/budgets/{budget}/confirm', ConfirmHouseholdBudgetController::class)->name('budgets.confirm');
 });

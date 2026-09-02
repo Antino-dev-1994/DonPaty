@@ -8,6 +8,8 @@ use App\Modules\Finance\Domain\Enums\FinancialScope;
 use App\Modules\Finance\Domain\Models\FinancialAccount;
 use App\Modules\Finance\Domain\Models\FinancialCategory;
 use App\Modules\Household\Application\HouseholdVisibility;
+use App\Modules\Household\Application\HouseholdBudgetReport;
+use App\Modules\Household\Domain\Models\HouseholdBudget;
 use App\Modules\Household\Domain\Enums\HouseholdTransactionType;
 use App\Modules\Household\Domain\Models\FundRequest;
 use App\Modules\Household\Domain\Models\HouseholdTransaction;
@@ -19,7 +21,7 @@ use Inertia\Response;
 
 class HouseholdDashboardController extends Controller
 {
-    public function __invoke(Request $request, HouseholdVisibility $visibility, FinancialAccountBalance $balances): Response
+    public function __invoke(Request $request, HouseholdVisibility $visibility, FinancialAccountBalance $balances, HouseholdBudgetReport $budgetReport): Response
     {
         $month = preg_match('/^\d{4}-\d{2}$/', (string) $request->input('month'))
             ? $request->string('month')->toString()
@@ -43,6 +45,7 @@ class HouseholdDashboardController extends Controller
         $destinationAccounts = $canPayRequests
             ? FinancialAccount::query()->with('person:id,name')->where('scope', FinancialScope::Personal)->where('is_active', true)->orderBy('name')->get()
             : collect();
+        $budget = HouseholdBudget::query()->where('year', $start->year)->where('month', $start->month)->first();
 
         return Inertia::render('household/Index', [
             'month' => $month,
@@ -99,6 +102,12 @@ class HouseholdDashboardController extends Controller
                 ...$account->only(['id', 'name', 'person_id']),
                 'person' => $account->person?->name,
             ]),
+            'budget' => $budget ? [
+                'id' => $budget->id,
+                'status' => $budget->status->value,
+                'status_label' => $budget->status->value === 'confirmed' ? 'Confirmado' : 'Borrador',
+                'lines' => $budgetReport->execute($budget, $request->user()),
+            ] : null,
             'canManage' => $request->user()->hasPermission('household.manage'),
             'canViewAll' => $visibility->canViewAll($request->user()),
             'canCreateRequest' => $request->user()->hasPermission('fund-requests.create'),
