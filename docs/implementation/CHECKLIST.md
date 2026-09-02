@@ -166,7 +166,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Visibilidad propia por habitante.
 - [x] Solicitudes al hogar o negocio.
 - [x] Pago desde negocio como mano de obra.
-- [ ] Presupuestos.
+- [x] Presupuestos.
 - [ ] Deudas, préstamos y cuotas.
 - [ ] Metas de ahorro.
 - [ ] Verificación funcional y commit.
@@ -175,6 +175,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - La pantalla del hogar permite administrar cuentas y movimientos únicamente con `household.manage`; el rol habitante conserva una vista propia de solo lectura y podrá crear solicitudes de fondos en el siguiente bloque.
 - Evidencia de solicitudes: commit `c2d64d2`; creación, historial de estados, aprobación o rechazo, pago y confirmación de recepción con permisos separados.
 - El desembolso desde el hogar es una transferencia interna; desde el negocio genera un gasto pagado de mano de obra, una entrada en la cuenta personal del habitante y un aporte al fondo de costos del periodo abierto, sin duplicar conceptos.
+- Evidencia de presupuestos: commit `ccf0422`; presupuesto mensual borrador o confirmado, líneas por categoría y habitante opcional, ejecutado, disponible y porcentaje de consumo.
+- Solo los gastos marcados consumen presupuesto; las transferencias internas quedan excluidas y la visibilidad del ejecutado respeta el alcance autorizado del usuario.
 
 ## Entrega 10: Tableros y reportes
 
