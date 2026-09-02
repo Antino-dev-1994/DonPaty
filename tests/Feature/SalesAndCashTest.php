@@ -63,14 +63,16 @@ class SalesAndCashTest extends TestCase
         $this->assertSame('7.000000', InventoryBalance::query()->where('presentation_id', $context['single']->id)->sole()->physical_quantity);
         $this->assertSame(2500, $sale->cost_of_goods_sold);
 
+        $returnedAt = now()->addHour();
         app(RegisterSaleReturn::class)->execute(
             $sale,
             [new SaleReturnLineData($sale->lines->sole()->id, '2', true, 'Producto en buen estado.')],
-            now()->addHour(),
+            $returnedAt,
             'Cliente cambió la cantidad requerida.',
             $context['owner'],
             $pettyCash->id,
         );
+        Carbon::setTestNow($returnedAt->addHour());
         $closed = app(CloseCashSession::class)->execute($session, 3000, '', $context['owner']);
 
         $this->assertSame('9.000000', InventoryBalance::query()->where('presentation_id', $context['single']->id)->sole()->physical_quantity);

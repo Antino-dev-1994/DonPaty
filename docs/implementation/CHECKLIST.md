@@ -139,6 +139,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Cuando faltan unidades, el punto de venta puede desarmar automáticamente un paquete compatible del mismo producto antes de evaluar inventario negativo.
 - La devolución controla el acumulado por línea, permite decidir si el producto vuelve al inventario, aplica primero el crédito a cartera y reembolsa únicamente el excedente desde una cuenta con saldo.
 - Se agregaron dos pruebas funcionales básicas: venta en caja con desarmado, devolución y cierre; venta a crédito con abono parcial.
+- La primera verificación confirmó pedidos, finanzas y venta a crédito; el escenario de caja requirió alinear el reloj simulado del cierre con la devolución ya registrada.
 
 ## Entrega 8: Finanzas del negocio
 
