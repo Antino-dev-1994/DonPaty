@@ -164,8 +164,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 - [x] Cuentas y movimientos del hogar.
 - [x] Visibilidad propia por habitante.
-- [ ] Solicitudes al hogar o negocio.
-- [ ] Pago desde negocio como mano de obra.
+- [x] Solicitudes al hogar o negocio.
+- [x] Pago desde negocio como mano de obra.
 - [ ] Presupuestos.
 - [ ] Deudas, préstamos y cuotas.
 - [ ] Metas de ahorro.
@@ -173,6 +173,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Evidencia inicial de E9: commit `f1306f5`; cuentas compartidas o personales, saldo inicial contable, ingresos, gastos y transferencias internas sin inflar el flujo.
 - La consulta mensual y los saldos aplican una política de visibilidad reutilizable: el propietario autorizado consolida el hogar y cada habitante solo accede a sus cuentas y movimientos relacionados.
 - La pantalla del hogar permite administrar cuentas y movimientos únicamente con `household.manage`; el rol habitante conserva una vista propia de solo lectura y podrá crear solicitudes de fondos en el siguiente bloque.
+- Evidencia de solicitudes: commit `c2d64d2`; creación, historial de estados, aprobación o rechazo, pago y confirmación de recepción con permisos separados.
+- El desembolso desde el hogar es una transferencia interna; desde el negocio genera un gasto pagado de mano de obra, una entrada en la cuenta personal del habitante y un aporte al fondo de costos del periodo abierto, sin duplicar conceptos.
 
 ## Entrega 10: Tableros y reportes
 
