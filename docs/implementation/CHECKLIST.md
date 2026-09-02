@@ -179,6 +179,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Solo los gastos marcados consumen presupuesto; las transferencias internas quedan excluidas y la visibilidad del ejecutado respeta el alcance autorizado del usuario.
 - Evidencia de deudas y ahorro: commit `4e7aac6`; obligaciones por pagar, préstamos por cobrar, cronograma mensual, capital e interés separados, abonos parciales o anticipados y cierre automático de cuotas.
 - Las metas muestran objetivo, ahorrado, pendiente y porcentaje; cada aporte es un traslado contable entre cuentas con validación de saldo, sin crear ingresos o gastos ficticios.
+- Pruebas básicas preparadas en el commit `1988ebb`: un escenario de privacidad, solicitud, mano de obra y presupuesto; otro de deuda, interés y ahorro. La verificación permanece pendiente hasta ejecutar el comando indicado.
 
 ## Entrega 10: Tableros y reportes
 
