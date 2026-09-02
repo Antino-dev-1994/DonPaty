@@ -9,6 +9,7 @@ use App\Modules\Finance\Domain\Models\FinancialAccount;
 use App\Modules\Finance\Domain\Models\FinancialCategory;
 use App\Modules\Household\Application\HouseholdVisibility;
 use App\Modules\Household\Domain\Enums\HouseholdTransactionType;
+use App\Modules\Household\Domain\Models\FundRequest;
 use App\Modules\Household\Domain\Models\HouseholdTransaction;
 use App\Modules\People\Domain\Models\Person;
 use Illuminate\Http\Request;
@@ -35,6 +36,13 @@ class HouseholdDashboardController extends Controller
                 ->where('is_active', true),
             $request->user(),
         )->with('person:id,name')->orderBy('name')->get();
+        $canPayRequests = $request->user()->hasPermission('fund-requests.pay');
+        $paymentAccounts = $canPayRequests
+            ? FinancialAccount::query()->whereIn('scope', [FinancialScope::Business, FinancialScope::Household])->where('accepts_payments', true)->where('is_active', true)->orderBy('name')->get()
+            : collect();
+        $destinationAccounts = $canPayRequests
+            ? FinancialAccount::query()->with('person:id,name')->where('scope', FinancialScope::Personal)->where('is_active', true)->orderBy('name')->get()
+            : collect();
 
         return Inertia::render('household/Index', [
             'month' => $month,
@@ -67,8 +75,35 @@ class HouseholdDashboardController extends Controller
                 'type' => $category->record_type->value,
             ]),
             'people' => Person::query()->where('is_active', true)->orderBy('name')->get(['id', 'name']),
+            'fundRequests' => $visibility->fundRequests(FundRequest::query(), $request->user())
+                ->with(['requester:id,name', 'sourceAccount:id,name', 'destinationAccount:id,name'])
+                ->latest()->limit(100)->get()->map(fn (FundRequest $fundRequest) => [
+                    ...$fundRequest->only(['id', 'document_number', 'amount', 'reason']),
+                    'requester' => $fundRequest->requester->name,
+                    'requester_person_id' => $fundRequest->requester_person_id,
+                    'source_scope' => $fundRequest->source_scope->value,
+                    'source_label' => $fundRequest->source_scope === FinancialScope::Business ? 'Negocio' : 'Hogar',
+                    'needed_at' => $fundRequest->needed_at->format('Y-m-d'),
+                    'status' => $fundRequest->status->value,
+                    'status_label' => $fundRequest->status->label(),
+                    'source_account' => $fundRequest->sourceAccount?->name,
+                    'destination_account' => $fundRequest->destinationAccount?->name,
+                    'can_confirm' => $fundRequest->status->value === 'paid' && ($request->user()->person_id === $fundRequest->requester_person_id || $visibility->canViewAll($request->user())),
+                ]),
+            'paymentAccounts' => $paymentAccounts->map(fn (FinancialAccount $account) => [
+                ...$account->only(['id', 'name']),
+                'scope' => $account->scope->value,
+                'balance' => $balances->execute($account->id),
+            ]),
+            'destinationAccounts' => $destinationAccounts->map(fn (FinancialAccount $account) => [
+                ...$account->only(['id', 'name', 'person_id']),
+                'person' => $account->person?->name,
+            ]),
             'canManage' => $request->user()->hasPermission('household.manage'),
             'canViewAll' => $visibility->canViewAll($request->user()),
+            'canCreateRequest' => $request->user()->hasPermission('fund-requests.create'),
+            'canApproveRequests' => $request->user()->hasPermission('fund-requests.approve'),
+            'canPayRequests' => $canPayRequests,
             'now' => now()->format('Y-m-d\TH:i'),
         ]);
     }
