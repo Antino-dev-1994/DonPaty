@@ -162,14 +162,17 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 ## Entrega 9: Hogar
 
-- [ ] Cuentas y movimientos del hogar.
-- [ ] Visibilidad propia por habitante.
+- [x] Cuentas y movimientos del hogar.
+- [x] Visibilidad propia por habitante.
 - [ ] Solicitudes al hogar o negocio.
 - [ ] Pago desde negocio como mano de obra.
 - [ ] Presupuestos.
 - [ ] Deudas, préstamos y cuotas.
 - [ ] Metas de ahorro.
 - [ ] Verificación funcional y commit.
+- Evidencia inicial de E9: commit `f1306f5`; cuentas compartidas o personales, saldo inicial contable, ingresos, gastos y transferencias internas sin inflar el flujo.
+- La consulta mensual y los saldos aplican una política de visibilidad reutilizable: el propietario autorizado consolida el hogar y cada habitante solo accede a sus cuentas y movimientos relacionados.
+- La pantalla del hogar permite administrar cuentas y movimientos únicamente con `household.manage`; el rol habitante conserva una vista propia de solo lectura y podrá crear solicitudes de fondos en el siguiente bloque.
 
 ## Entrega 10: Tableros y reportes
 
