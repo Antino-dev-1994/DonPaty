@@ -169,7 +169,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Presupuestos.
 - [x] Deudas, préstamos y cuotas.
 - [x] Metas de ahorro.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia inicial de E9: commit `f1306f5`; cuentas compartidas o personales, saldo inicial contable, ingresos, gastos y transferencias internas sin inflar el flujo.
 - La consulta mensual y los saldos aplican una política de visibilidad reutilizable: el propietario autorizado consolida el hogar y cada habitante solo accede a sus cuentas y movimientos relacionados.
 - La pantalla del hogar permite administrar cuentas y movimientos únicamente con `household.manage`; el rol habitante conserva una vista propia de solo lectura y podrá crear solicitudes de fondos en el siguiente bloque.
@@ -180,6 +180,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Evidencia de deudas y ahorro: commit `4e7aac6`; obligaciones por pagar, préstamos por cobrar, cronograma mensual, capital e interés separados, abonos parciales o anticipados y cierre automático de cuotas.
 - Las metas muestran objetivo, ahorrado, pendiente y porcentaje; cada aporte es un traslado contable entre cuentas con validación de saldo, sin crear ingresos o gastos ficticios.
 - Pruebas básicas preparadas en el commit `1988ebb`: un escenario de privacidad, solicitud, mano de obra y presupuesto; otro de deuda, interés y ahorro. La verificación permanece pendiente hasta ejecutar el comando indicado.
+- Verificación final informada por el usuario el 2 de septiembre de 2026: las 2 pruebas de hogar aprobaron con 14 aserciones y la compilación de producción terminó correctamente.
 
 ## Entrega 10: Tableros y reportes
 
