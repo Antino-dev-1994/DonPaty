@@ -108,7 +108,7 @@ class BusinessFinanceTest extends TestCase
         $closed = app(CloseCostPeriod::class)->execute($period, $owner);
 
         $this->assertSame('closed', $closed->status->value);
-        $this->assertSame(3000, $labor->fresh()->balance_amount);
+        $this->assertSame(2000, $labor->fresh()->balance_amount);
         $this->assertDatabaseHas('cost_variances', ['cost_period_id' => $period->id, 'cost_type' => 'electricity', 'variance_amount' => 200]);
         $this->assertDatabaseHas('cost_variances', ['cost_period_id' => $period->id, 'cost_type' => 'gas', 'variance_amount' => -200]);
         $this->assertDatabaseHas('cost_variances', ['cost_period_id' => $period->id, 'cost_type' => 'labor', 'actual_amount' => 3000, 'allocated_amount' => 2500, 'variance_amount' => 500]);

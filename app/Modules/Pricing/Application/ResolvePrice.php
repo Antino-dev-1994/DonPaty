@@ -5,13 +5,13 @@ namespace App\Modules\Pricing\Application;
 use App\Modules\Customers\Domain\Models\CustomerProfile;
 use App\Modules\Pricing\Domain\Models\PriceList;
 use App\Modules\Pricing\Domain\Models\PriceListItem;
+use Carbon\CarbonInterface;
 use DomainException;
-use Illuminate\Support\Carbon;
 
 class ResolvePrice
 {
     /** @return array{price_list:PriceList,item:PriceListItem} */
-    public function execute(string $presentationId, ?CustomerProfile $customer = null, ?string $priceListId = null, ?Carbon $at = null): array
+    public function execute(string $presentationId, ?CustomerProfile $customer = null, ?string $priceListId = null, ?CarbonInterface $at = null): array
     {
         $at ??= now();
         $list = $priceListId ? PriceList::query()->findOrFail($priceListId) : $customer?->defaultPriceList;
