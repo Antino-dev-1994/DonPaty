@@ -8,6 +8,10 @@ use App\Modules\Household\Presentation\Http\Controllers\RejectFundRequestControl
 use App\Modules\Household\Presentation\Http\Controllers\StoreFundRequestController;
 use App\Modules\Household\Presentation\Http\Controllers\ConfirmHouseholdBudgetController;
 use App\Modules\Household\Presentation\Http\Controllers\StoreHouseholdBudgetLineController;
+use App\Modules\Household\Presentation\Http\Controllers\PayDebtController;
+use App\Modules\Household\Presentation\Http\Controllers\StoreDebtController;
+use App\Modules\Household\Presentation\Http\Controllers\StoreSavingsContributionController;
+use App\Modules\Household\Presentation\Http\Controllers\StoreSavingsGoalController;
 use App\Modules\Household\Presentation\Http\Controllers\StoreHouseholdAccountController;
 use App\Modules\Household\Presentation\Http\Controllers\StoreHouseholdTransactionController;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +27,8 @@ Route::middleware(['web', 'auth', 'verified'])->prefix('household')->name('house
     Route::post('/fund-requests/{fundRequest}/confirm', ConfirmFundRequestController::class)->name('fund-requests.confirm');
     Route::post('/budgets/lines', StoreHouseholdBudgetLineController::class)->name('budgets.lines.store');
     Route::post('/budgets/{budget}/confirm', ConfirmHouseholdBudgetController::class)->name('budgets.confirm');
+    Route::post('/debts', StoreDebtController::class)->name('debts.store');
+    Route::post('/debts/{debt}/payments', PayDebtController::class)->name('debts.payments.store');
+    Route::post('/savings-goals', StoreSavingsGoalController::class)->name('savings-goals.store');
+    Route::post('/savings-goals/{savingsGoal}/contributions', StoreSavingsContributionController::class)->name('savings-goals.contributions.store');
 });

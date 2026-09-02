@@ -10,6 +10,8 @@ use App\Modules\Finance\Domain\Models\FinancialCategory;
 use App\Modules\Household\Application\HouseholdVisibility;
 use App\Modules\Household\Application\HouseholdBudgetReport;
 use App\Modules\Household\Domain\Models\HouseholdBudget;
+use App\Modules\Household\Domain\Models\Debt;
+use App\Modules\Household\Domain\Models\SavingsGoal;
 use App\Modules\Household\Domain\Enums\HouseholdTransactionType;
 use App\Modules\Household\Domain\Models\FundRequest;
 use App\Modules\Household\Domain\Models\HouseholdTransaction;
@@ -108,6 +110,46 @@ class HouseholdDashboardController extends Controller
                 'status_label' => $budget->status->value === 'confirmed' ? 'Confirmado' : 'Borrador',
                 'lines' => $budgetReport->execute($budget, $request->user()),
             ] : null,
+            'debts' => $visibility->personalRecords(Debt::query(), $request->user())
+                ->with(['person:id,name', 'installments' => fn ($query) => $query->orderBy('sequence')])
+                ->latest('start_date')->get()->map(function (Debt $debt): array {
+                    $interestTotal = (int) $debt->installments->sum('interest_amount');
+                    $next = $debt->installments->first(fn ($installment) => $installment->status->value !== 'paid');
+
+                    return [
+                        ...$debt->only(['id', 'document_number', 'description', 'principal_amount', 'principal_paid', 'interest_paid']),
+                        'person' => $debt->person?->name,
+                        'direction' => $debt->direction->value,
+                        'direction_label' => $debt->direction->label(),
+                        'status' => $debt->status->value,
+                        'status_label' => $debt->status->value === 'paid' ? 'Pagada' : 'Activa',
+                        'annual_interest_rate' => (float) $debt->annual_interest_rate,
+                        'interest_total' => $interestTotal,
+                        'balance' => $debt->principal_amount + $interestTotal - $debt->principal_paid - $debt->interest_paid,
+                        'next_due_at' => $next?->due_at->format('Y-m-d'),
+                        'next_due_balance' => $next ? ($next->principal_amount + $next->interest_amount - $next->principal_paid - $next->interest_paid) : 0,
+                        'installments_count' => $debt->installments->count(),
+                    ];
+                }),
+            'savingsGoals' => $visibility->personalRecords(SavingsGoal::query(), $request->user())
+                ->with(['person:id,name', 'financialAccount:id,name'])
+                ->withSum('contributions', 'amount')
+                ->latest()->get()->map(function (SavingsGoal $goal): array {
+                    $saved = (int) ($goal->contributions_sum_amount ?? 0);
+
+                    return [
+                        ...$goal->only(['id', 'name', 'target_amount']),
+                        'person' => $goal->person?->name,
+                        'financial_account_id' => $goal->financial_account_id,
+                        'account' => $goal->financialAccount->name,
+                        'target_date' => $goal->target_date?->format('Y-m-d'),
+                        'status' => $goal->status->value,
+                        'status_label' => $goal->status->value === 'completed' ? 'Completada' : 'Activa',
+                        'saved_amount' => $saved,
+                        'pending_amount' => max(0, $goal->target_amount - $saved),
+                        'percentage' => min(100, round($saved * 100 / $goal->target_amount, 1)),
+                    ];
+                }),
             'canManage' => $request->user()->hasPermission('household.manage'),
             'canViewAll' => $visibility->canViewAll($request->user()),
             'canCreateRequest' => $request->user()->hasPermission('fund-requests.create'),

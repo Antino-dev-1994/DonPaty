@@ -8,7 +8,6 @@ use App\Modules\Finance\Application\Data\JournalEntryData;
 use App\Modules\Finance\Application\Data\JournalLineData;
 use App\Modules\Finance\Application\PostJournalEntry;
 use App\Modules\Finance\Domain\Enums\FinancialCategoryType;
-use App\Modules\Finance\Domain\Enums\FinancialDocumentStatus;
 use App\Modules\Finance\Domain\Enums\FinancialScope;
 use App\Modules\Finance\Domain\Enums\PaymentDirection;
 use App\Modules\Finance\Domain\Models\FinancialAccount;
@@ -27,6 +26,7 @@ class RecordHouseholdTransaction
         private readonly NextDocumentNumber $numbers,
         private readonly PostJournalEntry $journal,
         private readonly FinancialAccountBalance $balances,
+        private readonly RecordHouseholdPayment $payments,
         private readonly RecordAuditEvent $audit,
     ) {}
 
@@ -93,7 +93,7 @@ class RecordHouseholdTransaction
         }
         if ($from && $this->balances->execute($from->id) < $data->amount) throw new DomainException('La cuenta de origen no tiene saldo suficiente.');
         foreach ([$from, $to] as $account) {
-            if ($account?->scope === FinancialScope::Personal && $data->personId && $account->person_id !== $data->personId) {
+            if ($account?->scope === FinancialScope::Personal && $account->person_id !== $data->personId) {
                 throw new DomainException('La cuenta personal no pertenece al habitante indicado.');
             }
         }
@@ -107,17 +107,7 @@ class RecordHouseholdTransaction
         $direction = $data->type === HouseholdTransactionType::Income ? PaymentDirection::Incoming : PaymentDirection::Outgoing;
         $account = $to ?? $from;
 
-        return Payment::create([
-            'document_number' => $this->numbers->execute('household_payment', $direction === PaymentDirection::Incoming ? 'HIN' : 'HEG', $data->occurredAt),
-            'direction' => $direction,
-            'person_id' => $data->personId,
-            'paid_at' => $data->occurredAt,
-            'amount' => $data->amount,
-            'financial_account_id' => $account->id,
-            'status' => FinancialDocumentStatus::Confirmed,
-            'reference' => $data->description,
-            'created_by' => $data->creator->id,
-        ]);
+        return $this->payments->execute($direction, $data->amount, $account->id, $data->personId, $data->occurredAt, $data->description, $data->creator);
     }
 
     /** @return list<JournalLineData> */

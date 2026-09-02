@@ -50,6 +50,17 @@ class HouseholdVisibility
         return $query->where('requester_person_id', $user->person_id);
     }
 
+    public function personalRecords(Builder $query, User $user): Builder
+    {
+        if ($this->canViewAll($user)) {
+            return $query;
+        }
+
+        $this->ensureCanViewOwn($user);
+
+        return $query->where('person_id', $user->person_id);
+    }
+
     private function ensureCanViewOwn(User $user): void
     {
         if (! $user->hasPermission('household.view-own') || ! $user->person_id) {
