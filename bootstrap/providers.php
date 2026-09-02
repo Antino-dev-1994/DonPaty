@@ -9,6 +9,7 @@ use App\Modules\Customers\CustomersServiceProvider;
 use App\Modules\Identity\IdentityServiceProvider;
 use App\Modules\Inventory\InventoryServiceProvider;
 use App\Modules\Finance\FinanceServiceProvider;
+use App\Modules\Household\HouseholdServiceProvider;
 use App\Modules\People\PeopleServiceProvider;
 use App\Modules\Orders\OrdersServiceProvider;
 use App\Modules\Purchasing\PurchasingServiceProvider;
@@ -30,6 +31,7 @@ return [
     CustomersServiceProvider::class,
     InventoryServiceProvider::class,
     FinanceServiceProvider::class,
+    HouseholdServiceProvider::class,
     DashboardServiceProvider::class,
     PeopleServiceProvider::class,
     OrdersServiceProvider::class,
