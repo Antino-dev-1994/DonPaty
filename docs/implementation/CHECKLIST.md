@@ -185,12 +185,16 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 ## Entrega 10: Tableros y reportes
 
 - [ ] Tableros por rol.
-- [ ] Resultado diario y mensual.
-- [ ] Flujo de caja y rentabilidad.
-- [ ] Márgenes, rendimiento y merma.
-- [ ] Inventario valorizado.
-- [ ] Cartera, obligaciones y presupuesto del hogar.
+- [x] Resultado diario y mensual.
+- [x] Flujo de caja y rentabilidad.
+- [x] Márgenes, rendimiento y merma.
+- [x] Inventario valorizado.
+- [x] Cartera, obligaciones y presupuesto del hogar.
 - [ ] Verificación funcional y commit.
+- Evidencia inicial de E10: commit `7e0a203`; reportes con rango de hasta 366 días, permisos financieros, operativos o del hogar y filtros por producto o persona.
+- El flujo se deriva de pagos confirmados y el resultado de asientos del ámbito negocio; se muestran por separado, por día y acumulados, indicando como provisional cualquier rango con meses sin cerrar.
+- Los márgenes descuentan devoluciones, la producción muestra rendimiento, merma y costo, y el inventario se valoriza con existencia física por costo promedio.
+- Cartera, obligaciones, ejecución presupuestal, solicitudes, deudas y ahorro conservan los filtros de ámbito y privacidad definidos en sus módulos de origen.
 
 ## Entrega 11: Adjuntos, auditoría y respaldos
 
