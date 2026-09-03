@@ -3,6 +3,7 @@
 namespace App\Modules\Production\Presentation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Attachments\Application\AttachmentViewData;
 use App\Modules\Identity\Domain\Models\AuthorizationRequest;
 use App\Modules\Production\Application\ProductionAvailability;
 use App\Modules\Production\Domain\Enums\ProductionStatus;
@@ -13,7 +14,7 @@ use Inertia\Response;
 
 class ShowProductionController extends Controller
 {
-    public function __invoke(Request $request, ProductionOrder $production, ProductionAvailability $availability): Response
+    public function __invoke(Request $request, ProductionOrder $production, ProductionAvailability $availability, AttachmentViewData $attachmentView): Response
     {
         abort_unless($request->user()->hasPermission('production.view'), 403);
         $canViewCosts = $request->user()->hasPermission('reports.view-financial');
@@ -38,6 +39,7 @@ class ShowProductionController extends Controller
             ],
             'availability' => $production->status === ProductionStatus::Planned ? $availability->execute($production) : [],
             'authorizations' => $authorizations->map(fn($authorization)=>['id'=>$authorization->id,'permission'=>$authorization->approval_permission,'status'=>$authorization->status->value,'usable'=>$authorization->isUsable(),'reason'=>$authorization->reason]),
+            'attachments' => $attachmentView->execute('production', $production, $request->user()),
             'canManage' => $request->user()->hasPermission('production.manage'), 'canComplete' => $request->user()->hasPermission('production.complete'), 'canReverse' => $request->user()->hasPermission('production.reverse'), 'canRequestAuthorization' => $request->user()->hasPermission('authorizations.request'), 'canViewCosts' => $canViewCosts,
         ]);
     }

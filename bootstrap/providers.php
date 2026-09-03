@@ -1,6 +1,7 @@
 <?php
 
 use App\Modules\Dashboard\DashboardServiceProvider;
+use App\Modules\Attachments\AttachmentsServiceProvider;
 use App\Modules\Audit\AuditServiceProvider;
 use App\Modules\Catalog\CatalogServiceProvider;
 use App\Modules\CashManagement\CashManagementServiceProvider;
@@ -23,6 +24,7 @@ use App\Providers\FortifyServiceProvider;
 return [
     AppServiceProvider::class,
     FortifyServiceProvider::class,
+    AttachmentsServiceProvider::class,
     IdentityServiceProvider::class,
     AuditServiceProvider::class,
     CatalogServiceProvider::class,

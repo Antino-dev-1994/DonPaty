@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import AttachmentPanel from '@/components/AttachmentPanel.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
@@ -31,6 +32,7 @@ const props = defineProps<{
     canReverse: boolean;
     canRequestAuthorization: boolean;
     canViewCosts: boolean;
+    attachments: any;
 }>();
 
 const shortage = computed(() => props.availability.some((line) => line.is_short));
@@ -220,6 +222,8 @@ const money = (value: number) =>
             </div>
             <p v-else class="mt-2 text-sm text-muted-foreground">Sin novedades.</p>
         </section>
+
+        <AttachmentPanel :attachments="attachments" />
 
         <section
             v-if="order.status === 'completed' && canViewCosts"

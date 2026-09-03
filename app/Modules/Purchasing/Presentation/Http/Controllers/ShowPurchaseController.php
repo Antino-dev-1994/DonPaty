@@ -3,6 +3,7 @@
 namespace App\Modules\Purchasing\Presentation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Modules\Attachments\Application\AttachmentViewData;
 use App\Modules\Purchasing\Domain\Models\Purchase;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,7 +11,7 @@ use Inertia\Response;
 
 class ShowPurchaseController extends Controller
 {
-    public function __invoke(Request $request, Purchase $purchase): Response
+    public function __invoke(Request $request, Purchase $purchase, AttachmentViewData $attachmentView): Response
     {
         abort_unless($request->user()->hasPermission('purchases.manage') || $request->user()->hasPermission('purchases.receive'), 403);
         $purchase->load([
@@ -50,6 +51,7 @@ class ShowPurchaseController extends Controller
             'canReceive' => $request->user()->hasPermission('purchases.receive'),
             'canPay' => $request->user()->hasPermission('payables.manage') && $purchase->balance_amount > 0,
             'canReturn' => $request->user()->hasPermission('purchases.manage') && $purchase->receipt_status->value !== 'pending',
+            'attachments' => $attachmentView->execute('purchase', $purchase, $request->user()),
         ]);
     }
 }
