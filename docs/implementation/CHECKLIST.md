@@ -197,6 +197,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Cartera, obligaciones, ejecución presupuestal, solicitudes, deudas y ahorro conservan los filtros de ámbito y privacidad definidos en sus módulos de origen.
 - Evidencia del tablero: commit `38724d3`; propietario y administrador ven decisiones financieras, producción y ventas ven indicadores operativos sin costos, y cada habitante recibe únicamente el resumen privado del hogar.
 - El tablero incorpora acciones rápidas por permiso, pedidos próximos o atrasados, demanda pendiente de producción, periodo de costos faltante, inventario crítico, cartera vencida y solicitudes por atender.
+- Pruebas básicas preparadas en el commit `b6d55c6`: separación entre flujo y resultado con obligación vencida, y bloqueo de costos/valorización para un rol exclusivamente operativo. La verificación permanece pendiente de ejecución.
 
 ## Entrega 11: Adjuntos, auditoría y respaldos
 
