@@ -190,7 +190,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Márgenes, rendimiento y merma.
 - [x] Inventario valorizado.
 - [x] Cartera, obligaciones y presupuesto del hogar.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia inicial de E10: commit `7e0a203`; reportes con rango de hasta 366 días, permisos financieros, operativos o del hogar y filtros por producto o persona.
 - El flujo se deriva de pagos confirmados y el resultado de asientos del ámbito negocio; se muestran por separado, por día y acumulados, indicando como provisional cualquier rango con meses sin cerrar.
 - Los márgenes descuentan devoluciones, la producción muestra rendimiento, merma y costo, y el inventario se valoriza con existencia física por costo promedio.
@@ -198,6 +198,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Evidencia del tablero: commit `38724d3`; propietario y administrador ven decisiones financieras, producción y ventas ven indicadores operativos sin costos, y cada habitante recibe únicamente el resumen privado del hogar.
 - El tablero incorpora acciones rápidas por permiso, pedidos próximos o atrasados, demanda pendiente de producción, periodo de costos faltante, inventario crítico, cartera vencida y solicitudes por atender.
 - Pruebas básicas preparadas en el commit `b6d55c6`: separación entre flujo y resultado con obligación vencida, y bloqueo de costos/valorización para un rol exclusivamente operativo. La verificación permanece pendiente de ejecución.
+- Verificación final informada por el usuario el 2 de septiembre de 2026: las 2 pruebas aprobaron con 12 aserciones y la compilación de producción terminó correctamente.
+- Protección complementaria en el commit `5976912`: los costos de una producción también se omiten en el servidor y en la interfaz cuando el usuario no posee `reports.view-financial`.
 
 ## Entrega 11: Adjuntos, auditoría y respaldos
 
