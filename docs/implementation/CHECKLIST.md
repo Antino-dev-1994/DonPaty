@@ -204,13 +204,15 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 ## Entrega 11: Adjuntos, auditoría y respaldos
 
 - [x] Adjuntos privados.
-- [ ] Auditoría consultable.
+- [x] Auditoría consultable.
 - [ ] Respaldos de base de datos y archivos.
 - [ ] Manifiesto e integridad.
 - [ ] Restauración controlada.
 - [ ] Verificación funcional y commit.
 - Evidencia de adjuntos: commit `995263e`; almacenamiento privado con nombres físicos aleatorios, PDF/JPEG/PNG hasta 10 MB configurable, hash SHA-256 y autorización heredada del documento.
 - La carga, descarga y eliminación quedan auditadas; cada descarga comprueba la integridad antes de entregar el archivo. El panel reutilizable ya está integrado en ventas, compras y producciones.
+- Evidencia de auditoría: commit `7685353`; filtros por usuario, acción, documento, rango de fechas y presencia de autorización, detalle enlazado de la excepción y paginación conservando filtros.
+- Los datos antes/después pasan por un sanitizador recursivo central que reemplaza contraseñas, secretos, tokens, credenciales, cookies y llaves privadas por `[REDACTADO]`.
 
 ## Entrega 12: Lanzamiento por Internet
 
