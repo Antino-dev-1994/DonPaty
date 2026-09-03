@@ -2,7 +2,6 @@
 
 namespace App\Modules\Dashboard\Application;
 
-use App\Modules\Dashboard\Application\Data\ReportDateRange;
 use App\Modules\Finance\Domain\Models\Payable;
 use App\Modules\Sales\Domain\Models\Receivable;
 

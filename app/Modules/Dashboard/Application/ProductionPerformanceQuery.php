@@ -8,8 +8,8 @@ use App\Modules\Production\Domain\Models\ProductionOrder;
 
 class ProductionPerformanceQuery
 {
-    /** @return array{totals:array<string, int|float>, rows:list<array<string, int|float|string|null>>} */
-    public function execute(ReportDateRange $range): array
+    /** @return array{totals:array<string, int|float|null>, rows:list<array<string, int|float|string|null>>} */
+    public function execute(ReportDateRange $range, bool $includeCosts = false): array
     {
         $orders = ProductionOrder::query()
             ->with(['recipeVersion.recipe:id,name', 'responsiblePerson:id,name', 'outputs'])
@@ -29,9 +29,9 @@ class ProductionPerformanceQuery
                 'waste' => round($waste, 6),
                 'yield_percentage' => $expected > 0 ? round($actual * 100 / $expected, 2) : 0,
                 'waste_percentage' => $expected > 0 ? round($waste * 100 / $expected, 2) : 0,
-                'total_cost' => (int) $orders->sum('total_cost'),
+                'total_cost' => $includeCosts ? (int) $orders->sum('total_cost') : null,
             ],
-            'rows' => $orders->map(function (ProductionOrder $order): array {
+            'rows' => $orders->map(function (ProductionOrder $order) use ($includeCosts): array {
                 $expected = (float) $order->expected_dough_quantity;
                 $actual = (float) $order->actual_dough_quantity;
 
@@ -46,8 +46,8 @@ class ProductionPerformanceQuery
                     'actual_dough' => $actual,
                     'waste' => (float) $order->waste_quantity,
                     'yield_percentage' => $expected > 0 ? round($actual * 100 / $expected, 2) : 0,
-                    'total_cost' => $order->total_cost,
-                    'cost_per_dough_kg' => $actual > 0 ? (int) round($order->total_cost / $actual) : 0,
+                    'total_cost' => $includeCosts ? $order->total_cost : null,
+                    'cost_per_dough_kg' => $includeCosts && $actual > 0 ? (int) round($order->total_cost / $actual) : null,
                     'output_quantity' => round((float) $order->outputs->sum(fn ($output) => (float) $output->quantity), 6),
                 ];
             })->all(),

@@ -10,11 +10,9 @@ use App\Modules\Finance\Domain\Enums\FinancialDocumentStatus;
 use App\Modules\Finance\Domain\Enums\FinancialScope;
 use App\Modules\Finance\Domain\Enums\PaymentDirection;
 use App\Modules\Finance\Domain\Models\JournalEntry;
-use App\Modules\Finance\Domain\Models\JournalLine;
 use App\Modules\Finance\Domain\Models\Payment;
 use App\Modules\Sales\Domain\Models\Sale;
 use App\Modules\Sales\Domain\Models\SaleReturn;
-use Carbon\CarbonImmutable;
 use Illuminate\Support\Collection;
 
 class BusinessPerformanceQuery

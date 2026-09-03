@@ -1,117 +1,37 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import {
-    CircleDollarSign,
-    ClipboardList,
-    House,
-    PackageOpen,
-    Wheat,
-} from '@lucide/vue';
-import { dashboard } from '@/routes';
+import { AlertTriangle, BarChart3, Boxes, CircleDollarSign, ClipboardList, Factory, House, WalletCards } from '@lucide/vue';
+import { Button } from '@/components/ui/button';
 
-defineOptions({
-    layout: {
-        breadcrumbs: [
-            {
-                title: 'Panel principal',
-                href: dashboard(),
-            },
-        ],
-    },
-});
-
-const modules = [
-    {
-        title: 'Inventario',
-        description: 'Materias primas, productos y paquetes.',
-        icon: PackageOpen,
-    },
-    {
-        title: 'Producción',
-        description: 'Recetas, masa, rendimiento y costos.',
-        icon: Wheat,
-    },
-    {
-        title: 'Pedidos y ventas',
-        description: 'Demanda pendiente, cartera y caja.',
-        icon: ClipboardList,
-    },
-    {
-        title: 'Finanzas',
-        description: 'Ingresos, gastos y resultado diario.',
-        icon: CircleDollarSign,
-    },
-    {
-        title: 'Hogar',
-        description: 'Presupuestos, solicitudes y deudas.',
-        icon: House,
-    },
-];
-
-defineProps<{ costPeriodAlert: { message: string; canManage: boolean } | null; upcomingOrders: { id: string; document_number: string; customer: string; due_at: string; is_overdue: boolean; status: string }[] }>();
+defineProps<{ overview:any; actions:{label:string;href:string}[] }>();
+const money = (value:number) => new Intl.NumberFormat('es-CO', { style:'currency', currency:'COP', maximumFractionDigits:0 }).format(value || 0);
+const number = (value:number, digits=2) => new Intl.NumberFormat('es-CO', { maximumFractionDigits:digits }).format(value || 0);
+const resultLabel = (value:number) => value > 0 ? 'Ganancia' : value < 0 ? 'Pérdida' : 'Equilibrio';
 </script>
 
 <template>
     <Head title="Panel principal" />
+    <main class="flex flex-1 flex-col gap-5 p-4 md:p-6">
+        <header class="flex flex-wrap items-end justify-between gap-3"><div><p class="text-xs font-semibold tracking-[0.2em] text-amber-700 uppercase">DonPaty</p><h1 class="text-2xl font-semibold">Panel principal</h1><p class="text-sm text-muted-foreground">Vista para {{ overview.roles.join(', ') || 'usuario' }} · {{ overview.alert_count }} alertas requieren atención.</p></div><Button v-if="overview.permissions.financial || overview.permissions.operational || overview.permissions.household" as-child variant="outline"><Link href="/reports"><BarChart3 class="size-4"/> Abrir reportes</Link></Button></header>
+        <section v-if="actions.length" class="flex flex-wrap gap-2"><Button v-for="action in actions" :key="action.href" as-child size="sm"><Link :href="action.href">{{ action.label }}</Link></Button></section>
 
-    <main class="flex flex-1 flex-col gap-6 p-4 md:p-6">
-        <section v-if="costPeriodAlert" class="flex flex-col justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950 sm:flex-row sm:items-center dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-100">
-            <p>{{ costPeriodAlert.message }}</p>
-            <Link v-if="costPeriodAlert.canManage" href="/cost-periods/create" class="shrink-0 font-semibold underline">Abrir periodo</Link>
-        </section>
-        <section v-if="upcomingOrders.length" class="rounded-xl border bg-card p-4">
-            <div class="flex items-center justify-between"><div><h2 class="font-semibold">Pedidos próximos o atrasados</h2><p class="text-xs text-muted-foreground">Entregas dentro de las próximas 24 horas.</p></div><Link href="/orders?view=upcoming" class="text-sm font-medium text-amber-700 underline">Ver pedidos</Link></div>
-            <div class="mt-3 divide-y"><Link v-for="order in upcomingOrders" :key="order.id" :href="`/orders/${order.id}`" class="flex justify-between gap-3 py-2 text-sm"><span><strong>{{ order.document_number }}</strong> · {{ order.customer }}<small class="block text-muted-foreground">{{ order.status }}</small></span><span :class="order.is_overdue ? 'font-semibold text-destructive' : ''">{{ order.due_at }}<small v-if="order.is_overdue" class="block">Atrasado</small></span></Link></div>
-        </section>
-        <section
-            class="overflow-hidden rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 via-orange-50 to-white p-6 dark:border-amber-900/50 dark:from-amber-950/40 dark:via-orange-950/20 dark:to-background"
-        >
-            <p
-                class="mb-2 text-xs font-semibold tracking-[0.2em] text-amber-700 uppercase dark:text-amber-300"
-            >
-                DonPaty
-            </p>
-            <h1 class="text-2xl font-semibold tracking-tight md:text-3xl">
-                Administración de la panadería y el hogar
-            </h1>
-            <p class="mt-3 max-w-2xl text-sm text-muted-foreground md:text-base">
-                La base técnica está activa. Los módulos se habilitarán por
-                entregas verificables, conservando inventario, dinero y costos
-                en movimientos auditables.
-            </p>
-        </section>
+        <section v-if="overview.operational?.cost_period && !overview.operational.cost_period.exists" class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-950 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100"><span><AlertTriangle class="mr-2 inline size-4"/>Falta abrir el periodo de costos del mes; no se podrán completar producciones.</span><Link v-if="overview.operational.cost_period.can_manage" href="/cost-periods/create" class="font-semibold underline">Abrir periodo</Link></section>
 
-        <section>
-            <div class="mb-3 flex items-center justify-between gap-4">
-                <div>
-                    <h2 class="font-semibold">Módulos planificados</h2>
-                    <p class="text-sm text-muted-foreground">
-                        Se activarán según el checklist de implementación.
-                    </p>
-                </div>
-                <span
-                    class="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800 dark:bg-amber-900/40 dark:text-amber-200"
-                >
-                    Entrega 1 completada
-                </span>
-            </div>
+        <template v-if="overview.financial">
+            <section><div class="flex items-center gap-2"><CircleDollarSign class="size-5 text-amber-700"/><h2 class="text-lg font-semibold">Negocio hoy</h2><span v-if="overview.financial.today.provisional" class="rounded-full bg-amber-100 px-2 py-1 text-xs text-amber-800">Provisional</span></div><div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"><article class="rounded-xl border bg-card p-4"><small>Resultado de hoy</small><p class="text-xl font-semibold" :class="overview.financial.today.totals.profit < 0 ? 'text-destructive' : 'text-emerald-700'">{{ resultLabel(overview.financial.today.totals.profit) }} · {{ money(overview.financial.today.totals.profit) }}</p><p class="text-xs text-muted-foreground">Ingresos {{ money(overview.financial.today.totals.revenue) }} · costos/gastos {{ money(overview.financial.today.totals.expenses) }}</p></article><article class="rounded-xl border bg-card p-4"><small>Flujo de hoy</small><p class="text-xl font-semibold" :class="overview.financial.today.totals.cash_flow < 0 ? 'text-destructive' : ''">{{ money(overview.financial.today.totals.cash_flow) }}</p><p class="text-xs text-muted-foreground">Entradas {{ money(overview.financial.today.totals.cash_in) }} · salidas {{ money(overview.financial.today.totals.cash_out) }}</p></article><article class="rounded-xl border bg-card p-4"><small>Resultado del mes</small><p class="text-xl font-semibold" :class="overview.financial.month.totals.profit < 0 ? 'text-destructive' : ''">{{ money(overview.financial.month.totals.profit) }}</p><p class="text-xs text-muted-foreground">{{ resultLabel(overview.financial.month.totals.profit) }}</p></article><article class="rounded-xl border bg-card p-4"><small>Ventas netas del mes</small><p class="text-xl font-semibold">{{ money(overview.financial.month.totals.sales) }}</p><p class="text-xs text-muted-foreground">Margen bruto {{ money(overview.financial.month.totals.sales_margin) }}</p></article></div></section>
+            <section class="grid gap-5 lg:grid-cols-2"><article class="rounded-xl border bg-card"><header class="flex items-center gap-2 p-4"><WalletCards class="size-4 text-amber-700"/><h3 class="font-semibold">Caja y bancos</h3></header><div class="grid gap-2 border-y p-4 sm:grid-cols-2"><div v-for="account in overview.financial.cash.accounts" :key="account.id" class="rounded-lg bg-muted/40 p-3 text-sm"><span>{{ account.name }}</span><strong class="block">{{ money(account.balance) }}</strong></div></div><p class="p-4 text-sm">Dinero total: <strong>{{ money(overview.financial.cash.total) }}</strong></p></article><article class="rounded-xl border bg-card"><h3 class="p-4 font-semibold">Cartera y obligaciones</h3><div class="grid grid-cols-2 gap-3 border-y p-4"><div><small>Por cobrar</small><strong class="block">{{ money(overview.financial.obligations.receivables_total) }}</strong><span class="text-xs text-destructive">Vencido {{ money(overview.financial.obligations.receivables_overdue) }}</span></div><div><small>Por pagar</small><strong class="block">{{ money(overview.financial.obligations.payables_total) }}</strong><span class="text-xs text-destructive">Vencido {{ money(overview.financial.obligations.payables_overdue) }}</span></div></div><Link href="/reports" class="m-4 inline-block text-sm text-amber-700 underline">Ver documentos</Link></article></section>
+        </template>
 
-            <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
-                <article
-                    v-for="module in modules"
-                    :key="module.title"
-                    class="rounded-xl border bg-card p-4 shadow-xs"
-                >
-                    <component
-                        :is="module.icon"
-                        class="mb-4 size-5 text-amber-700 dark:text-amber-300"
-                    />
-                    <h3 class="text-sm font-semibold">{{ module.title }}</h3>
-                    <p class="mt-1 text-xs leading-5 text-muted-foreground">
-                        {{ module.description }}
-                    </p>
-                </article>
-            </div>
-        </section>
+        <template v-if="overview.operational">
+            <section><div class="flex items-center gap-2"><Factory class="size-5 text-amber-700"/><h2 class="text-lg font-semibold">Operación y producción</h2></div><div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"><article class="rounded-xl border bg-card p-4"><small>Demanda pendiente</small><p class="text-xl font-semibold">{{ overview.operational.demand.count }} pedidos/líneas</p><p class="text-xs text-muted-foreground">Masa {{ number(overview.operational.demand.dough_quantity,6) }} kg · harina sugerida {{ number(overview.operational.demand.flour_quantity,6) }} kg</p></article><article class="rounded-xl border bg-card p-4"><small>Producciones activas</small><p class="text-xl font-semibold">{{ overview.operational.active_productions.length }}</p><p class="text-xs text-muted-foreground">Completadas hoy {{ overview.operational.production.totals.productions }}</p></article><article class="rounded-xl border bg-card p-4"><small>Rendimiento de hoy</small><p class="text-xl font-semibold">{{ overview.operational.production.totals.yield_percentage }}%</p><p class="text-xs text-muted-foreground">Merma {{ number(overview.operational.production.totals.waste,6) }} kg</p></article><article class="rounded-xl border bg-card p-4"><small>Alertas de inventario</small><p class="text-xl font-semibold">{{ overview.operational.inventory.low_count }} bajos · {{ overview.operational.inventory.negative_count }} negativos</p><p v-if="overview.operational.inventory.total_value !== null" class="text-xs text-muted-foreground">Valor {{ money(overview.operational.inventory.total_value) }}</p></article></div></section>
+            <section class="grid gap-5 xl:grid-cols-2"><article class="rounded-xl border bg-card"><header class="flex items-center justify-between p-4"><span class="flex items-center gap-2"><ClipboardList class="size-4 text-amber-700"/><strong>Pedidos en próximas 24 horas</strong></span><Link href="/orders/demand" class="text-xs text-amber-700 underline">Demanda</Link></header><div class="divide-y"><Link v-for="order in overview.operational.upcoming_orders" :key="order.id" :href="`/orders/${order.id}`" class="flex justify-between gap-3 p-4 text-sm"><span><strong>{{ order.document }}</strong> · {{ order.customer }}<small class="block text-muted-foreground">{{ order.status }}</small></span><span :class="order.is_overdue ? 'font-semibold text-destructive' : ''">{{ order.due_at }}<small v-if="order.is_overdue" class="block">Atrasado</small></span></Link><p v-if="!overview.operational.upcoming_orders.length" class="p-6 text-sm text-muted-foreground">Sin pedidos próximos o atrasados.</p></div></article><article class="rounded-xl border bg-card"><header class="flex items-center gap-2 p-4"><Factory class="size-4 text-amber-700"/><strong>Producciones activas</strong></header><div class="divide-y"><Link v-for="item in overview.operational.active_productions" :key="item.id" :href="`/production/${item.id}`" class="flex justify-between gap-3 p-4 text-sm"><span><strong>{{ item.document }} · {{ item.recipe }}</strong><small class="block text-muted-foreground">{{ item.status }} · {{ item.responsible || 'Sin responsable' }}</small></span><span>{{ number(item.flour_quantity,6) }} kg harina<small class="block">{{ item.planned_for }}</small></span></Link><p v-if="!overview.operational.active_productions.length" class="p-6 text-sm text-muted-foreground">Sin producciones activas.</p></div></article></section>
+            <section v-if="overview.operational.inventory.alerts.length" class="rounded-xl border bg-card"><header class="flex items-center gap-2 p-4"><Boxes class="size-4 text-amber-700"/><strong>Inventario que requiere atención</strong></header><div class="grid gap-2 border-t p-4 sm:grid-cols-2 lg:grid-cols-3"><div v-for="item in overview.operational.inventory.alerts" :key="item.presentation_id" class="rounded-lg border p-3 text-sm" :class="item.is_negative ? 'border-red-300 bg-red-50 dark:bg-red-950/20' : 'border-amber-300 bg-amber-50 dark:bg-amber-950/20'"><strong>{{ item.item }} · {{ item.presentation }}</strong><p>Disponible {{ number(item.available_quantity,6) }} {{ item.unit }}</p></div></div></section>
+        </template>
+
+        <template v-if="overview.household">
+            <section><div class="flex items-center gap-2"><House class="size-5 text-amber-700"/><h2 class="text-lg font-semibold">Hogar</h2></div><div class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4"><article class="rounded-xl border bg-card p-4"><small>Presupuesto disponible</small><p class="text-xl font-semibold" :class="overview.household.budget.available < 0 ? 'text-destructive' : ''">{{ money(overview.household.budget.available) }}</p><p class="text-xs text-muted-foreground">Ejecutado {{ money(overview.household.budget.executed) }} de {{ money(overview.household.budget.budgeted) }}</p></article><article class="rounded-xl border bg-card p-4"><small>Solicitudes por atender</small><p class="text-xl font-semibold">{{ overview.household.pending_requests }}</p><p class="text-xs text-muted-foreground">{{ money(overview.household.requests_total) }}</p></article><article class="rounded-xl border bg-card p-4"><small>Deudas activas</small><p class="text-xl font-semibold">{{ money(overview.household.debt_balance) }}</p><p class="text-xs text-destructive">{{ overview.household.overdue_installments }} cuotas vencidas</p></article><article class="rounded-xl border bg-card p-4"><small>Ahorro</small><p class="text-xl font-semibold">{{ money(overview.household.savings_saved) }}</p><p class="text-xs text-muted-foreground">Objetivo {{ money(overview.household.savings_target) }}</p></article></div><div class="mt-3 text-right"><Link href="/household" class="text-sm text-amber-700 underline">Abrir finanzas del hogar</Link></div></section>
+        </template>
+
+        <section v-if="!overview.permissions.financial && !overview.permissions.operational && !overview.permissions.household" class="rounded-xl border bg-card p-8 text-center"><h2 class="font-semibold">Sin indicadores asignados</h2><p class="mt-1 text-sm text-muted-foreground">Solicita al propietario los permisos necesarios para consultar un tablero.</p></section>
     </main>
 </template>
