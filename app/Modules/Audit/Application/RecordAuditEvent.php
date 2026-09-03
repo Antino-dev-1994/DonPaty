@@ -10,6 +10,8 @@ use Illuminate\Support\Str;
 
 class RecordAuditEvent
 {
+    public function __construct(private readonly SanitizeAuditData $sanitizer) {}
+
     public function execute(
         string $action,
         Model $resource,
@@ -26,8 +28,8 @@ class RecordAuditEvent
             'resource_type' => $resource->getMorphClass(),
             'resource_id' => (string) $resource->getKey(),
             'authorization_request_id' => $authorizationRequestId,
-            'before_data' => $before,
-            'after_data' => $after,
+            'before_data' => $this->sanitizer->execute($before),
+            'after_data' => $this->sanitizer->execute($after),
             'ip_address' => $request?->ip(),
             'correlation_id' => $request?->attributes->get('correlation_id') ?? (string) Str::ulid(),
         ]);
