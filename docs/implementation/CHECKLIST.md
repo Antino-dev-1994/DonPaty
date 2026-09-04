@@ -205,14 +205,17 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 - [x] Adjuntos privados.
 - [x] Auditoría consultable.
-- [ ] Respaldos de base de datos y archivos.
-- [ ] Manifiesto e integridad.
-- [ ] Restauración controlada.
+- [x] Respaldos de base de datos y archivos.
+- [x] Manifiesto e integridad.
+- [x] Restauración controlada.
 - [ ] Verificación funcional y commit.
 - Evidencia de adjuntos: commit `995263e`; almacenamiento privado con nombres físicos aleatorios, PDF/JPEG/PNG hasta 10 MB configurable, hash SHA-256 y autorización heredada del documento.
 - La carga, descarga y eliminación quedan auditadas; cada descarga comprueba la integridad antes de entregar el archivo. El panel reutilizable ya está integrado en ventas, compras y producciones.
 - Evidencia de auditoría: commit `7685353`; filtros por usuario, acción, documento, rango de fechas y presencia de autorización, detalle enlazado de la excepción y paginación conservando filtros.
 - Los datos antes/después pasan por un sanitizador recursivo central que reemplaza contraseñas, secretos, tokens, credenciales, cookies y llaves privadas por `[REDACTADO]`.
+- Evidencia de respaldos: commit `5dc5493`; genera un ZIP privado con copia consistente SQLite o `mysqldump`, todos los adjuntos registrados y un manifiesto versionado con tamaño y SHA-256 por entrada.
+- La verificación comprueba el hash del archivo completo, identidad del manifiesto, base de datos y cada adjunto. La restauración no se expone como botón web: exige el comando `backups:restore`, frase exacta por ULID, una segunda verificación, respaldo previo y modo mantenimiento.
+- Pruebas básicas preparadas: sanitización recursiva y creación/verificación real de un respaldo SQLite. La ejecución permanece pendiente del comando indicado al usuario.
 
 ## Entrega 12: Lanzamiento por Internet
 
