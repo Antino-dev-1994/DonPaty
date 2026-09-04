@@ -6,13 +6,13 @@ use App\Models\User;
 use App\Modules\Audit\Application\SanitizeAuditData;
 use App\Modules\Backups\Application\CreateBackup;
 use App\Modules\Backups\Application\VerifyBackup;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class BackupsAndAuditTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseTruncation;
 
     public function test_audit_data_is_sanitized_recursively(): void
     {
