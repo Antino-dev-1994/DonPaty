@@ -224,8 +224,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 - [ ] Migraciones verificadas en MySQL.
 - [ ] Ambiente de ensayo.
-- [ ] Dominio y HTTPS.
-- [ ] Almacenamiento persistente.
+- [ ] Dominio gratuito registrado, DNS delegado y HTTPS verificado.
+- [x] Estrategia de almacenamiento persistente y externo definida.
 - [ ] Tareas programadas y procesos diferidos necesarios.
 - [ ] Respaldos automáticos.
 - [ ] Carga inicial y fecha de corte.
@@ -237,6 +237,8 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - La fecha de corte se interpreta en `America/Bogota`, se persiste en UTC y vuelve a mostrarse en hora local; corrección registrada en `49c16b0`.
 - Verificación local informada por el usuario el 4 de septiembre de 2026: la migración `launch_configurations` y la compilación con Node 24.5.0 aprobaron. La carga real y activación siguen pendientes del lanzamiento.
 - Diagnóstico de producción reforzado en `5985b82`: exige HTTPS forzado, cookie y sesión cifradas, correo real de recuperación, remitente configurado y extensión Zip; la plantilla usa `MAIL_SCHEME` compatible con Laravel actual.
+- Infraestructura preseleccionada: VPS Hostinger o Teramont, dominio inicial DigitalPlat FreeDomain con DNS autoritativo externo, adjuntos privados persistentes y respaldos en un bucket S3 compatible fuera del VPS. La contratación, el nombre exacto y la evidencia operativa siguen pendientes.
+- Los discos `attachments_s3` y `backups_s3` tienen credenciales independientes y acceso privado; producción usará `backups_s3` aunque los adjuntos permanezcan inicialmente en el volumen del VPS.
 
 ## Futuro: Capacitor
 

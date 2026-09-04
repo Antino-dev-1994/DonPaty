@@ -1,6 +1,6 @@
 # Despliegue de DonPaty
 
-Este documento prepara un despliegue portable. El proveedor, dominio y región se definirán antes de ejecutar el lanzamiento real.
+Este documento prepara un despliegue portable. La preselección de VPS y el uso inicial de un dominio gratuito están documentados en [INFRASTRUCTURE.md](INFRASTRUCTURE.md).
 
 ## Requisitos del servidor
 
@@ -21,8 +21,8 @@ Decisiones obligatorias antes del lanzamiento:
 - `APP_URL`, `SESSION_DOMAIN` y DNS deben usar el dominio real.
 - `TRUSTED_PROXIES` debe contener solo las redes del balanceador o `*` únicamente cuando el proveedor aísle el servidor de acceso directo.
 - `DB_USERNAME` debe poseer privilegios solo sobre la base DonPaty.
-- `ATTACHMENTS_DISK` debe ser persistente.
-- `BACKUPS_DISK` debe estar fuera de la instancia principal.
+- `ATTACHMENTS_DISK=local` exige conservar `storage/app/private` entre despliegues. Puede cambiarse a `attachments_s3` sin modificar código.
+- `BACKUPS_DISK=backups_s3` debe usar un bucket privado externo al VPS y credenciales exclusivas con acceso únicamente a ese bucket.
 
 ## Procesos
 

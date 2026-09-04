@@ -60,6 +60,34 @@ return [
             'report' => false,
         ],
 
+        'attachments_s3' => [
+            'driver' => 's3',
+            'key' => env('ATTACHMENTS_S3_ACCESS_KEY_ID'),
+            'secret' => env('ATTACHMENTS_S3_SECRET_ACCESS_KEY'),
+            'region' => env('ATTACHMENTS_S3_REGION', 'auto'),
+            'bucket' => env('ATTACHMENTS_S3_BUCKET'),
+            'url' => env('ATTACHMENTS_S3_URL'),
+            'endpoint' => env('ATTACHMENTS_S3_ENDPOINT'),
+            'use_path_style_endpoint' => env('ATTACHMENTS_S3_USE_PATH_STYLE_ENDPOINT', false),
+            'visibility' => 'private',
+            'throw' => true,
+            'report' => true,
+        ],
+
+        'backups_s3' => [
+            'driver' => 's3',
+            'key' => env('BACKUPS_S3_ACCESS_KEY_ID'),
+            'secret' => env('BACKUPS_S3_SECRET_ACCESS_KEY'),
+            'region' => env('BACKUPS_S3_REGION', 'auto'),
+            'bucket' => env('BACKUPS_S3_BUCKET'),
+            'url' => env('BACKUPS_S3_URL'),
+            'endpoint' => env('BACKUPS_S3_ENDPOINT'),
+            'use_path_style_endpoint' => env('BACKUPS_S3_USE_PATH_STYLE_ENDPOINT', false),
+            'visibility' => 'private',
+            'throw' => true,
+            'report' => true,
+        ],
+
     ],
 
     /*
