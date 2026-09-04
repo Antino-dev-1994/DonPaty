@@ -273,9 +273,10 @@ El comando `app:lan-readiness` detecta configuración insegura o incompleta y `a
 - [x] Producciones terminadas y ventas representativas.
 - [x] Datos del hogar y métricas visibles.
 - [x] Seeder idempotente y prueba básica implementados.
-- [ ] Verificación del seeder y commit de cierre.
+- [x] Commit del escenario demostrativo.
+- [ ] Verificación del seeder en la instalación LAN.
 
-El agua quedó integrada en `17f3e87`. El escenario se carga explícitamente con `php artisan db:seed --class=DemoBakerySeeder`, se restringe a ambientes no productivos y está descrito en `docs/demo/DATASET.md`.
+El agua quedó integrada en `17f3e87` y el escenario completo en `bde0341`. Se carga explícitamente con `php artisan db:seed --class=DemoBakerySeeder`, se restringe a ambientes no productivos y está descrito en `docs/demo/DATASET.md`.
 
 ## Futuro: Capacitor
 
