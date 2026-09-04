@@ -220,7 +220,22 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Segunda verificación: el build aprobó y la sanitización obtuvo 4 aserciones correctas; el escenario SQLite quedó aislado en `15c6978` para evitar que una base `:memory:` nueva heredara estado estático entre dos pruebas.
 - Verificación final informada por el usuario el 4 de septiembre de 2026: el respaldo SQLite y su manifiesto aprobaron con 4 aserciones; junto con la compilación previa, E11 queda cerrada.
 
-## Entrega 12: Lanzamiento por Internet
+## Entrega 12A: Operación local en la red Wi-Fi (prioridad actual)
+
+- [x] Ambiente `lan` separado del desarrollo y de producción.
+- [x] URL validada con IPv4 privada y servidor accesible en `0.0.0.0`.
+- [x] SQLite, sesiones cifradas y assets compilados verificados por diagnóstico.
+- [x] Contraseñas fuertes y comandos destructivos protegidos en ambiente LAN.
+- [x] Guía de firewall privado, IP estable, uso diario y programador.
+- [x] Plantilla de configuración sin secretos.
+- [ ] Acceso comprobado desde un segundo dispositivo conectado al mismo Wi-Fi.
+- [ ] Respaldo automático creado y copia externa comprobada.
+- [ ] Revisión de permisos y comprobación de humo con usuarios reales.
+- [x] Commit de operación LAN.
+
+El comando `app:lan-readiness` detecta configuración insegura o incompleta y `app:lan` solo inicia cuando no hay errores. Este modo nunca requiere ni autoriza abrir el puerto 8000 hacia Internet.
+
+## Entrega 12B: Lanzamiento por Internet (posterior)
 
 - [ ] Migraciones verificadas en MySQL.
 - [ ] Ambiente de ensayo.

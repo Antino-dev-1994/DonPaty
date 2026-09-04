@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Middleware\HandleAppearance;
-use App\Http\Middleware\HandleInertiaRequests;
+use App\Console\Commands\CheckLanReadinessCommand;
+use App\Console\Commands\CheckProductionReadinessCommand;
+use App\Console\Commands\ServeLanCommand;
 use App\Http\Middleware\AssignCorrelationId;
 use App\Http\Middleware\EnsureUserIsActive;
-use App\Console\Commands\CheckProductionReadinessCommand;
+use App\Http\Middleware\HandleAppearance;
+use App\Http\Middleware\HandleInertiaRequests;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,7 +19,11 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withCommands([CheckProductionReadinessCommand::class])
+    ->withCommands([
+        CheckProductionReadinessCommand::class,
+        CheckLanReadinessCommand::class,
+        ServeLanCommand::class,
+    ])
     ->withMiddleware(function (Middleware $middleware): void {
         $trustedProxies = (string) env('TRUSTED_PROXIES', '');
         if ($trustedProxies !== '') {

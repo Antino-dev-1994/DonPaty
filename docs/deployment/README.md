@@ -2,6 +2,8 @@
 
 Este documento prepara un despliegue portable. La preselección de VPS y el uso inicial de un dominio gratuito están documentados en [INFRASTRUCTURE.md](INFRASTRUCTURE.md).
 
+La prioridad actual es operar primero desde el computador de la panadería para los dispositivos del mismo Wi-Fi. Ese procedimiento está en [LOCAL_NETWORK.md](LOCAL_NETWORK.md).
+
 ## Requisitos del servidor
 
 - PHP 8.4 con BCMath, cURL, Intl, Mbstring, OpenSSL, PDO MySQL y Zip.

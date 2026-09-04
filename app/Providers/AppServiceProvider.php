@@ -40,11 +40,11 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        DB::prohibitDestructiveCommands(
-            app()->isProduction(),
-        );
+        $isDeployed = app()->environment('production', 'lan');
 
-        Password::defaults(fn (): ?Password => app()->isProduction()
+        DB::prohibitDestructiveCommands($isDeployed);
+
+        Password::defaults(fn (): ?Password => $isDeployed
             ? Password::min(12)
                 ->mixedCase()
                 ->letters()
