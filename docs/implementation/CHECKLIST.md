@@ -227,7 +227,9 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] SQLite, sesiones cifradas y assets compilados verificados por diagnóstico.
 - [x] Contraseñas fuertes y comandos destructivos protegidos en ambiente LAN.
 - [x] Guía de firewall privado, IP estable, uso diario y programador.
+- [x] Inicio automático reversible para servidor y programador en Windows.
 - [x] Plantilla de configuración sin secretos.
+- [ ] Tareas automáticas instaladas y comprobadas después de reiniciar sesión.
 - [ ] Acceso comprobado desde un segundo dispositivo conectado al mismo Wi-Fi.
 - [ ] Respaldo automático creado y copia externa comprobada.
 - [ ] Revisión de permisos y comprobación de humo con usuarios reales.

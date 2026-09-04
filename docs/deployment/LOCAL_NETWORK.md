@@ -59,6 +59,38 @@ Los demás dispositivos abren la dirección mostrada, por ejemplo `http://192.16
 
 El servidor escucha únicamente en la IPv4 privada indicada por `APP_URL`, no en todas las interfaces del computador. Si esa dirección deja de pertenecer al equipo, el servidor no podrá enlazarla y deberá corregirse el `.env`.
 
+## Inicio automático en Windows
+
+Después de completar correctamente `app:lan-readiness`, detén con `Ctrl+C` los procesos manuales y registra dos tareas para la sesión actual: una mantiene el servidor LAN y otra el programador. En PowerShell normal, desde la raíz del proyecto:
+
+```powershell
+.\scripts\windows\Install-DonPatyLanTasks.ps1 -PhpPath "C:\ruta\real\php.exe"
+```
+
+Usa la ruta mostrada por `where.exe php` desde la terminal donde PHP funciona. Las tareas:
+
+- se inician inmediatamente y en cada inicio de sesión;
+- ejecutan de nuevo el diagnóstico antes de instalarse y rechazan una configuración incompleta;
+- se ejecutan ocultas con el usuario actual y sin privilegios administrativos;
+- evitan abrir una segunda instancia del mismo proceso;
+- se reinician hasta diez veces si terminan con error;
+- guardan salida en `storage/logs/lan-web.log` y `lan-scheduler.log`;
+- rotan cada archivo al superar 10 MB, conservando una generación anterior.
+
+Comprueba su estado con:
+
+```powershell
+Get-ScheduledTask -TaskName "DonPaty-LAN-*" | Select-Object TaskName, State
+```
+
+Para detener y retirar únicamente estas dos tareas:
+
+```powershell
+.\scripts\windows\Remove-DonPatyLanTasks.ps1
+```
+
+La regla del firewall es independiente y no se elimina al retirar las tareas.
+
 ## Respaldo y recuperación
 
 En el modo inicial, adjuntos, SQLite y ZIP de respaldo permanecen en el computador principal. El sistema crea el respaldo programado, pero al menos una copia verificada debe trasladarse periódicamente a una memoria o almacenamiento externo; guardar original y copia en el mismo disco no protege ante daño o pérdida del equipo.
@@ -69,3 +101,4 @@ En el modo inicial, adjuntos, SQLite y ZIP de respaldo permanecen en el computad
 - Si cambió la IPv4: actualiza `APP_URL`, ejecuta `php artisan optimize:clear` y vuelve a iniciar `app:lan`.
 - Si la interfaz aparece sin estilos: ejecuta `npm run build` con Node 24.5.0 y verifica de nuevo `app:lan-readiness`.
 - Si aparece un aviso de migraciones: detén el servidor, ejecuta `php artisan migrate` y vuelve a iniciar.
+- Si una tarea automática no inicia: revisa `storage/logs/lan-web.log`, confirma la ruta de PHP y vuelve a ejecutar el instalador.
