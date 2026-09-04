@@ -11,7 +11,7 @@ class LaunchReadinessQuery
 {
     public function execute(LaunchConfiguration $configuration): array
     {
-        $cutoff = $configuration->cutoff_at;
+        $cutoff = $configuration->cutoff_at?->timezone(config('regional.display_timezone'));
         $attestations = $configuration->attestations ?? [];
 
         return [

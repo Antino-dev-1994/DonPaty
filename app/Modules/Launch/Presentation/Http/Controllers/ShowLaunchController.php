@@ -19,7 +19,7 @@ class ShowLaunchController extends Controller
         return Inertia::render('launch/Index', [
             'configuration' => [
                 'status' => $configuration->status,
-                'cutoff_at' => $configuration->cutoff_at?->format('Y-m-d\TH:i'),
+                'cutoff_at' => $configuration->cutoff_at?->timezone(config('regional.display_timezone'))->format('Y-m-d\TH:i'),
                 'attestations' => $configuration->attestations ?? [],
                 'notes' => $configuration->notes,
                 'activated_at' => $configuration->activated_at?->timezone(config('regional.display_timezone'))->format('Y-m-d H:i'),

@@ -5,6 +5,7 @@ namespace App\Modules\Launch\Application;
 use App\Models\User;
 use App\Modules\Audit\Application\RecordAuditEvent;
 use App\Modules\Launch\Domain\Models\LaunchConfiguration;
+use Carbon\CarbonImmutable;
 use DomainException;
 
 class SaveLaunchConfiguration
@@ -18,7 +19,7 @@ class SaveLaunchConfiguration
         }
         $before = $configuration->toArray();
         $configuration->update([
-            'cutoff_at' => $data['cutoff_at'],
+            'cutoff_at' => CarbonImmutable::parse($data['cutoff_at'], config('regional.display_timezone'))->utc(),
             'notes' => $data['notes'] ?? null,
             'attestations' => collect($data['attestations'])->map(fn ($value): bool => (bool) $value)->all(),
         ]);
