@@ -236,6 +236,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Flujo de puesta en marcha en `6a4b8a1`: registra fecha de corte y declaraciones de conciliación, exige propietario, periodo mensual abierto y respaldo reciente válido, requiere contraseña y frase exacta, y bloquea cambios después de la activación auditada.
 - La fecha de corte se interpreta en `America/Bogota`, se persiste en UTC y vuelve a mostrarse en hora local; corrección registrada en `49c16b0`.
 - Verificación local informada por el usuario el 4 de septiembre de 2026: la migración `launch_configurations` y la compilación con Node 24.5.0 aprobaron. La carga real y activación siguen pendientes del lanzamiento.
+- Diagnóstico de producción reforzado en `5985b82`: exige HTTPS forzado, cookie y sesión cifradas, correo real de recuperación, remitente configurado y extensión Zip; la plantilla usa `MAIL_SCHEME` compatible con Laravel actual.
 
 ## Futuro: Capacitor
 
