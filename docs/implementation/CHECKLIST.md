@@ -241,7 +241,8 @@ El comando `app:lan-readiness` detecta configuración insegura o incompleta y `a
 - La verificación desde otro dispositivo, la regla real del firewall y la copia externa del primer respaldo requieren ejecutarse en la red del usuario antes de cerrar esta entrega.
 - El enlace exclusivo a la IPv4 privada no bloquea túneles salientes. El futuro acceso público usará un perfil separado con HTTPS, cookies seguras y proxy confiable; no reutilizará la configuración HTTP de LAN.
 - Inicio automático preparado en `80f52a2`: dos tareas limitadas al usuario actual ejecutan servidor y programador, validan primero el modo LAN, evitan instancias duplicadas, reinician ante fallos y disponen de retiro reversible.
-- Verificación de diagnóstico informada por el usuario el 3 de septiembre de 2026: migraciones al día, `LanAccessUrlTest` aprobado con 6 aserciones y todas las comprobaciones de `app:lan-readiness` en estado OK. La instalación de tareas falló únicamente porque PowerShell se ejecutó desde `C:\WINDOWS\system32` con una ruta relativa y una ruta de PHP incompleta; no corresponde a un defecto del script.
+- Verificación de diagnóstico informada por el usuario el 3 de septiembre de 2026: migraciones al día, `LanAccessUrlTest` aprobado con 6 aserciones y todas las comprobaciones de `app:lan-readiness` en estado OK. La primera instalación no encontró el script al ejecutarse desde `C:\WINDOWS\system32` con una ruta relativa y una ruta de PHP incompleta.
+- La segunda ejecución reveló que `$PSScriptRoot` no es confiable como valor predeterminado dentro de `param`. El instalador ahora resuelve proyecto y PHP después de enlazar los argumentos, por lo que funciona desde cualquier directorio; continúa pendiente repetirlo con la ruta correcta `C:\Users\andre\.config\herd\bin\php84\php.exe`.
 
 ## Entrega 12B: Lanzamiento por Internet (posterior)
 

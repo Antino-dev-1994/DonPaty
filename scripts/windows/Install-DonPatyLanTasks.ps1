@@ -1,10 +1,18 @@
 [CmdletBinding()]
 param(
-    [string] $ProjectPath = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path,
-    [string] $PhpPath = (Get-Command php -ErrorAction Stop).Source
+    [string] $ProjectPath,
+    [string] $PhpPath
 )
 
 $ErrorActionPreference = 'Stop'
+
+if ([string]::IsNullOrWhiteSpace($ProjectPath)) {
+    $ProjectPath = Join-Path $PSScriptRoot '..\..'
+}
+
+if ([string]::IsNullOrWhiteSpace($PhpPath)) {
+    $PhpPath = (Get-Command php -ErrorAction Stop).Source
+}
 
 $resolvedProject = (Resolve-Path -LiteralPath $ProjectPath).Path
 $resolvedPhp = (Resolve-Path -LiteralPath $PhpPath).Path
