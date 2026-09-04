@@ -217,6 +217,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - La verificación comprueba el hash del archivo completo, identidad del manifiesto, base de datos y cada adjunto. La restauración no se expone como botón web: exige el comando `backups:restore`, frase exacta por ULID, una segunda verificación, respaldo previo y modo mantenimiento.
 - Pruebas básicas preparadas: sanitización recursiva y creación/verificación real de un respaldo SQLite. La ejecución permanece pendiente del comando indicado al usuario.
 - Primera verificación del 3 de septiembre de 2026: las migraciones nuevas aprobaron, pero la prueba detectó el orden incorrecto al revertir un índice único antiguo y el build detectó un import de iconos inconsistente. Ambos defectos quedaron corregidos en `be47670`; se requiere repetir solo prueba y build.
+- Segunda verificación: el build aprobó y la sanitización obtuvo 4 aserciones correctas; el escenario SQLite quedó aislado en `15c6978` para evitar que una base `:memory:` nueva heredara estado estático entre dos pruebas. Solo falta repetir ese escenario.
 
 ## Entrega 12: Lanzamiento por Internet
 
@@ -231,6 +232,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Commit de preparación de lanzamiento.
 - Preparación portable en `dea2089`: plantilla de producción sin secretos, HTTPS y proxies configurables, diagnóstico `app:readiness`, respaldo diario con retención, escenario CI MySQL y runbook con checklist de lanzamiento.
 - El proveedor, ambiente de ensayo, dominio, persistencia externa, cron real, MySQL real y fecha de corte siguen deliberadamente pendientes de evidencia operativa.
+- Flujo de puesta en marcha en `6a4b8a1`: registra fecha de corte y declaraciones de conciliación, exige propietario, periodo mensual abierto y respaldo reciente válido, requiere contraseña y frase exacta, y bloquea cambios después de la activación auditada.
 
 ## Futuro: Capacitor
 
