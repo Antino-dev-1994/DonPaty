@@ -235,6 +235,9 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 
 El comando `app:lan-readiness` detecta configuración insegura o incompleta y `app:lan` solo inicia cuando no hay errores. Este modo nunca requiere ni autoriza abrir el puerto 8000 hacia Internet.
 
+- Evidencia de implementación LAN: commit `ed8dd65`; incluye plantilla sin secretos, diagnóstico, servidor vinculado a todas las interfaces, protección del ambiente desplegado y guía de operación en Windows/Wi-Fi.
+- La verificación desde otro dispositivo, la regla real del firewall y la copia externa del primer respaldo requieren ejecutarse en la red del usuario antes de cerrar esta entrega.
+
 ## Entrega 12B: Lanzamiento por Internet (posterior)
 
 - [ ] Migraciones verificadas en MySQL.
