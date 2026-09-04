@@ -215,9 +215,9 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Los datos antes/después pasan por un sanitizador recursivo central que reemplaza contraseñas, secretos, tokens, credenciales, cookies y llaves privadas por `[REDACTADO]`.
 - Evidencia de respaldos: commit `5dc5493`; genera un ZIP privado con copia consistente SQLite o `mysqldump`, todos los adjuntos registrados y un manifiesto versionado con tamaño y SHA-256 por entrada.
 - La verificación comprueba el hash del archivo completo, identidad del manifiesto, base de datos y cada adjunto. La restauración no se expone como botón web: exige el comando `backups:restore`, frase exacta por ULID, una segunda verificación, respaldo previo y modo mantenimiento.
-- Pruebas básicas preparadas: sanitización recursiva y creación/verificación real de un respaldo SQLite. La ejecución permanece pendiente del comando indicado al usuario.
+- Pruebas básicas: sanitización recursiva y creación/verificación real de un respaldo SQLite.
 - Primera verificación del 3 de septiembre de 2026: las migraciones nuevas aprobaron, pero la prueba detectó el orden incorrecto al revertir un índice único antiguo y el build detectó un import de iconos inconsistente. Ambos defectos quedaron corregidos en `be47670`; se requiere repetir solo prueba y build.
-- Segunda verificación: el build aprobó y la sanitización obtuvo 4 aserciones correctas; el escenario SQLite quedó aislado en `15c6978` para evitar que una base `:memory:` nueva heredara estado estático entre dos pruebas. Solo falta repetir ese escenario.
+- Segunda verificación: el build aprobó y la sanitización obtuvo 4 aserciones correctas; el escenario SQLite quedó aislado en `15c6978` para evitar que una base `:memory:` nueva heredara estado estático entre dos pruebas.
 - Verificación final informada por el usuario el 4 de septiembre de 2026: el respaldo SQLite y su manifiesto aprobaron con 4 aserciones; junto con la compilación previa, E11 queda cerrada.
 
 ## Entrega 12: Lanzamiento por Internet
