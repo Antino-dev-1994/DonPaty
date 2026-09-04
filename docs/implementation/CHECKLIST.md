@@ -240,6 +240,7 @@ El comando `app:lan-readiness` detecta configuración insegura o incompleta y `a
 - Evidencia de implementación LAN: commit `ed8dd65`; incluye plantilla sin secretos, diagnóstico, servidor vinculado a todas las interfaces, protección del ambiente desplegado y guía de operación en Windows/Wi-Fi.
 - La verificación desde otro dispositivo, la regla real del firewall y la copia externa del primer respaldo requieren ejecutarse en la red del usuario antes de cerrar esta entrega.
 - El enlace exclusivo a la IPv4 privada no bloquea túneles salientes. El futuro acceso público usará un perfil separado con HTTPS, cookies seguras y proxy confiable; no reutilizará la configuración HTTP de LAN.
+- Inicio automático preparado en `80f52a2`: dos tareas limitadas al usuario actual ejecutan servidor y programador, validan primero el modo LAN, evitan instancias duplicadas, reinician ante fallos y disponen de retiro reversible.
 
 ## Entrega 12B: Lanzamiento por Internet (posterior)
 
