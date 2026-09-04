@@ -208,7 +208,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [x] Respaldos de base de datos y archivos.
 - [x] Manifiesto e integridad.
 - [x] Restauración controlada.
-- [ ] Verificación funcional y commit.
+- [x] Verificación funcional y commit.
 - Evidencia de adjuntos: commit `995263e`; almacenamiento privado con nombres físicos aleatorios, PDF/JPEG/PNG hasta 10 MB configurable, hash SHA-256 y autorización heredada del documento.
 - La carga, descarga y eliminación quedan auditadas; cada descarga comprueba la integridad antes de entregar el archivo. El panel reutilizable ya está integrado en ventas, compras y producciones.
 - Evidencia de auditoría: commit `7685353`; filtros por usuario, acción, documento, rango de fechas y presencia de autorización, detalle enlazado de la excepción y paginación conservando filtros.
@@ -218,6 +218,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Pruebas básicas preparadas: sanitización recursiva y creación/verificación real de un respaldo SQLite. La ejecución permanece pendiente del comando indicado al usuario.
 - Primera verificación del 3 de septiembre de 2026: las migraciones nuevas aprobaron, pero la prueba detectó el orden incorrecto al revertir un índice único antiguo y el build detectó un import de iconos inconsistente. Ambos defectos quedaron corregidos en `be47670`; se requiere repetir solo prueba y build.
 - Segunda verificación: el build aprobó y la sanitización obtuvo 4 aserciones correctas; el escenario SQLite quedó aislado en `15c6978` para evitar que una base `:memory:` nueva heredara estado estático entre dos pruebas. Solo falta repetir ese escenario.
+- Verificación final informada por el usuario el 4 de septiembre de 2026: el respaldo SQLite y su manifiesto aprobaron con 4 aserciones; junto con la compilación previa, E11 queda cerrada.
 
 ## Entrega 12: Lanzamiento por Internet
 
