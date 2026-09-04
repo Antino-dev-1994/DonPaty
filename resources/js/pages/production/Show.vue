@@ -233,7 +233,7 @@ const money = (value: number) =>
             <div class="mt-3 grid grid-cols-2 gap-3 text-sm md:grid-cols-4">
                 <div><p class="text-xs text-muted-foreground">Ingredientes</p><strong>{{ money(order.ingredient_cost) }}</strong></div>
                 <div><p class="text-xs text-muted-foreground">Mano de obra</p><strong>{{ money(order.labor_cost) }}</strong></div>
-                <div><p class="text-xs text-muted-foreground">Gas y electricidad</p><strong>{{ money(order.overhead_cost) }}</strong></div>
+                <div><p class="text-xs text-muted-foreground">Servicios</p><strong>{{ money(order.overhead_cost) }}</strong></div>
                 <div><p class="text-xs text-muted-foreground">Total</p><strong>{{ money(order.total_cost) }}</strong></div>
             </div>
         </section>

@@ -21,10 +21,10 @@ class OpenCostPeriod
     {
         $types = array_values(array_unique(array_map(fn ($utility) => $utility->type->value, $data->utilities)));
         sort($types);
-        $requiredTypes = [UtilityType::Electricity->value, UtilityType::Gas->value];
+        $requiredTypes = array_map(fn (UtilityType $type) => $type->value, UtilityType::cases());
         sort($requiredTypes);
-        if (count($data->utilities) !== 2 || $types !== $requiredTypes) {
-            throw new DomainException('El periodo debe registrar una factura de electricidad y una de gas.');
+        if (count($data->utilities) !== count($requiredTypes) || $types !== $requiredTypes) {
+            throw new DomainException('El periodo debe registrar una factura de electricidad, gas y agua.');
         }
 
         return DB::transaction(function()use($data):CostPeriod{

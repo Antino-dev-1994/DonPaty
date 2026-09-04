@@ -55,6 +55,10 @@ class FinanceReferenceSeeder extends Seeder
             'name' => 'Gas del negocio', 'account_type' => FinancialAccountType::Expense,
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
         ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '5135-AGUA'], [
+            'name' => 'Agua del negocio', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
         FinancialAccount::query()->updateOrCreate(['code' => '5195-OTROS-GASTOS'], [
             'name' => 'Otros gastos del negocio', 'account_type' => FinancialAccountType::Expense,
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,

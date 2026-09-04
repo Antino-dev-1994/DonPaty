@@ -175,6 +175,7 @@ class ProductionTest extends TestCase
         return [
             new UtilityCostData(UtilityType::Electricity, Carbon::parse('2026-08-01'), Carbon::parse('2026-08-31'), Carbon::parse('2026-08-31'), 100, '100', '0', null, null, 100, 'Tarifa inicial de prueba.'),
             new UtilityCostData(UtilityType::Gas, Carbon::parse('2026-08-01'), Carbon::parse('2026-08-31'), Carbon::parse('2026-08-31'), 200, '100', '0', null, null, 200, 'Tarifa inicial de prueba.'),
+            new UtilityCostData(UtilityType::Water, Carbon::parse('2026-08-01'), Carbon::parse('2026-08-31'), Carbon::parse('2026-08-31'), 300, '100', '0', null, null, 300, 'Tarifa inicial de prueba.'),
         ];
     }
 

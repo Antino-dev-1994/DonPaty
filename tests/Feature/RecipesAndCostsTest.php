@@ -54,10 +54,10 @@ class RecipesAndCostsTest extends TestCase
     public function test_first_cost_period_uses_manual_rates_and_next_period_suggests_from_flour_history(): void
     {
         $owner = $this->owner();
-        $august = app(OpenCostPeriod::class)->execute(new OpenCostPeriodData(2026, 8, $owner, $this->utilities('2026-07-01', '2026-07-31', 100000, 60, 700, 500)));
+        $august = app(OpenCostPeriod::class)->execute(new OpenCostPeriodData(2026, 8, $owner, $this->utilities('2026-07-01', '2026-07-31', 100000, 60, 700, 500, 300)));
         $august->update(['processed_flour_quantity' => 100]);
 
-        $september = app(OpenCostPeriod::class)->execute(new OpenCostPeriodData(2026, 9, $owner, $this->utilities('2026-08-01', '2026-08-31', 120000, 50, null, null)));
+        $september = app(OpenCostPeriod::class)->execute(new OpenCostPeriodData(2026, 9, $owner, $this->utilities('2026-08-01', '2026-08-31', 120000, 50, null, null, null)));
         $electricity = $september->rates()->where('cost_type', UtilityType::Electricity)->sole();
 
         $this->assertSame(600, $electricity->suggested_rate);
@@ -86,11 +86,12 @@ class RecipesAndCostsTest extends TestCase
     }
 
     /** @return list<UtilityCostData> */
-    private function utilities(string $from, string $to, int $total, int $businessPercentage, ?int $electricityRate, ?int $gasRate): array
+    private function utilities(string $from, string $to, int $total, int $businessPercentage, ?int $electricityRate, ?int $gasRate, ?int $waterRate): array
     {
         return [
             new UtilityCostData(UtilityType::Electricity, Carbon::parse($from), Carbon::parse($to), Carbon::parse($to), $total, (string) $businessPercentage, (string) (100 - $businessPercentage), null, null, $electricityRate, $electricityRate === null ? null : 'Tarifa inicial sin historial.'),
             new UtilityCostData(UtilityType::Gas, Carbon::parse($from), Carbon::parse($to), Carbon::parse($to), $total, (string) $businessPercentage, (string) (100 - $businessPercentage), null, null, $gasRate, $gasRate === null ? null : 'Tarifa inicial sin historial.'),
+            new UtilityCostData(UtilityType::Water, Carbon::parse($from), Carbon::parse($to), Carbon::parse($to), $total, (string) $businessPercentage, (string) (100 - $businessPercentage), null, null, $waterRate, $waterRate === null ? null : 'Tarifa inicial sin historial.'),
         ];
     }
 

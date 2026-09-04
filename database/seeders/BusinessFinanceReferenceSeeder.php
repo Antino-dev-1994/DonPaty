@@ -17,6 +17,7 @@ class BusinessFinanceReferenceSeeder extends Seeder
         $this->category('GAS-MANO-OBRA', 'Mano de obra', FinancialCategoryType::Expense, '5105-MANO-OBRA', CostType::Labor);
         $this->category('GAS-ELECTRICIDAD', 'Electricidad', FinancialCategoryType::Expense, '5135-ELECTRICIDAD', CostType::Electricity);
         $this->category('GAS-GAS', 'Gas', FinancialCategoryType::Expense, '5135-GAS', CostType::Gas);
+        $this->category('GAS-AGUA', 'Agua', FinancialCategoryType::Expense, '5135-AGUA', CostType::Water);
         $this->category('GAS-OTROS', 'Otros gastos', FinancialCategoryType::Expense, '5195-OTROS-GASTOS');
     }
 

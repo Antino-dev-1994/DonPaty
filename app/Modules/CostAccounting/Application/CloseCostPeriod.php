@@ -37,10 +37,10 @@ class CloseCostPeriod
                 throw new DomainException('Finaliza o revierte las producciones pendientes antes de cerrar el periodo.');
             }
             $unlinkedUtilities = $period->poolEntries
-                ->whereIn('cost_type', [CostType::Electricity, CostType::Gas])
+                ->whereIn('cost_type', CostType::utilities())
                 ->filter(fn ($entry) => ! ExpenseRecord::query()->where('cost_pool_entry_id', $entry->id)->exists());
             if ($unlinkedUtilities->isNotEmpty()) {
-                throw new DomainException('Registra los gastos de electricidad y gas asociados a las facturas del periodo antes de cerrarlo.');
+                throw new DomainException('Registra los gastos de servicios asociados a las facturas del periodo antes de cerrarlo.');
             }
 
             $journalLines = [];

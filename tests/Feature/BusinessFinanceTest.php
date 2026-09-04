@@ -63,12 +63,13 @@ class BusinessFinanceTest extends TestCase
             [
                 $this->utility(UtilityType::Electricity, 1000, 100),
                 $this->utility(UtilityType::Gas, 2000, 200),
+                $this->utility(UtilityType::Water, 3000, 300),
             ],
             500,
             'Tarifa inicial de prueba.',
         ));
 
-        foreach ([[CostType::Electricity, 'GAS-ELECTRICIDAD'], [CostType::Gas, 'GAS-GAS']] as [$costType, $categoryCode]) {
+        foreach ([[CostType::Electricity, 'GAS-ELECTRICIDAD'], [CostType::Gas, 'GAS-GAS'], [CostType::Water, 'GAS-AGUA']] as [$costType, $categoryCode]) {
             $poolEntry = $period->poolEntries()->where('cost_type', $costType)->sole();
             app(RegisterExpense::class)->execute(new RegisterExpenseData(
                 FinancialCategory::query()->where('code', $categoryCode)->sole()->id,

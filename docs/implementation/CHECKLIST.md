@@ -262,6 +262,17 @@ El comando `app:lan-readiness` detecta configuración insegura o incompleta y `a
 - Infraestructura preseleccionada: VPS Hostinger o Teramont, dominio inicial DigitalPlat FreeDomain con DNS autoritativo externo, adjuntos privados persistentes y respaldos en un bucket S3 compatible fuera del VPS. La contratación, el nombre exacto y la evidencia operativa siguen pendientes.
 - Los discos `attachments_s3` y `backups_s3` tienen credenciales independientes y acceso privado; producción usará `backups_s3` aunque los adjuntos permanezcan inicialmente en el volumen del VPS.
 
+## Datos demostrativos
+
+- [x] Agua incorporada como servicio mensual, costo indirecto y categoría contable.
+- [ ] Tres habitantes y usuarios demostrativos.
+- [ ] Materias primas, compras y existencias.
+- [ ] Recetas versionadas de cascarita, bolita y tajado.
+- [ ] Periodo de costos con recibos de agua y electricidad.
+- [ ] Producciones terminadas y ventas representativas.
+- [ ] Datos del hogar y métricas visibles.
+- [ ] Seeder idempotente, prueba básica y commit.
+
 ## Futuro: Capacitor
 
 - [ ] API móvil versionada.
