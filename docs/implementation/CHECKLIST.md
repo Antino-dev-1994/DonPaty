@@ -216,6 +216,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Evidencia de respaldos: commit `5dc5493`; genera un ZIP privado con copia consistente SQLite o `mysqldump`, todos los adjuntos registrados y un manifiesto versionado con tamaño y SHA-256 por entrada.
 - La verificación comprueba el hash del archivo completo, identidad del manifiesto, base de datos y cada adjunto. La restauración no se expone como botón web: exige el comando `backups:restore`, frase exacta por ULID, una segunda verificación, respaldo previo y modo mantenimiento.
 - Pruebas básicas preparadas: sanitización recursiva y creación/verificación real de un respaldo SQLite. La ejecución permanece pendiente del comando indicado al usuario.
+- Primera verificación del 3 de septiembre de 2026: las migraciones nuevas aprobaron, pero la prueba detectó el orden incorrecto al revertir un índice único antiguo y el build detectó un import de iconos inconsistente. Ambos defectos quedaron corregidos en `be47670`; se requiere repetir solo prueba y build.
 
 ## Entrega 12: Lanzamiento por Internet
 
@@ -227,7 +228,9 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [ ] Respaldos automáticos.
 - [ ] Carga inicial y fecha de corte.
 - [ ] Revisión de permisos y comprobación de humo.
-- [ ] Commit de preparación de lanzamiento.
+- [x] Commit de preparación de lanzamiento.
+- Preparación portable en `dea2089`: plantilla de producción sin secretos, HTTPS y proxies configurables, diagnóstico `app:readiness`, respaldo diario con retención, escenario CI MySQL y runbook con checklist de lanzamiento.
+- El proveedor, ambiente de ensayo, dominio, persistencia externa, cron real, MySQL real y fecha de corte siguen deliberadamente pendientes de evidencia operativa.
 
 ## Futuro: Capacitor
 
