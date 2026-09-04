@@ -241,6 +241,7 @@ El comando `app:lan-readiness` detecta configuración insegura o incompleta y `a
 - La verificación desde otro dispositivo, la regla real del firewall y la copia externa del primer respaldo requieren ejecutarse en la red del usuario antes de cerrar esta entrega.
 - El enlace exclusivo a la IPv4 privada no bloquea túneles salientes. El futuro acceso público usará un perfil separado con HTTPS, cookies seguras y proxy confiable; no reutilizará la configuración HTTP de LAN.
 - Inicio automático preparado en `80f52a2`: dos tareas limitadas al usuario actual ejecutan servidor y programador, validan primero el modo LAN, evitan instancias duplicadas, reinician ante fallos y disponen de retiro reversible.
+- Verificación de diagnóstico informada por el usuario el 3 de septiembre de 2026: migraciones al día, `LanAccessUrlTest` aprobado con 6 aserciones y todas las comprobaciones de `app:lan-readiness` en estado OK. La instalación de tareas falló únicamente porque PowerShell se ejecutó desde `C:\WINDOWS\system32` con una ruta relativa y una ruta de PHP incompleta; no corresponde a un defecto del script.
 
 ## Entrega 12B: Lanzamiento por Internet (posterior)
 
@@ -265,13 +266,16 @@ El comando `app:lan-readiness` detecta configuración insegura o incompleta y `a
 ## Datos demostrativos
 
 - [x] Agua incorporada como servicio mensual, costo indirecto y categoría contable.
-- [ ] Tres habitantes y usuarios demostrativos.
-- [ ] Materias primas, compras y existencias.
-- [ ] Recetas versionadas de cascarita, bolita y tajado.
-- [ ] Periodo de costos con recibos de agua y electricidad.
-- [ ] Producciones terminadas y ventas representativas.
-- [ ] Datos del hogar y métricas visibles.
-- [ ] Seeder idempotente, prueba básica y commit.
+- [x] Tres habitantes y usuarios demostrativos.
+- [x] Materias primas, compras y existencias.
+- [x] Recetas versionadas de cascarita, bolita y tajado.
+- [x] Periodo de costos con recibos de agua y electricidad.
+- [x] Producciones terminadas y ventas representativas.
+- [x] Datos del hogar y métricas visibles.
+- [x] Seeder idempotente y prueba básica implementados.
+- [ ] Verificación del seeder y commit de cierre.
+
+El agua quedó integrada en `17f3e87`. El escenario se carga explícitamente con `php artisan db:seed --class=DemoBakerySeeder`, se restringe a ambientes no productivos y está descrito en `docs/demo/DATASET.md`.
 
 ## Futuro: Capacitor
 
