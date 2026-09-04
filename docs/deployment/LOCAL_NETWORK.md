@@ -6,6 +6,7 @@ Esta es la prioridad de despliegue actual. El computador principal conserva la a
 
 - El computador servidor debe permanecer encendido, conectado a la misma red y sin suspensión mientras se use DonPaty.
 - La red debe ser privada y estar protegida con WPA2 o WPA3.
+- El modo inicial usa HTTP y no ofrece cifrado extremo a extremo dentro de la LAN. Solo debe utilizarse en una red doméstica confiable; no ingreses desde redes públicas o de invitados.
 - No crear redirección de puertos en el router. Este modo no debe exponerse directamente a Internet.
 - Conviene reservar la IPv4 del computador en el DHCP del router para evitar que la dirección cambie.
 - Cada persona ingresa con su propio usuario; no compartir la cuenta propietaria.
@@ -55,6 +56,8 @@ php artisan schedule:work
 ```
 
 Los demás dispositivos abren la dirección mostrada, por ejemplo `http://192.168.1.50:8000`. El comando se detiene con `Ctrl+C`.
+
+El servidor escucha únicamente en la IPv4 privada indicada por `APP_URL`, no en todas las interfaces del computador. Si esa dirección deja de pertenecer al equipo, el servidor no podrá enlazarla y deberá corregirse el `.env`.
 
 ## Respaldo y recuperación
 

@@ -223,7 +223,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 ## Entrega 12A: Operación local en la red Wi-Fi (prioridad actual)
 
 - [x] Ambiente `lan` separado del desarrollo y de producción.
-- [x] URL validada con IPv4 privada y servidor accesible en `0.0.0.0`.
+- [x] URL validada y servidor vinculado únicamente a la IPv4 privada del Wi-Fi.
 - [x] SQLite, sesiones cifradas y assets compilados verificados por diagnóstico.
 - [x] Contraseñas fuertes y comandos destructivos protegidos en ambiente LAN.
 - [x] Guía de firewall privado, IP estable, uso diario y programador.
@@ -233,10 +233,11 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - [ ] Revisión de permisos y comprobación de humo con usuarios reales.
 - [x] Commit de operación LAN.
 
-El comando `app:lan-readiness` detecta configuración insegura o incompleta y `app:lan` solo inicia cuando no hay errores. Este modo nunca requiere ni autoriza abrir el puerto 8000 hacia Internet.
+El comando `app:lan-readiness` detecta configuración insegura o incompleta y `app:lan` solo inicia cuando no hay errores. El modo inicial usa HTTP en una red privada confiable y nunca requiere ni autoriza abrir el puerto 8000 hacia Internet.
 
 - Evidencia de implementación LAN: commit `ed8dd65`; incluye plantilla sin secretos, diagnóstico, servidor vinculado a todas las interfaces, protección del ambiente desplegado y guía de operación en Windows/Wi-Fi.
 - La verificación desde otro dispositivo, la regla real del firewall y la copia externa del primer respaldo requieren ejecutarse en la red del usuario antes de cerrar esta entrega.
+- El enlace exclusivo a la IPv4 privada no bloquea túneles salientes. El futuro acceso público usará un perfil separado con HTTPS, cookies seguras y proxy confiable; no reutilizará la configuración HTTP de LAN.
 
 ## Entrega 12B: Lanzamiento por Internet (posterior)
 

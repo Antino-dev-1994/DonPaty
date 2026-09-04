@@ -29,10 +29,11 @@ final class ServeLanCommand extends Command
         }
 
         $this->components->info("DonPaty estará disponible en {$accessUrl->value}");
-        $this->components->warn('Úsalo solo dentro de tu Wi-Fi. No abras ni redirijas este puerto desde el router hacia Internet.');
+        $this->components->warn('El modo inicial usa HTTP: úsalo únicamente en tu Wi-Fi privado y confiable.');
+        $this->components->warn('No abras ni redirijas este puerto desde el router hacia Internet.');
 
         return $this->call('serve', [
-            '--host' => '0.0.0.0',
+            '--host' => $accessUrl->host,
             '--port' => $accessUrl->port,
             '--no-reload' => true,
         ]);
