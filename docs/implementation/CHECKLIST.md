@@ -179,7 +179,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Solo los gastos marcados consumen presupuesto; las transferencias internas quedan excluidas y la visibilidad del ejecutado respeta el alcance autorizado del usuario.
 - Evidencia de deudas y ahorro: commit `4e7aac6`; obligaciones por pagar, préstamos por cobrar, cronograma mensual, capital e interés separados, abonos parciales o anticipados y cierre automático de cuotas.
 - Las metas muestran objetivo, ahorrado, pendiente y porcentaje; cada aporte es un traslado contable entre cuentas con validación de saldo, sin crear ingresos o gastos ficticios.
-- Pruebas básicas preparadas en el commit `1988ebb`: un escenario de privacidad, solicitud, mano de obra y presupuesto; otro de deuda, interés y ahorro. La verificación permanece pendiente hasta ejecutar el comando indicado.
+- Pruebas básicas preparadas en el commit `1988ebb`: un escenario de privacidad, solicitud, mano de obra y presupuesto; otro de deuda, interés y ahorro.
 - Verificación final informada por el usuario el 2 de septiembre de 2026: las 2 pruebas de hogar aprobaron con 14 aserciones y la compilación de producción terminó correctamente.
 
 ## Entrega 10: Tableros y reportes
@@ -197,7 +197,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Cartera, obligaciones, ejecución presupuestal, solicitudes, deudas y ahorro conservan los filtros de ámbito y privacidad definidos en sus módulos de origen.
 - Evidencia del tablero: commit `38724d3`; propietario y administrador ven decisiones financieras, producción y ventas ven indicadores operativos sin costos, y cada habitante recibe únicamente el resumen privado del hogar.
 - El tablero incorpora acciones rápidas por permiso, pedidos próximos o atrasados, demanda pendiente de producción, periodo de costos faltante, inventario crítico, cartera vencida y solicitudes por atender.
-- Pruebas básicas preparadas en el commit `b6d55c6`: separación entre flujo y resultado con obligación vencida, y bloqueo de costos/valorización para un rol exclusivamente operativo. La verificación permanece pendiente de ejecución.
+- Pruebas básicas preparadas en el commit `b6d55c6`: separación entre flujo y resultado con obligación vencida, y bloqueo de costos/valorización para un rol exclusivamente operativo.
 - Verificación final informada por el usuario el 2 de septiembre de 2026: las 2 pruebas aprobaron con 12 aserciones y la compilación de producción terminó correctamente.
 - Protección complementaria en el commit `5976912`: los costos de una producción también se omiten en el servidor y en la interfaz cuando el usuario no posee `reports.view-financial`.
 
