@@ -233,6 +233,7 @@ Este documento registra el avance real de DonPaty. Un elemento solo se marca com
 - Preparación portable en `dea2089`: plantilla de producción sin secretos, HTTPS y proxies configurables, diagnóstico `app:readiness`, respaldo diario con retención, escenario CI MySQL y runbook con checklist de lanzamiento.
 - El proveedor, ambiente de ensayo, dominio, persistencia externa, cron real, MySQL real y fecha de corte siguen deliberadamente pendientes de evidencia operativa.
 - Flujo de puesta en marcha en `6a4b8a1`: registra fecha de corte y declaraciones de conciliación, exige propietario, periodo mensual abierto y respaldo reciente válido, requiere contraseña y frase exacta, y bloquea cambios después de la activación auditada.
+- La fecha de corte se interpreta en `America/Bogota`, se persiste en UTC y vuelve a mostrarse en hora local; corrección registrada en `49c16b0`.
 
 ## Futuro: Capacitor
 
