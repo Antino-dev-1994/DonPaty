@@ -44,7 +44,7 @@ class DemoSalesSeeder extends Seeder
             customerProfileId: null,
             salesOrderId: null,
             priceListId: $retail->id,
-            soldAt: Carbon::now()->subHour(),
+            soldAt: Carbon::now(),
             dueAt: null,
             discount: 0,
             actor: $actor,

@@ -40,7 +40,7 @@ class DemoProductionSeeder extends Seeder
             ],
             actualDough: '17.6',
             waste: '0.4',
-            plannedFor: $now->copy()->subHours(4),
+            plannedFor: $now->copy(),
         );
 
         $slicedVersion = $this->version(DemoCatalogSeeder::SLICED_RECIPE, $now);
@@ -54,7 +54,7 @@ class DemoProductionSeeder extends Seeder
             ],
             actualDough: '14.52',
             waste: '0.44',
-            plannedFor: $now->copy()->subHours(2),
+            plannedFor: $now->copy(),
         );
     }
 
