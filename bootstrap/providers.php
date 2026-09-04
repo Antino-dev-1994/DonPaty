@@ -2,6 +2,7 @@
 
 use App\Modules\Dashboard\DashboardServiceProvider;
 use App\Modules\Attachments\AttachmentsServiceProvider;
+use App\Modules\Backups\BackupsServiceProvider;
 use App\Modules\Audit\AuditServiceProvider;
 use App\Modules\Catalog\CatalogServiceProvider;
 use App\Modules\CashManagement\CashManagementServiceProvider;
@@ -25,6 +26,7 @@ return [
     AppServiceProvider::class,
     FortifyServiceProvider::class,
     AttachmentsServiceProvider::class,
+    BackupsServiceProvider::class,
     IdentityServiceProvider::class,
     AuditServiceProvider::class,
     CatalogServiceProvider::class,
