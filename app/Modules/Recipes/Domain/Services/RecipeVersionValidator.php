@@ -9,6 +9,7 @@ use App\Modules\Catalog\Domain\Models\Unit;
 use App\Modules\Catalog\Domain\Services\UnitConverter;
 use App\Modules\Recipes\Application\Data\RecipeVersionData;
 use App\Modules\Recipes\Domain\Enums\IngredientRole;
+use App\Modules\Recipes\Domain\Enums\RecipeBatchComponentType;
 use DomainException;
 
 class RecipeVersionValidator
@@ -38,6 +39,19 @@ class RecipeVersionValidator
                 $referenceInIngredientUnit = $this->converter->convert($data->referenceFlourQuantity, $referenceUnit, $unit);
                 if (bccomp($ingredient->quantity, $referenceInIngredientUnit, 4) !== 0) throw new DomainException('La cantidad de harina debe coincidir con la referencia de la versión.');
             }
+        }
+
+        foreach ($data->batchComponents as $component) {
+            if (trim($component->label) === '') throw new DomainException('Todo costo por lote necesita una descripción.');
+            if ($component->type === RecipeBatchComponentType::InventoryConsumption) {
+                if (! $component->itemId || ! $component->unitId || $component->quantityPerBatch === null || bccomp($component->quantityPerBatch, '0', 6) <= 0) throw new DomainException('El insumo por lote requiere artículo, cantidad y unidad.');
+                $item = Item::query()->where('is_active', true)->findOrFail($component->itemId);
+                $unit = Unit::query()->findOrFail($component->unitId);
+                $hasCompatiblePresentation = ProductPresentation::query()->with('stockUnit')->where('item_id', $item->id)->where('is_active', true)->where('is_stockable', true)->get()->contains(fn (ProductPresentation $presentation) => $presentation->stockUnit->dimension === $unit->dimension);
+                if (! $hasCompatiblePresentation) throw new DomainException("{$item->name} necesita una presentación inventariable compatible con la unidad del lote.");
+                continue;
+            }
+            if ($component->amountPerBatch === null || $component->amountPerBatch <= 0) throw new DomainException('El costo estándar por lote debe ser mayor que cero.');
         }
 
         if ($data->compatibleProducts === []) throw new DomainException('La versión debe incluir al menos un producto compatible.');

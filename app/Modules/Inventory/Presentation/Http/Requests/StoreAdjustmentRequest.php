@@ -22,6 +22,7 @@ class StoreAdjustmentRequest extends FormRequest
             'lines.*.presentation_id' => ['required', 'ulid', 'distinct', 'exists:product_presentations,id'],
             'lines.*.counted_quantity' => ['required', 'numeric', 'decimal:0,6'],
             'lines.*.unit_cost' => ['nullable', 'integer', 'min:0'],
+            'replaces_adjustment_id' => ['nullable', 'ulid', 'exists:inventory_adjustments,id'],
         ];
     }
 }

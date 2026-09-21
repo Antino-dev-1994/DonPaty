@@ -15,6 +15,10 @@ class FinanceReferenceSeeder extends Seeder
             'name' => 'Caja principal', 'account_type' => FinancialAccountType::Asset,
             'scope' => FinancialScope::Business, 'accepts_payments' => true, 'is_active' => true,
         ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '1110-NEQUI'], [
+            'name' => 'Nequi', 'account_type' => FinancialAccountType::Asset,
+            'scope' => FinancialScope::Business, 'accepts_payments' => true, 'is_active' => true,
+        ]);
         FinancialAccount::query()->updateOrCreate(['code' => '1105-CAJA-MENOR'], [
             'name' => 'Caja menor', 'account_type' => FinancialAccountType::Asset,
             'scope' => FinancialScope::Business, 'accepts_payments' => true, 'is_active' => true,
@@ -65,6 +69,10 @@ class FinanceReferenceSeeder extends Seeder
         ]);
         FinancialAccount::query()->updateOrCreate(['code' => '6135-COSTO-VENTAS'], [
             'name' => 'Costo de ventas', 'account_type' => FinancialAccountType::Expense,
+            'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
+        ]);
+        FinancialAccount::query()->updateOrCreate(['code' => '3105-CAPITAL-APORTADO'], [
+            'name' => 'Capital aportado al negocio', 'account_type' => FinancialAccountType::Equity,
             'scope' => FinancialScope::Business, 'accepts_payments' => false, 'is_active' => true,
         ]);
         FinancialAccount::query()->updateOrCreate(['code' => '3105-HOG-PATRIMONIO'], [

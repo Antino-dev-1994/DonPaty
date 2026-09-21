@@ -22,8 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(HouseholdFinanceReferenceSeeder::class);
         $this->call(PricingReferenceSeeder::class);
 
-        if (app()->environment(['local', 'testing'])) {
-            $this->call(DevelopmentOwnerSeeder::class);
-        }
+        $this->call(DonPatyOperationalSeeder::class);
     }
 }

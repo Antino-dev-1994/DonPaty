@@ -4,6 +4,7 @@ namespace App\Modules\Inventory\Presentation\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Modules\Catalog\Domain\Models\ProductPresentation;
+use App\Modules\Inventory\Domain\Models\InventoryMovement;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,6 +16,7 @@ class CreateAdjustmentController extends Controller
         abort_unless($request->user()->hasPermission('inventory.adjust'), 403);
 
         return Inertia::render('inventory/adjustments/Create', [
+            'defaultAdjustmentType' => InventoryMovement::query()->exists() ? 'manual' : 'initial',
             'presentations' => ProductPresentation::query()
                 ->with(['item:id,name,allow_negative_stock', 'stockUnit:id,code', 'inventoryBalance'])
                 ->where('is_active', true)->where('is_stockable', true)->orderBy('name')->get()->map(fn (ProductPresentation $presentation) => [

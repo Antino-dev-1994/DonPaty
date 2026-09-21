@@ -22,6 +22,7 @@ class RecipeVersion extends Model
     public function creator(): BelongsTo { return $this->belongsTo(User::class, 'created_by'); }
     public function activator(): BelongsTo { return $this->belongsTo(User::class, 'activated_by'); }
     public function ingredients(): HasMany { return $this->hasMany(RecipeIngredient::class)->orderBy('sort_order'); }
+    public function batchComponents(): HasMany { return $this->hasMany(RecipeBatchComponent::class)->orderBy('sort_order'); }
     public function compatibleProducts(): HasMany { return $this->hasMany(RecipeCompatibleProduct::class); }
 
     public function scopeApplicableOn(Builder $query, string $date): Builder

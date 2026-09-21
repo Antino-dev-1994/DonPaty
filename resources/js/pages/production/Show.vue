@@ -234,8 +234,10 @@ const money = (value: number) =>
                 <div><p class="text-xs text-muted-foreground">Ingredientes</p><strong>{{ money(order.ingredient_cost) }}</strong></div>
                 <div><p class="text-xs text-muted-foreground">Mano de obra</p><strong>{{ money(order.labor_cost) }}</strong></div>
                 <div><p class="text-xs text-muted-foreground">Servicios</p><strong>{{ money(order.overhead_cost) }}</strong></div>
+                <div><p class="text-xs text-muted-foreground">Costos por lote</p><strong>{{ money(order.batch_cost) }}</strong></div>
                 <div><p class="text-xs text-muted-foreground">Total</p><strong>{{ money(order.total_cost) }}</strong></div>
             </div>
+            <div v-if="order.batch_costs?.length" class="mt-4 divide-y border-t text-sm"><div v-for="cost in order.batch_costs" :key="cost.id" class="flex justify-between py-2"><span>{{ cost.label }}</span><strong>{{ money(cost.amount) }}</strong></div></div>
         </section>
 
         <section

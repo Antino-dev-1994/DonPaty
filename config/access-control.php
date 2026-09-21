@@ -83,6 +83,14 @@ return [
             'sales.create', 'sales.return', 'prices.override', 'cash.open', 'cash.operate', 'cash.close', 'receivables.manage',
             'reports.view-operational', 'authorizations.request',
         ]],
+        'operations_manager' => ['Operación comercial y producción', 'Compras, ventas, inventario, recetas y producción sin administración de usuarios ni autorizaciones.', [
+            'people.view', 'catalog.view', 'catalog.manage', 'inventory.view', 'inventory.adjust', 'recipes.view', 'recipes.manage',
+            'recipes.activate-version', 'production.view', 'production.manage', 'production.complete', 'cost-periods.view',
+            'customers.view', 'customers.manage', 'orders.view', 'orders.manage', 'sales.create', 'sales.return',
+            'prices.manage', 'prices.override', 'purchases.manage', 'purchases.receive', 'payables.manage',
+            'receivables.manage', 'cash.open', 'cash.operate', 'cash.close', 'finance.view', 'reports.view-operational',
+            'authorizations.request',
+        ]],
         'resident' => ['Habitante', 'Acceso limitado a la información propia del hogar.', [
             'household.view-own', 'fund-requests.create',
         ]],

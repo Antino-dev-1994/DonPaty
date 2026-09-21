@@ -18,6 +18,7 @@ use App\Modules\Production\Domain\Models\ProductionOrder;
 use App\Modules\Production\Domain\Services\IntegerCostAllocator;
 use App\Modules\Orders\Application\FulfillProductionDemand;
 use App\Modules\Recipes\Domain\Models\RecipeCompatibleProduct;
+use App\Modules\Recipes\Domain\Enums\RecipeBatchComponentType;
 use DomainException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -29,7 +30,7 @@ class CompleteProduction
     public function execute(ProductionOrder $order, CompleteProductionData $data): ProductionOrder
     {
         return DB::transaction(function () use ($order, $data): ProductionOrder {
-            $order = ProductionOrder::query()->with(['costPeriod.rates', 'consumptions.unit', 'consumptions.presentation.stockUnit'])->lockForUpdate()->findOrFail($order->id);
+            $order = ProductionOrder::query()->with(['costPeriod.rates', 'consumptions.unit', 'consumptions.presentation.stockUnit', 'recipeVersion.batchComponents'])->lockForUpdate()->findOrFail($order->id);
             if ($order->status !== ProductionStatus::InProgress || $order->costPeriod->status !== CostPeriodStatus::Open) throw new DomainException('La producción y su periodo deben estar abiertos.');
             if ($order->started_at && $data->completedAt->lt($order->started_at)) throw new DomainException('La finalización no puede ser anterior al inicio.');
             if (bccomp($data->actualDoughQuantityKg, '0', 6) <= 0 || bccomp($data->wasteQuantityKg, '0', 6) < 0) throw new DomainException('La masa real debe ser positiva y la merma no puede ser negativa.');
@@ -52,7 +53,8 @@ class CompleteProduction
             $laborCost = $this->labor->execute($order, $data);
             CostAllocation::create(['cost_period_id' => $order->cost_period_id, 'production_order_id' => $order->id, 'cost_type' => 'labor', 'base_quantity' => $order->flour_quantity, 'rate' => (int) round($laborCost / (float) $order->flour_quantity), 'amount' => $laborCost]);
             $overheadCost = $this->allocateOverheads($order);
-            $totalCost = $ingredientCost + $laborCost + $overheadCost;
+            $batchCost = $this->recordBatchCosts($order);
+            $totalCost = $ingredientCost + $laborCost + $overheadCost + $batchCost;
 
             [$outputRecords, $outputLines] = $this->prepareOutputs($order, $data, $totalCost);
             $outputMovement = $this->postMovement->execute(new InventoryMovementData(
@@ -62,10 +64,10 @@ class CompleteProduction
             foreach ($outputRecords as $record) $order->outputs()->create($record);
             $this->fulfillDemand->execute($order);
             $order->costPeriod->increment('processed_flour_quantity', (float) $order->flour_quantity);
-            $order->update(['status' => ProductionStatus::Completed, 'completed_at' => $data->completedAt, 'actual_dough_quantity' => $data->actualDoughQuantityKg, 'waste_quantity' => $data->wasteQuantityKg, 'consumption_movement_id' => $consumptionMovement->id, 'output_movement_id' => $outputMovement->id, 'ingredient_cost' => $ingredientCost, 'labor_cost' => $laborCost, 'overhead_cost' => $overheadCost, 'total_cost' => $totalCost]);
+            $order->update(['status' => ProductionStatus::Completed, 'completed_at' => $data->completedAt, 'actual_dough_quantity' => $data->actualDoughQuantityKg, 'waste_quantity' => $data->wasteQuantityKg, 'consumption_movement_id' => $consumptionMovement->id, 'output_movement_id' => $outputMovement->id, 'ingredient_cost' => $ingredientCost, 'labor_cost' => $laborCost, 'overhead_cost' => $overheadCost, 'batch_cost' => $batchCost, 'total_cost' => $totalCost]);
             if (bccomp($data->actualDoughQuantityKg, $order->expected_dough_quantity, 3) !== 0) $order->incidents()->create(['incident_type' => 'yield_difference', 'description' => 'La masa real difiere del rendimiento esperado.', 'quantity' => bcsub($data->actualDoughQuantityKg, $order->expected_dough_quantity, 6), 'recorded_by' => $data->actor->id, 'recorded_at' => $data->completedAt]);
             $this->audit->execute('production.order_completed', $order, $data->actor, after: $order->fresh(['outputs', 'consumptions', 'laborEntries', 'overheadAllocations'])->toArray(), authorizationRequestId: $order->negative_stock_authorization_id);
-            return $order->fresh(['outputs', 'consumptions', 'laborEntries', 'overheadAllocations']);
+            return $order->fresh(['outputs', 'consumptions', 'laborEntries', 'overheadAllocations', 'batchCosts']);
         });
     }
 
@@ -98,6 +100,19 @@ class CompleteProduction
             $order->overheadAllocations()->create(['overhead_rate_id' => $rate->id, 'cost_type' => $rate->cost_type, 'base_quantity' => $order->flour_quantity, 'rate' => $rate->effective_rate, 'amount' => $amount]);
             CostAllocation::create(['cost_period_id' => $order->cost_period_id, 'production_order_id' => $order->id, 'cost_type' => $rate->cost_type->value, 'base_quantity' => $order->flour_quantity, 'rate' => $rate->effective_rate, 'amount' => $amount]);
         }
+        return $total;
+    }
+
+    private function recordBatchCosts(ProductionOrder $order): int
+    {
+        $total = 0;
+        foreach ($order->recipeVersion->batchComponents->where('type', RecipeBatchComponentType::StandardCost) as $component) {
+            $amount = $component->amount_per_batch;
+            $order->batchCosts()->create(['recipe_batch_component_id' => $component->id, 'label' => $component->label, 'amount' => $amount]);
+            CostAllocation::create(['cost_period_id' => $order->cost_period_id, 'production_order_id' => $order->id, 'cost_type' => 'recipe_batch', 'base_quantity' => 1, 'rate' => $amount, 'amount' => $amount]);
+            $total += $amount;
+        }
+
         return $total;
     }
 

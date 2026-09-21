@@ -14,6 +14,7 @@ use App\Modules\Production\Domain\Models\ProductionOrder;
 use App\Modules\Production\Domain\Services\ConsumablePresentationResolver;
 use App\Modules\Recipes\Domain\Models\RecipeCompatibleProduct;
 use App\Modules\Recipes\Domain\Models\RecipeVersion;
+use App\Modules\Recipes\Domain\Enums\RecipeBatchComponentType;
 use App\Modules\Shared\Application\NextDocumentNumber;
 use DomainException;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class PlanProduction
     {
         if (bccomp($data->flourQuantityKg, '0', 6) <= 0 || $data->outputs === []) throw new DomainException('La harina y los productos planeados deben ser positivos.');
         return DB::transaction(function () use ($data): ProductionOrder {
-            $version = RecipeVersion::query()->with(['referenceFlourUnit', 'yieldUnit', 'ingredients.item', 'ingredients.unit', 'compatibleProducts.doughWeightUnit', 'compatibleProducts.finishingComponents.item', 'compatibleProducts.finishingComponents.unit'])->applicableOn($data->plannedFor->toDateString())->findOrFail($data->recipeVersionId);
+            $version = RecipeVersion::query()->with(['referenceFlourUnit', 'yieldUnit', 'ingredients.item', 'ingredients.unit', 'batchComponents.item', 'batchComponents.unit', 'compatibleProducts.doughWeightUnit', 'compatibleProducts.finishingComponents.item', 'compatibleProducts.finishingComponents.unit'])->applicableOn($data->plannedFor->toDateString())->findOrFail($data->recipeVersionId);
             $period = CostPeriod::query()->where('year', $data->plannedFor->year)->where('month', $data->plannedFor->month)->where('status', CostPeriodStatus::Open)->firstOrFail();
             if ($period->rates()->count() < 2) throw new DomainException('El periodo no tiene tarifas efectivas de gas y electricidad.');
             if ($data->laborMethod === LaborMethod::StandardPerKilogram && $period->standard_labor_rate_per_kg <= 0) throw new DomainException('Configura la tarifa estándar de mano de obra del periodo.');
@@ -38,6 +39,10 @@ class PlanProduction
             foreach ($version->ingredients as $ingredient) {
                 $presentation = $this->presentations->resolve($ingredient, $ingredient->unit);
                 $order->consumptions()->create(['recipe_ingredient_id' => $ingredient->id, 'item_id' => $ingredient->item_id, 'presentation_id' => $presentation->id, 'calculated_quantity' => bcmul($ingredient->quantity, $factor, 6), 'unit_id' => $ingredient->unit_id]);
+            }
+            foreach ($version->batchComponents->where('type', RecipeBatchComponentType::InventoryConsumption) as $component) {
+                $presentation = $this->presentations->resolveForItem($component->item_id, $component->unit, $component->item->name);
+                $order->consumptions()->create(['recipe_batch_component_id' => $component->id, 'item_id' => $component->item_id, 'presentation_id' => $presentation->id, 'calculated_quantity' => $component->quantity_per_batch, 'unit_id' => $component->unit_id]);
             }
             $plannedDoughKg = '0';
             foreach ($data->outputs as $outputData) {

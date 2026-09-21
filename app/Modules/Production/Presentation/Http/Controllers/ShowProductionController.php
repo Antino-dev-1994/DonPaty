@@ -18,7 +18,7 @@ class ShowProductionController extends Controller
     {
         abort_unless($request->user()->hasPermission('production.view'), 403);
         $canViewCosts = $request->user()->hasPermission('reports.view-financial');
-        $production->load(['recipeVersion.recipe:id,name', 'costPeriod', 'responsiblePerson:id,name', 'consumptions.item:id,name', 'consumptions.unit:id,code', 'consumptions.presentation:id,name,stock_unit_id', 'consumptions.presentation.stockUnit:id,code', 'plannedOutputs.presentation.item:id,name', 'outputs.presentation.item:id,name', 'incidents.recorder:id,name', 'laborEntries.person:id,name', 'overheadAllocations']);
+        $production->load(['recipeVersion.recipe:id,name', 'costPeriod', 'responsiblePerson:id,name', 'consumptions.item:id,name', 'consumptions.unit:id,code', 'consumptions.presentation:id,name,stock_unit_id', 'consumptions.presentation.stockUnit:id,code', 'plannedOutputs.presentation.item:id,name', 'outputs.presentation.item:id,name', 'incidents.recorder:id,name', 'laborEntries.person:id,name', 'overheadAllocations', 'batchCosts']);
         $authorizations = AuthorizationRequest::query()->where('resource_type', $production->getMorphClass())->where('resource_id', $production->id)->latest()->get();
 
         return Inertia::render('production/Show', [
@@ -27,6 +27,7 @@ class ShowProductionController extends Controller
                 'ingredient_cost' => $canViewCosts ? $production->ingredient_cost : null,
                 'labor_cost' => $canViewCosts ? $production->labor_cost : null,
                 'overhead_cost' => $canViewCosts ? $production->overhead_cost : null,
+                'batch_cost' => $canViewCosts ? $production->batch_cost : null,
                 'total_cost' => $canViewCosts ? $production->total_cost : null,
                 'planned_for' => $production->planned_for->format('Y-m-d H:i'), 'started_at' => $production->started_at?->format('Y-m-d H:i'), 'completed_at' => $production->completed_at?->format('Y-m-d H:i'),
                 'status' => $production->status->value, 'status_label' => $production->status->label(), 'labor_method' => $production->labor_method->value, 'labor_method_label' => $production->labor_method->label(),
@@ -36,6 +37,7 @@ class ShowProductionController extends Controller
                 'outputs' => $production->outputs->map(fn($line)=>['id'=>$line->id,'product'=>"{$line->presentation->item->name} — {$line->presentation->name}",'quantity'=>$line->quantity,'dough_quantity'=>$line->dough_quantity,'allocated_cost'=>$canViewCosts ? $line->allocated_cost : null,'unit_cost'=>$canViewCosts ? $line->unit_cost : null]),
                 'incidents' => $production->incidents->map(fn($incident)=>[...$incident->only(['id','incident_type','description','quantity','amount']),'recorded_at'=>$incident->recorded_at->format('Y-m-d H:i'),'recorder'=>$incident->recorder->name]),
                 'labor_entries' => $production->laborEntries->map(fn($line)=>[...$line->only(['id','hours','hourly_rate','flour_rate','manual_amount','total_amount','reason']),'person'=>$line->person?->name,'method'=>$line->method->label()]),
+                'batch_costs' => $canViewCosts ? $production->batchCosts->map(fn ($cost) => $cost->only(['id', 'label', 'amount'])) : [],
             ],
             'availability' => $production->status === ProductionStatus::Planned ? $availability->execute($production) : [],
             'authorizations' => $authorizations->map(fn($authorization)=>['id'=>$authorization->id,'permission'=>$authorization->approval_permission,'status'=>$authorization->status->value,'usable'=>$authorization->isUsable(),'reason'=>$authorization->reason]),

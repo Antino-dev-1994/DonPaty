@@ -65,7 +65,7 @@ class ProductionTest extends TestCase
         ));
 
         $this->assertSame('completed', $completed->status->value);
-        $this->assertSame(7500, $completed->total_cost);
+        $this->assertSame(7800, $completed->total_cost);
         $this->assertSame('9.000000', $this->balance($flour));
         $this->assertSame('0.980000', $this->balance($yeast));
         $this->assertSame('10.000000', $this->balance($smallBread));

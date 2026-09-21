@@ -2,6 +2,8 @@
 
 use App\Modules\Inventory\Presentation\Http\Controllers\ConfirmAdjustmentController;
 use App\Modules\Inventory\Presentation\Http\Controllers\CreateAdjustmentController;
+use App\Modules\Inventory\Presentation\Http\Controllers\DiscardAdjustmentController;
+use App\Modules\Inventory\Presentation\Http\Controllers\EditAdjustmentController;
 use App\Modules\Inventory\Presentation\Http\Controllers\InventoryDashboardController;
 use App\Modules\Inventory\Presentation\Http\Controllers\ListAdjustmentsController;
 use App\Modules\Inventory\Presentation\Http\Controllers\ListMovementsController;
@@ -19,6 +21,8 @@ Route::middleware(['web', 'auth', 'verified'])->prefix('inventory')->name('inven
     Route::get('/adjustments/create', CreateAdjustmentController::class)->name('adjustments.create');
     Route::post('/adjustments', StoreAdjustmentController::class)->name('adjustments.store');
     Route::get('/adjustments/{adjustment}', ShowAdjustmentController::class)->name('adjustments.show');
+    Route::get('/adjustments/{adjustment}/edit', EditAdjustmentController::class)->name('adjustments.edit');
+    Route::delete('/adjustments/{adjustment}', DiscardAdjustmentController::class)->name('adjustments.destroy');
     Route::post('/adjustments/{adjustment}/authorization', RequestAdjustmentAuthorizationController::class)->name('adjustments.authorization');
     Route::post('/adjustments/{adjustment}/confirm', ConfirmAdjustmentController::class)->name('adjustments.confirm');
     Route::get('/packages', PackageConversionsController::class)->name('packages.index');
