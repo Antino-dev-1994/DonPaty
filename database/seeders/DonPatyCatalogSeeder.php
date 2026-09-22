@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Modules\Catalog\Application\CreateItem;
 use App\Modules\Catalog\Application\CreatePresentation;
+use App\Modules\Catalog\Application\SyncPackageComponents;
 use App\Modules\Catalog\Application\Data\ItemData;
 use App\Modules\Catalog\Application\Data\PresentationData;
 use App\Modules\Catalog\Domain\Enums\ItemType;
@@ -29,7 +30,7 @@ use Illuminate\Support\Carbon;
 
 class DonPatyCatalogSeeder extends Seeder
 {
-    public const RECIPE_CODE = 'DP-PAN-TAJADO-6KG';
+    public const RECIPE_CODE = 'DP-PAN-TAJADO-10KG-20260921';
     public const TAJADO_SKU = 'DP-PAN-TAJADO-410G';
 
     public function run(): void
@@ -39,24 +40,25 @@ class DonPatyCatalogSeeder extends Seeder
         $milliliter = Unit::query()->where('code', 'ml')->sole();
         $unit = Unit::query()->where('code', 'und')->sole();
         $tray = Unit::query()->firstOrCreate(['code' => 'cub30'], ['name' => 'Cubeta de 30 unidades', 'dimension' => 'count', 'scale_to_base' => 30, 'precision' => 3, 'is_active' => true]);
+        $halfCase = Unit::query()->firstOrCreate(['code' => 'mcaj6'], ['name' => 'Media caja de 6 unidades', 'dimension' => 'count', 'scale_to_base' => 6, 'precision' => 3, 'is_active' => true]);
         $actor = User::query()->where('email', DonPatyPeopleSeeder::KEVIN_EMAIL)->sole();
 
         $items = [
-            'flour' => $this->material('DP-HARINA', 'Harina de trigo', ItemType::RawMaterial, $kg, '6'),
-            'water' => $this->material('DP-AGUA', 'Agua para masa', ItemType::RawMaterial, $kg, '2.7'),
-            'sugar' => $this->material('DP-AZUCAR', 'Azúcar', ItemType::RawMaterial, $kg, '0.78'),
-            'salt' => $this->material('DP-SAL', 'Sal', ItemType::RawMaterial, $kg, '0.02'),
-            'prodigio' => $this->material('DP-MANTEQUILLA-PRODIGIO', 'Mantequilla Prodigio', ItemType::RawMaterial, $kg, '0.51'),
-            'hydrogenated' => $this->material('DP-MANTEQUILLA-HIDROGENADA', 'Mantequilla hidrogenada', ItemType::RawMaterial, $kg, '0.3'),
-            'eggs' => $this->material('DP-HUEVOS', 'Huevos', ItemType::RawMaterial, $unit, '6'),
-            'essence' => $this->material('DP-ESENCIA-MANTEQUILLA', 'Esencia de mantequilla', ItemType::RawMaterial, $milliliter, '10'),
+            'flour' => $this->material('DP-HARINA', 'Harina de trigo', ItemType::RawMaterial, $kg, '10'),
+            'water' => $this->material('DP-AGUA', 'Agua para masa', ItemType::RawMaterial, $kg, '4.2'),
+            'sugar' => $this->material('DP-AZUCAR', 'Azúcar', ItemType::RawMaterial, $kg, '1.3'),
+            'salt' => $this->material('DP-SAL', 'Sal', ItemType::RawMaterial, $kg, '0.25'),
+            'prodigio' => $this->material('DP-MANTEQUILLA-PRODIGIO', 'Mantequilla Prodigio', ItemType::RawMaterial, $kg, '0.926'),
+            'hydrogenated' => $this->material('DP-MANTEQUILLA-HIDROGENADA', 'Mantequilla hidrogenada', ItemType::RawMaterial, $kg, '0.4'),
+            'eggs' => $this->material('DP-HUEVOS', 'Huevos', ItemType::RawMaterial, $unit, '11'),
+            'essence' => $this->material('DP-ESENCIA-MANTEQUILLA', 'Esencia de mantequilla', ItemType::RawMaterial, $milliliter, '20'),
             'vanilla' => $this->material('DP-ESENCIA-VAINILLA', 'Esencia de vainilla', ItemType::RawMaterial, $milliliter, '10'),
             'color' => $this->material('DP-COLOR', 'Color para pan', ItemType::RawMaterial, $gram, '1'),
-            'yeast' => $this->material('DP-LEVADURA', 'Levadura', ItemType::RawMaterial, $gram, '100'),
-            'antimold' => $this->material('DP-ANTIMOHO', 'Antimoho', ItemType::RawMaterial, $gram, '18'),
-            'astra' => $this->material('DP-MANTEQUILLA-ASTRA', 'Mantequilla Astra para enmoldado', ItemType::Supply, $kg, '0.2'),
+            'yeast' => $this->material('DP-LEVADURA', 'Levadura', ItemType::RawMaterial, $gram, '120'),
+            'antimold' => $this->material('DP-ANTIMOHO', 'Antimoho', ItemType::RawMaterial, $gram, '30'),
+            'astra' => $this->material('DP-MANTEQUILLA-ASTRA', 'Mantequilla Astra para enmoldado', ItemType::Supply, $kg, '0.14'),
             'gourmet' => $this->material('DP-EMPASTE-GOURMET', 'Empaste Gourmet para hojaldrar', ItemType::RawMaterial, $kg, '0.35'),
-            'bag' => $this->material('DP-BOLSA-TAJADO', 'Bolsa para pan tajado', ItemType::Packaging, $unit, '22'),
+            'bag' => $this->material('DP-BOLSA-TAJADO', 'Bolsa para pan tajado', ItemType::Packaging, $unit, '35'),
             'bakingGas' => $this->material('DP-GAS-BOMBONA-HORNEADA', 'Gas de bombona — horneada de horno', ItemType::Supply, $unit, '1'),
         ];
 
@@ -72,30 +74,40 @@ class DonPatyCatalogSeeder extends Seeder
 
         $tajadoItem = $this->material('DP-PAN-TAJADO', 'Pan tajado 410 g', ItemType::FinishedProduct, $unit, '22');
         $tajado = $this->presentation($tajadoItem, $unit, self::TAJADO_SKU, 'Unidad de 410 g', false, true, '1', 2600);
+        $leftoverItem = $this->material('DP-SOBRANTE-MASA-PRODUCCION', 'Sobrante de masa de producción', ItemType::Intermediate, $kg, '0');
+        $leftover = $this->presentation($leftoverItem, $kg, 'DP-SOBRANTE-MASA-KG', 'Kilogramo de masa reservada', false, false, '1');
+
+        $cocaColaItem = $this->material('DP-COCACOLA-2L', 'Coca-Cola 2 L', ItemType::Resale, $unit, '0');
+        $cocaCola = $this->presentation($cocaColaItem, $unit, 'DP-COCACOLA-2L-UND', 'Unidad de Coca-Cola 2 L', true, true, '1', 6000);
+        $schweppesItem = $this->material('DP-SCHWEPPES-400ML', 'Schweppes soda 400 ml', ItemType::Resale, $unit, '0');
+        $schweppes = $this->presentation($schweppesItem, $unit, 'DP-SCHWEPPES-400ML-UND', 'Unidad de Schweppes soda 400 ml', false, true, '1', 2500);
+        $schweppesHalfCase = $this->presentation($schweppesItem, $halfCase, 'DP-SCHWEPPES-400ML-MCAJ6', 'Media caja de 6 unidades', true, false, '6');
+        app(SyncPackageComponents::class)->execute($schweppesHalfCase, [['presentation_id' => $schweppes->id, 'quantity' => '6']]);
 
         if (! Recipe::query()->where('code', self::RECIPE_CODE)->exists()) {
             $recipe = app(CreateRecipe::class)->execute(new RecipeData(
                 self::RECIPE_CODE,
-                'Pan tajado — receta de 6 kg de harina',
-                'Rendimiento estándar de 21,6 panes de 410 g. La harina adicional de cilindrado se registra como consumo real con novedad.',
+                'Pan tajado — producción real del 21 de septiembre de 2026',
+                'Base de 10 kg de harina. Esta versión conserva las cantidades reales del lote de 35 tajados y 509 g de masa reservada; las variaciones de cilindrado quedan documentadas en la producción.',
                 true,
-                new RecipeVersionData('6', $kg->id, '10.729', $kg->id, '0', 'Mezclar ingredientes, amasar, fermentar, enmoldar con Astra, hornear, enfriar, tajar y empacar. Registrar harina adicional de cilindrado y el destino de cualquier remanente.', [
-                    $this->ingredient($items['flour'], IngredientRole::Flour, '6', $kg, '100', 0),
-                    $this->ingredient($items['water'], IngredientRole::Liquid, '2.7', $kg, '45', 1),
-                    $this->ingredient($items['sugar'], IngredientRole::Sweetener, '0.78', $kg, '13', 2),
-                    $this->ingredient($items['salt'], IngredientRole::Salt, '0.02', $kg, '0.3333', 3),
-                    $this->ingredient($items['prodigio'], IngredientRole::Fat, '0.51', $kg, '8.5', 4),
-                    $this->ingredient($items['hydrogenated'], IngredientRole::Fat, '0.3', $kg, '5', 5),
-                    $this->ingredient($items['eggs'], IngredientRole::Other, '6', $unit, null, 6),
-                    $this->ingredient($items['essence'], IngredientRole::Other, '10', $milliliter, null, 7),
+                new RecipeVersionData('10', $kg->id, '17.534', $kg->id, '0', 'Mezclar ingredientes, amasar, fermentar, enmoldar con Astra, hornear, enfriar, tajar y empacar. Registrar por separado la harina y Prodigio de cilindrado, los huevos adicionales y el destino de toda masa reservada.', [
+                    $this->ingredient($items['flour'], IngredientRole::Flour, '10', $kg, '100', 0),
+                    $this->ingredient($items['water'], IngredientRole::Liquid, '4.2', $kg, '42', 1),
+                    $this->ingredient($items['sugar'], IngredientRole::Sweetener, '1.3', $kg, '13', 2),
+                    $this->ingredient($items['salt'], IngredientRole::Salt, '0.25', $kg, '2.5', 3),
+                    $this->ingredient($items['prodigio'], IngredientRole::Fat, '0.9', $kg, '9', 4),
+                    $this->ingredient($items['hydrogenated'], IngredientRole::Fat, '0.4', $kg, '4', 5),
+                    $this->ingredient($items['eggs'], IngredientRole::Other, '10', $unit, null, 6),
+                    $this->ingredient($items['essence'], IngredientRole::Other, '20', $milliliter, null, 7),
                     $this->ingredient($items['color'], IngredientRole::Other, '1', $gram, null, 8),
-                    $this->ingredient($items['yeast'], IngredientRole::Leavening, '100', $gram, '1.6667', 9),
-                    $this->ingredient($items['antimold'], IngredientRole::Other, '18', $gram, '0.3', 10),
-                    $this->ingredient($items['astra'], IngredientRole::Other, '0.2', $kg, '3.3333', 11),
+                    $this->ingredient($items['yeast'], IngredientRole::Leavening, '120', $gram, '1.2', 9),
+                    $this->ingredient($items['antimold'], IngredientRole::Other, '30', $gram, '0.3', 10),
+                    $this->ingredient($items['astra'], IngredientRole::Other, '0.14', $kg, '1.4', 11),
                 ], [
-                    new CompatibleProductData($tajado->id, '0.496713', $kg->id, '17.4574', '1', [
+                    new CompatibleProductData($tajado->id, '0.486428', $kg->id, '15.7114', '1', [
                         new FinishingComponentData($items['bag']->id, '1', $unit->id),
                     ]),
+                    new CompatibleProductData($leftover->id, '1', $kg->id, '0', '1', []),
                 ], [
                     new RecipeBatchComponentData(RecipeBatchComponentType::InventoryConsumption, 'Gas de bombona — horneada de horno', $items['bakingGas']->id, '1', $unit->id, null, 0),
                 ]),
@@ -103,7 +115,7 @@ class DonPatyCatalogSeeder extends Seeder
             app(PublishRecipeVersion::class)->execute($recipe->versions()->sole(), Carbon::today(), $actor);
         }
 
-        $this->prices($tajado);
+        $this->prices($tajado, $cocaCola, $schweppes);
     }
 
     private function material(string $code, string $name, ItemType $type, Unit $unit, string $minimumStock): Item
@@ -121,7 +133,7 @@ class DonPatyCatalogSeeder extends Seeder
         return new RecipeIngredientData($item->id, $item->presentations()->sole()->id, $role, $quantity, $unit->id, $percentage, false, $order);
     }
 
-    private function prices(ProductPresentation $tajado): void
+    private function prices(ProductPresentation $tajado, ProductPresentation $cocaCola, ProductPresentation $schweppes): void
     {
         foreach (['Mayorista' => 2600, 'Minorista' => 3500, 'Público' => 4000] as $listName => $price) {
             $list = PriceList::query()->firstOrCreate(
@@ -130,5 +142,8 @@ class DonPatyCatalogSeeder extends Seeder
             );
             $list->items()->updateOrCreate(['presentation_id' => $tajado->id], ['price' => $price, 'minimum_price' => 2600]);
         }
+        $retail = PriceList::query()->where('name', 'Minorista')->sole();
+        $retail->items()->updateOrCreate(['presentation_id' => $cocaCola->id], ['price' => 6000, 'minimum_price' => 6000]);
+        $retail->items()->updateOrCreate(['presentation_id' => $schweppes->id], ['price' => 2500, 'minimum_price' => 2500]);
     }
 }

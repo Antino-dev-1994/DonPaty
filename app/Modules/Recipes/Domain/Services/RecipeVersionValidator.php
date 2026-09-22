@@ -58,7 +58,7 @@ class RecipeVersionValidator
         foreach ($data->compatibleProducts as $product) {
             $presentation = ProductPresentation::query()->with('item')->where('is_active', true)->findOrFail($product->presentationId);
             $unit = Unit::query()->findOrFail($product->doughWeightUnitId);
-            if ($presentation->item->type !== ItemType::FinishedProduct || $unit->dimension->value !== 'mass') throw new DomainException('Los productos compatibles deben ser productos terminados y usar peso de masa.');
+            if (! in_array($presentation->item->type, [ItemType::FinishedProduct, ItemType::Intermediate], true) || $unit->dimension->value !== 'mass') throw new DomainException('Los productos compatibles deben ser productos terminados o intermedios y usar peso de masa.');
             if (bccomp($product->doughWeightPerUnit, '0', 6) <= 0 || bccomp($product->costWeightFactor, '0', 6) <= 0) throw new DomainException('El peso de masa y el factor de costo deben ser positivos.');
             if (bccomp($product->bakingLossPercentage, '0', 4) < 0 || bccomp($product->bakingLossPercentage, '100', 4) > 0) throw new DomainException('La pérdida de horneado debe estar entre 0 % y 100 %.');
         }
