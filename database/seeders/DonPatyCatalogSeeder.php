@@ -60,6 +60,7 @@ class DonPatyCatalogSeeder extends Seeder
             'gourmet' => $this->material('DP-EMPASTE-GOURMET', 'Empaste Gourmet para hojaldrar', ItemType::RawMaterial, $kg, '0.35'),
             'bag' => $this->material('DP-BOLSA-TAJADO', 'Bolsa para pan tajado', ItemType::Packaging, $unit, '35'),
             'bakingGas' => $this->material('DP-GAS-BOMBONA-HORNEADA', 'Gas de bombona — horneada de horno', ItemType::Supply, $unit, '1'),
+            'fryingGas' => $this->material('DP-GAS-TUBERIA-FRITADA', 'Gas de tubería — fritada', ItemType::Supply, $unit, '1'),
         ];
 
         foreach ($items as $key => $item) {
@@ -112,7 +113,7 @@ class DonPatyCatalogSeeder extends Seeder
                     new RecipeBatchComponentData(RecipeBatchComponentType::InventoryConsumption, 'Gas de bombona — horneada de horno', $items['bakingGas']->id, '1', $unit->id, null, 0),
                 ]),
             ), $actor);
-            app(PublishRecipeVersion::class)->execute($recipe->versions()->sole(), Carbon::today(), $actor);
+            app(PublishRecipeVersion::class)->execute($recipe->versions()->sole(), Carbon::parse('2026-09-21'), $actor);
         }
 
         $this->prices($tajado, $cocaCola, $schweppes);

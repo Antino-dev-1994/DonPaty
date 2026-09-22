@@ -7,6 +7,7 @@ use App\Modules\Audit\Application\RecordAuditEvent;
 use App\Modules\Identity\Domain\Models\AuthorizationRequest;
 use App\Modules\Production\Domain\Enums\ProductionStatus;
 use App\Modules\Production\Domain\Models\ProductionOrder;
+use Carbon\CarbonInterface;
 use DomainException;
 use Illuminate\Support\Facades\DB;
 
@@ -18,9 +19,9 @@ class StartProduction
         private readonly RecordAuditEvent $audit,
     ) {}
 
-    public function execute(ProductionOrder $order, User $actor, ?AuthorizationRequest $authorization = null): ProductionOrder
+    public function execute(ProductionOrder $order, User $actor, ?AuthorizationRequest $authorization = null, ?CarbonInterface $startedAt = null): ProductionOrder
     {
-        return DB::transaction(function () use ($order, $actor, $authorization): ProductionOrder {
+        return DB::transaction(function () use ($order, $actor, $authorization, $startedAt): ProductionOrder {
             $order = ProductionOrder::query()->lockForUpdate()->findOrFail($order->id);
             if ($order->status !== ProductionStatus::Planned) throw new DomainException('Solo puede iniciarse una producción planificada.');
             $hasShortage = collect($this->availability->execute($order))->contains('is_short', true);
@@ -31,7 +32,7 @@ class StartProduction
                     throw new DomainException('Hay ingredientes insuficientes; se requiere una autorización vigente para esta producción.');
                 }
             }
-            $order->update(['status' => ProductionStatus::InProgress, 'started_at' => now(), 'negative_stock_authorization_id' => $hasShortage ? $authorization->id : null]);
+            $order->update(['status' => ProductionStatus::InProgress, 'started_at' => $startedAt ?? now(), 'negative_stock_authorization_id' => $hasShortage ? $authorization->id : null]);
             $this->audit->execute('production.order_started', $order, $actor, after: ['shortage_authorized' => $hasShortage], authorizationRequestId: $authorization?->id);
             return $order->fresh();
         });

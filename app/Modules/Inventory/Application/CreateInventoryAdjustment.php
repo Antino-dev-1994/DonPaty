@@ -54,7 +54,8 @@ class CreateInventoryAdjustment
                 }
 
                 $difference = bcsub((string) $input['counted_quantity'], $balance->physical_quantity, 6);
-                if (bccomp($difference, '0', 6) > 0 && ($input['unit_cost'] ?? $balance->average_unit_cost) <= 0) {
+                $unitCost = $input['unit_cost'] ?? $balance->average_unit_cost;
+                if (bccomp($difference, '0', 6) > 0 && ($unitCost === null || $unitCost < 0)) {
                     throw new DomainException("Indica un costo para la entrada de {$presentation->name}.");
                 }
 
